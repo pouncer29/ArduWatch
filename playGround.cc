@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <ctime> //For testing purposes
-//#include "arrayTools.h"
+#include "arrayTools.h"
 
 using namespace std ; 
 
@@ -73,31 +73,31 @@ tm* getLocalTime(time_t* time){
 ///////////////
 //Array Tools
 ///////////////
-int getArrLen(char charArr[]){
-	int i = 0;
-	while(charArr[i] != '\0')
-		i++;
-	return i;
-}
-
-int getHourIndex(tm* localTime){
-
-	int curHour = localTime->tm_hour;
-
-	if(curHour < 0)
-		return -1;
-	else if(curHour >= 12)
-		return curHour - 12;
-	else
-		return curHour;
-	}
-
-int getMinuteIndex(tm* localTime){
-	int curMinute = localTime->tm_min;
-	
-	return curMinute/5;
-	}
-
+// int getArrLen(char charArr[]){
+// 	int i = 0;
+// 	while(charArr[i] != '\0')
+// 		i++;
+// 	return i;
+// }
+// 
+// int getHourIndex(tm* localTime){
+// 
+// 	int curHour = localTime->tm_hour;
+// 
+// 	if(curHour < 0)
+// 		return -1;
+// 	else if(curHour >= 12)
+// 		return curHour - 12;
+// 	else
+// 		return curHour;
+// 	}
+// 
+// int getMinuteIndex(tm* localTime){
+// 	int curMinute = localTime->tm_min;
+// 	
+// 	return curMinute/5;
+// 	}
+// 
 void printArray(char charArr[]){
 	int cap = getArrLen(charArr);
 	
@@ -106,44 +106,44 @@ void printArray(char charArr[]){
 	cout<<endl;
 	return;
 }
-
-char* genTimeArray(tm* localTime){
-
-	char* charArr = new char[12];
-	
-	for(int i = 0; i < 12; i++)
-		charArr[i] = '-';
-	
-	//Grab Indices
-	int hr = getHourIndex(localTime);
-	int min = getMinuteIndex(localTime);
-	
-// 	cout<<"In Generation Function"<<endl;
-// 	cout<<" Hour Index is: "<<hr<<endl;
-// 	cout<<" Minute Index is: "<<min<<endl;
-// 	cout<<"Array is: "<<endl;
-// 	printArray(charArr);
-// 	cout<<"length is: "<<getArrLen(charArr)<<endl;
-	
-
-//		Much easier not bugged way.
-		if(hr == min){
-			charArr[hr] = 'b';
-		}
-		else{
-			charArr[hr] = 'h';
-			charArr[min] = 'm';	
-		}
-		
-	
-		printArray(charArr);
-		return charArr;
-	}	
-
-
-////////////////////////////////////////////
-
-
+// 
+// char* genTimeArray(tm* localTime){
+// 
+// 	char* charArr = new char[12];
+// 	
+// 	for(int i = 0; i < 12; i++)
+// 		charArr[i] = '-';
+// 	
+// 	//Grab Indices
+// 	int hr = getHourIndex(localTime);
+// 	int min = getMinuteIndex(localTime);
+// 	
+// // 	cout<<"In Generation Function"<<endl;
+// // 	cout<<" Hour Index is: "<<hr<<endl;
+// // 	cout<<" Minute Index is: "<<min<<endl;
+// // 	cout<<"Array is: "<<endl;
+// // 	printArray(charArr);
+// // 	cout<<"length is: "<<getArrLen(charArr)<<endl;
+// 	
+// 
+// //		Much easier not bugged way.
+// 		if(hr == min){
+// 			charArr[hr] = 'b';
+// 		}
+// 		else{
+// 			charArr[hr] = 'h';
+// 			charArr[min] = 'm';	
+// 		}
+// 		
+// 	
+// 		printArray(charArr);
+// 		return charArr;
+// 	}	
+// 
+// 
+// ////////////////////////////////////////////
+// 
+// 
 /*
 * setNodeColour(r,g,b,n)
 * - sets the colour of node n to the int r g b value paramaters.
@@ -182,7 +182,7 @@ ledNode* newLedNode(){
 
 	return node;
 }
-	
+// 	
 /*
 * nodeStats(n)
 * prints the stats of ledNode* n

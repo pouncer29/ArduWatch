@@ -10,9 +10,9 @@
 //TIME HELPERS
 /////////////////////////////////////////////////////////////
 
-time_t getTimeZero();
-
-tm* getLocalTime(time_t* time);
+// time_t getTimeZero();
+// 
+// tm* getLocalTime(time_t* time);
 
 
 ///////////////
@@ -23,7 +23,6 @@ int getArrLen(char[]);
 int getHourIndex(tm*);
 
 int getMinuteIndex(tm*);
-
 
 char* genTimeArray(tm*);
 
