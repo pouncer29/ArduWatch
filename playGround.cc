@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <ctime> //For testing purposes
-#include <array>
+//#include "arrayTools.h"
 
 using namespace std ; 
 
@@ -26,64 +26,34 @@ int maxMinute;
 };
 
 /*
-* setNodeColour(r,g,b,n)
-* - sets the colour of node n to the int r g b value paramaters.
-* 
-* preconditions:
-* - n is not NULL
-*
-* postconditions:
-* - the r g b attributes of n are changed
-* return: nothing
+//HEADERS
+
+//TIME HELPER HEADERS
+time_t getTimeZero();
+
+tm* getLocalTime(time_t*);
+
+
+///////////////
+//Array Tools HEADERS
+///////////////
+int getArrLen(char[]);
+
+int getHourIndex(tm*);
+
+int getMinuteIndex(tm*);
+
+
+char* genTimeArray(tm*);
+
+//STRUCT HEADERS
+void setNodeColour(int, int, int, ledNode*);
+void nodeStats(ledNode*);
+
 */
-void setNodeColour(int r, int g, int b, ledNode* node){
-	
-	if(node == NULL){
-		cout<<"node was NULL, exiting"<<endl;
-		return;
-	}
 
-	node->r = r;
-	node->g = g;
-	node->b = b;
-	return;
-}
+/////////////////////
 
-/*
-* newLedNode()
-* - the struct equivilent of a constructor
-*
-* precond: none
-* postcond: new node declared and instantiated.
-* return: a pointer to the new node.
-*/
-ledNode* newLedNode(){
-	ledNode* node = new ledNode();
-	setNodeColour(0,0,0,node);
-
-	return node;
-}
-	
-
-/*
-* nodeStats(n)
-* prints the stats of ledNode* n
-* precond: n != NULL
-* postcond: stats desplayed
-* return: nothing 
-*/
-void nodeStats(ledNode* node){	
-	
-	if(node == NULL){
-		cout<<"node was NULL, exiting"<<endl;
-		return;
-	}	
-	cout<<"Colours were: "<<endl;
-	cout<<"Red: "<<node->r<<endl;
-	cout<<"Green: "<<node->g<<endl;
-	cout<<"Blue: " <<node->b<<endl;
-	return;
-}
 
 //////////////////////////////////////////////////////////////
 //TIME HELPERS
@@ -141,37 +111,117 @@ char* genTimeArray(tm* localTime){
 
 	char* charArr = new char[12];
 	
-	charArr[0] = 'h'; //Somehow marks the pointer as an array.
+	for(int i = 0; i < 12; i++)
+		charArr[i] = '-';
 	
 	//Grab Indices
 	int hr = getHourIndex(localTime);
 	int min = getMinuteIndex(localTime);
 	
-	// cout<<"In Generation Function"<<endl;
+// 	cout<<"In Generation Function"<<endl;
 // 	cout<<" Hour Index is: "<<hr<<endl;
 // 	cout<<" Minute Index is: "<<min<<endl;
 // 	cout<<"Array is: "<<endl;
-// 	//printArray(charArr);
- 	cout<<"length is: "<<getArrLen(charArr)<<endl;
-// 	
-	//Assign Values
-	for(int i = 0; i < 12; i++){
-		if (i==hr)
-			charArr[i] = 'h'; //cout<<"Tried hour!"<<endl;
-		if (i==min)
-			charArr[i] = 'm'; //cout<<"Tried Minut!"<<endl;
-		if ((hr==min) && (min == i))
-			charArr[i] = 'b';
-		else
-			charArr[i] = '-';
+// 	printArray(charArr);
+// 	cout<<"length is: "<<getArrLen(charArr)<<endl;
+	
+
+//		Much easier not bugged way.
+		if(hr == min){
+			charArr[hr] = 'b';
 		}
-		//printArray(charArr);
+		else{
+			charArr[hr] = 'h';
+			charArr[min] = 'm';	
+		}
+		
+	
+		printArray(charArr);
 		return charArr;
 	}	
 
 
+////////////////////////////////////////////
 
 
+/*
+* setNodeColour(r,g,b,n)
+* - sets the colour of node n to the int r g b value paramaters.
+* 
+* preconditions:
+* - n is not NULL
+*
+* postconditions:
+* - the r g b attributes of n are changed
+* return: nothing
+*/
+void setNodeColour(int r, int g, int b, ledNode* node){
+	
+	if(node == NULL){
+		cout<<"node was NULL, exiting"<<endl;
+		return;
+	}
+
+	node->r = r;
+	node->g = g;
+	node->b = b;
+	return;
+}
+
+/*
+* newLedNode()
+* - the struct equivilent of a constructor
+*
+* precond: none
+* postcond: new node declared and instantiated.
+* return: a pointer to the new node.
+*/
+ledNode* newLedNode(){
+	ledNode* node = new ledNode();
+	setNodeColour(0,0,0,node);
+
+	return node;
+}
+	
+/*
+* nodeStats(n)
+* prints the stats of ledNode* n
+* precond: n != NULL
+* postcond: stats desplayed
+* return: nothing 
+*/
+void nodeStats(ledNode* node){	
+
+	cout<<"Colours were: "<<endl;
+	cout<<"Red: "<<node->r<<endl;
+	cout<<"Green: "<<node->g<<endl;
+	cout<<"Blue: " <<node->b<<endl;
+	return;
+}
+
+ledNode* genNodeArray(tm* time){
+	
+	ledNode* nodeArr = new ledNode[12];
+	
+	int hrIndex = getHourIndex(time);
+	int minIndex = getMinuteIndex(time);
+	
+	//Assign Values
+	
+	if(hrIndex==minIndex){
+		setNodeColour(time->tm_hour,time->tm_min,time->tm_sec,&nodeArr[minIndex]);
+	}
+	else{
+		setNodeColour(time->tm_hour,time->tm_min,time->tm_sec,&nodeArr[hrIndex]);
+		setNodeColour(0,128,0,&nodeArr[minIndex]);
+	}
+		
+	nodeStats(&nodeArr[hrIndex]);
+	nodeStats(&nodeArr[minIndex]);
+	return nodeArr;
+}
+
+	
 
 	
 int main() {
@@ -180,10 +230,12 @@ int main() {
 	cout<<"Testing instantiation"<<endl;
 
 	ledNode* l = newLedNode();
-
 	setNodeColour(120,12,220,l);
 	nodeStats(l);
 
+	cout<<"---------------------------------------"<<endl<<endl;
+	
+	cout<<"Testing Time Indexing and Array Flaggging"<<endl;
 
 	//Testing time
 	time_t now = time(0);
@@ -200,11 +252,20 @@ int main() {
 		use your Array!*/
 		
 	//char ledSim[12];
-	char* ledArr = genTimeArray(timeII);
+	char* charArr = genTimeArray(timeII);
 	
-	cout<<"Length of the array is: "<< getArrLen(ledArr)<<endl;
+	cout<<"Length of the array is: "<< getArrLen(charArr)<<endl;
 
-	printArray(ledArr);
+	printArray(charArr);
+	
+	cout<<"---------------------------------------"<<endl<<endl;
+	
+	
+	
+	cout<<"Now lets try it with the ledNodes!"<<endl<<endl;
+	
+	ledNode* ledArr = genNodeArray(timeII);
+	
 
 
 return EXIT_SUCCESS; 
