@@ -40,7 +40,6 @@ int getHourIndex(tm* localTime){
 
 int getMinuteIndex(tm* localTime){
 	int curMinute = localTime->tm_min;
-	
 	return curMinute/5;
 	}
 
