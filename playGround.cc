@@ -11,37 +11,13 @@ using namespace std ;
 //Structs
 struct ledNode{
 
-//Atributes
-
 //Colours
 int r, g, b;
 
-//Time Range - We're going to try this out. If its a bust then oh well.
-int minHour;
-int maxHour;
-
-int minMinute;
-int maxMinute;
 
 };
 
-
-
-//////////////////////////////////////////////////////////////
-//TIME HELPERS (NOT NEEDED??)
-/////////////////////////////////////////////////////////////
-// 
-// time_t getTimeZero(){
-// 	time_t now = time(0);
-// 	return now;
-// }
-// 
-// tm* getLocalTime(time_t* time){
-// 	tm* localTime = localtime(time);
-// 	return localTime;
-// }
-
-
+//For test purposes!
 void printArray(char charArr[]){
 	int cap = getArrLen(charArr);
 	
@@ -52,6 +28,7 @@ void printArray(char charArr[]){
 }
 
 
+//ledNode tools
 /*
 * setNodeColour(r,g,b,n)
 * - sets the colour of node n to the int r g b value paramaters.
@@ -86,11 +63,11 @@ void setNodeColour(int r, int g, int b, ledNode* node){
 */
 ledNode* newLedNode(){
 	ledNode* node = new ledNode();
-	setNodeColour(0,0,0,node);
+	setNodeColour(30,195,195,node);	//Default node settings 60 + 195 = 255
 
 	return node;
 }
-// 	
+ 	
 /*
 * nodeStats(n)
 * prints the stats of ledNode* n
@@ -107,9 +84,43 @@ void nodeStats(ledNode* node){
 	return;
 }
 
+void setBlueSecond(ledNode* node, int addMe){
+	addMe += node->b;
+	int g = node->g;
+	
+		cout<<"about to make node blue value: "<<addMe<<endl;
+	
+	setNodeColour(30,g,addMe,node);
+	
+	return;
+}
+
+void setGreenMinute(ledNode* node, int addMe){
+	addMe += node->g;
+	
+	int b = node->b;
+	cout<<"about to make node green value: "<<addMe<<endl;
+	
+	setNodeColour(30,addMe,b,node);
+	
+	return;
+	}
+
+void setAverageCross(ledNode* hrNode, ledNode*minNode){
+	
+	minNode->g = (hrNode->g + minNode->g) / 2;
+	minNode->b = (hrNode->b + minNode->b) / 2;
+	
+	return;
+	}
+	
 ledNode* genNodeArray(tm* time){
 	
 	ledNode* nodeArr = new ledNode[12];
+	
+	for(int i = 0; i < 12; i++)
+		nodeArr[i] = *newLedNode();	
+
 	
 	int hrIndex = getHourIndex(time);
 	int minIndex = getMinuteIndex(time);
@@ -117,21 +128,24 @@ ledNode* genNodeArray(tm* time){
 	//Assign Values
 	
 	if(hrIndex==minIndex){
-		setNodeColour(time->tm_hour,time->tm_min,time->tm_sec,&nodeArr[minIndex]);
+		
+		setAverageCross(&nodeArr[hrIndex],&nodeArr[minIndex]);
+		//setNodeColour(time->tm_hour,time->tm_min,time->tm_sec,&nodeArr[minIndex]);
 	}
 	else{
-		setNodeColour(time->tm_hour,time->tm_min,time->tm_sec,&nodeArr[hrIndex]);
-		setNodeColour(0,128,0,&nodeArr[minIndex]);
+		// setNodeColour(time->tm_hour,time->tm_min,time->tm_sec,&nodeArr[hrIndex]);
+// 		setNodeColour(0,128,0,&nodeArr[minIndex]);
+		
+		setGreenMinute(&nodeArr[hrIndex], time->tm_min);
+		setBlueSecond(&nodeArr[minIndex], time->tm_sec);
 	}
 		
 	nodeStats(&nodeArr[hrIndex]);
 	nodeStats(&nodeArr[minIndex]);
 	return nodeArr;
 }
-
 	
 
-	
 int main() {
 	cout<<"Begin Watch playground"<<endl;	
 
