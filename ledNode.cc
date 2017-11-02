@@ -1,20 +1,10 @@
 //   Name: Ben Lewis
-//   Date: Oct 29th, 2017
-//   Synopsis: Arduino watch playground.
+//   Date: Nov 1st, 2017
+//   Synopsis:
 
 #include "ledNode.h"
-//#include "arrayTools.h"
 
 using namespace std ; 
-
-//LedNodeStruct
-// struct ledNode{
-// 
-// //Colours
-// int r, g, b;
-// 
-// 
-// };
 
 //constructor
 /*
@@ -57,32 +47,29 @@ void setNodeColour(int r, int g, int b, ledNode* node){
 	return;
 }
 
-void setBlueSecond(ledNode* node, int addMe){
-	addMe += node->b;
-	int g = node->g;
-	
-		//cout<<"about to make node blue value: "<<addMe<<endl;
-	
-	setNodeColour(30,g,addMe,node);
-	
+/*
+	preferably "addMe" is the value of seconds.
+*/
+void setMinRGB(ledNode* node, int addSeconds){
+	addSeconds += node->b;
+		
+	//Could possibly forget about that 195 deal if no longer using seconds to determine b.
+	setNodeColour(30,addSeconds,195,node);
 	return;
 }
 
-void setGreenMinute(ledNode* node, int addMe){
-	addMe += node->g;
-	
-	int b = node->b;
-	//cout<<"about to make node green value: "<<addMe<<endl;
-	
-	setNodeColour(30,addMe,b,node);
-	
+/*
+	sets the constant yellow hour hand.
+*/
+void setHourRGB(ledNode* node){
+	setNodeColour(247,255,29,node);
 	return;
 	}
 
 void setAverageCross(ledNode* hrNode, ledNode*minNode){
 	
 	minNode->g = (hrNode->g + minNode->g) / 2;
-	minNode->b = (hrNode->b + minNode->b) / 2;
+	//minNode->b = (hrNode->b + minNode->b) / 2;
 	
 	return;
 	}
@@ -102,7 +89,7 @@ int* nodeStats(ledNode* node){
 
 	rgbArr[0] = node->r;
 	rgbArr[1] = node->g;
-	rgbArr[3] = node->b;
+	rgbArr[2] = node->b;
 	
 	/*
 	cout<<"Colours were: "<<endl;
@@ -127,11 +114,17 @@ ledNode* genNodeArray(tm* time){
 	//Assign Values
 	
 	if(hrIndex==minIndex){
+		//Get interesting values to average.
+		setHourRGB(&nodeArr[hrIndex]);
+		setMinRGB(&nodeArr[minIndex], time->tm_sec);
+	
+		//and average them
 		setAverageCross(&nodeArr[hrIndex],&nodeArr[minIndex]);
 	}
 	else{
-		setGreenMinute(&nodeArr[hrIndex], time->tm_min);
-		setBlueSecond(&nodeArr[minIndex], time->tm_sec);
+		// otherwise do a regualr assignment.
+		setHourRGB(&nodeArr[hrIndex]);
+		setMinRGB(&nodeArr[minIndex], time->tm_sec);
 	}
 	
 	//if you wanna wolfFence and add a main...
