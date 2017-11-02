@@ -4,17 +4,6 @@
 
 #include "arrayTools.h"
 
-time_t getTimeZero(){
-	time_t now = time(0);
-	return now;
-}
-
-tm* getLocalTime(time_t* time){
-	tm* localTime = localtime(time);
-	return localTime;
-}
-
-
 ///////////////
 //Array Tools
 ///////////////
@@ -39,7 +28,6 @@ int getHourIndex(tm* localTime){
 
 int getMinuteIndex(tm* localTime){
 	int curMinute = localTime->tm_min;
-	
 	return curMinute/5;
 	}
 
