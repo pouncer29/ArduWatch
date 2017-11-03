@@ -4,7 +4,7 @@
 
 //#include <iostream>
 #include <ctime>
-#include "arrayTools.h"
+#include "../ArrayTools/arrayTools.h"
 
 using namespace std ; 
 

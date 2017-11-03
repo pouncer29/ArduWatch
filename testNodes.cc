@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include <ctime> //For testing purposes
-#include "arrayTools.h"
-#include "ledNode.h"
+#include "./Tools/ArrayTools/arrayTools.h"
+#include "./Tools/LedNode/ledNode.h"
 
 using namespace std ; 
 

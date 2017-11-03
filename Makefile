@@ -4,25 +4,29 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra #if wextra is a dick then rm it
 
+#Tools collections
+ARRAYTOOLS = ./Tools/ArrayTools/
+NODETOOLS = ./Tools/LedNode/
+
 .PHONEY: test clean
 
 default: test
 
-all: test
+all: test clean
 
 #Targets
 test: arrayTools.o ledNode.o testNodes.o
 	$(CXX) $(CXXFLAGS) -o test arrayTools.o ledNode.o testNodes.o
 	
 #components
-arrayTools.o: arrayTools.cc arrayTools.h
-	$(CXX) $(CXXFLAGS) -c arrayTools.cc #Grabbing arrayTools
+arrayTools.o: $(ARRAYTOOLS)arrayTools.cc $(ARRAYTOOLS)arrayTools.h
+	$(CXX) $(CXXFLAGS) -c $(ARRAYTOOLS)arrayTools.cc #Grabbing arrayTools
 	
-ledNode.o: ledNode.cc ledNode.h arrayTools.h
-	$(CXX) $(CXXFLAGS) -c ledNode.cc #Grabbing ledNode
+ledNode.o: $(NODETOOLS)ledNode.cc $(NODETOOLS)ledNode.h $(ARRAYTOOLS)arrayTools.h
+	$(CXX) $(CXXFLAGS) -c $(NODETOOLS)ledNode.cc #Grabbing ledNode
 	
 	
-testNodes.o: testNodes.cc ledNode.h arrayTools.h 
+testNodes.o: testNodes.cc $(NODETOOLS)ledNode.h $(ARRAYTOOLS)arrayTools.h 
 	$(CXX) $(CXXFLAGS) -c testNodes.cc #Creating the PlayGround
 	
 clean:
