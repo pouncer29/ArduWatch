@@ -11,28 +11,23 @@ default: test
 all: test
 
 #Targets
-test: arrayTools.o ledNode.o playGround.o
-	$(CXX) $(CXXFLAGS) -o test arrayTools.o ledNode.o playGround.o
+test: arrayTools.o ledNode.o testNodes.o
+	$(CXX) $(CXXFLAGS) -o test arrayTools.o ledNode.o testNodes.o
 	
 #components
 arrayTools.o: arrayTools.cc arrayTools.h
-	$(CXX) $(CXXFLAGS) -c arrayTools.cc #May need that .h here... not sure.
+	$(CXX) $(CXXFLAGS) -c arrayTools.cc #Grabbing arrayTools
 	
 ledNode.o: ledNode.cc ledNode.h arrayTools.h
-	$(CXX) $(CXXFLAGS) -c ledNode.cc #Again, those .h may need to be compiled.
+	$(CXX) $(CXXFLAGS) -c ledNode.cc #Grabbing ledNode
 	
-#If Playground is what we are running the main of, do we need a .o for it?
-playGround.o: playGround.cc ledNode.h arrayTools.h 
-	$(CXX) $(CXXFLAGS) -c playGround.cc #You know the deal.
+	
+testNodes.o: testNodes.cc ledNode.h arrayTools.h 
+	$(CXX) $(CXXFLAGS) -c testNodes.cc #Creating the PlayGround
 	
 clean:
-	rm *.o
+	rm *.o #Getting rid of those pesky .o files
 	
-	
-# TEST_OBJ = arrayTools.o ledNode.o playGround.o
-# 
-# #Should be the last thing we need to do or close. must make the .o targets first!
-# testArduWatch = $(TEST_OBJ)
-# 	g++ $(TEST_OBJ)
+
 
 
