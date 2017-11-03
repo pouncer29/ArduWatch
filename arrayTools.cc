@@ -3,18 +3,6 @@
 //   Synopsis: Arduino watch playground.
 
 #include "arrayTools.h"
-//#include <ctime>
-
-// time_t getTimeZero(){
-// 	time_t now = time(0);
-// 	return now;
-// }
-// 
-// tm* getLocalTime(time_t* time){
-// 	tm* localTime = localtime(time);
-// 	return localTime;
-// }
-
 
 ///////////////
 //Array Tools
@@ -47,22 +35,24 @@ char* genTimeArray(tm* localTime){
 
 	char* charArr = new char[12];
 	
-	for(int i=0;i<12;i++)
-		charArr[i] = '-';
-		
+	charArr[0] = 'h'; //Somehow marks the pointer as an array.
 	
 	//Grab Indices
 	int hr = getHourIndex(localTime);
 	int min = getMinuteIndex(localTime);
 	
-	if(hr == min){
-		charArr[min] = 'b';
+
+	//Assign Values
+	for(int i = 0; i < 12; i++){
+		if (i==hr)
+			charArr[i] = 'h'; 
+		if (i==min)
+			charArr[i] = 'm'; 
+		if ((hr==min) && (min == i))
+			charArr[i] = 'b';
+		else
+			charArr[i] = '-';
 		}
-	else{
-		charArr[hr] = 'h';
-		charArr[min] = 'm';
-		}
-	
 		
 		return charArr;
 	}	
