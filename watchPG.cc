@@ -3,9 +3,9 @@
 //   Synopsis: Arduino watch playground. for real this time tho.
 
 #include <iostream>
-#include <ctime> //For testing purposes
-#include "./Tools/ArrayTools/arrayTools.h"
-#include "./Tools/LedNode/ledNode.h"
+//#include <ctime> //For testing purposes
+//#include "./Tools/ArrayTools/arrayTools.h"
+//#include "./Tools/LedNode/ledNode.h"
 
 using namespace std ; 
 
