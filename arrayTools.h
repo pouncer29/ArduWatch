@@ -1,19 +1,10 @@
 //   Name: Ben Lewis
 //   Date: Oct 29th, 2017
-//   Synopsis: Arduino watch playground.
+//   Synopsis: Functions to display TEST array functions.
+//			   These will likely only be handy for my char arr examples.
 
 #include <iostream>
 #include <ctime> //For testing purposes
-
-
-//////////////////////////////////////////////////////////////
-//TIME HELPERS
-/////////////////////////////////////////////////////////////
-
-// time_t getTimeZero();
-// 
-// tm* getLocalTime(time_t* time);
-
 
 ///////////////
 //Array Tools

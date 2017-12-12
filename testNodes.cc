@@ -1,9 +1,9 @@
 //   Name: Ben Lewis
 //   Date: Oct 29th, 2017
-//   Synopsis: Arduino watch playground.
+//   Synopsis: test file for ArduWatch
 
 #include <iostream>
-#include <ctime> //For testing purposes
+#include <ctime> //For testing purposes, hopefully will be from RTC in future.
 #include "arrayTools.h"
 #include "ledNode.h"
 

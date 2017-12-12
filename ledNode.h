@@ -1,6 +1,6 @@
 //   Name: Ben Lewis
 //   Date: Oct 29th, 2017
-//   Synopsis: Arduino watch playground.
+//   Synopsis: The Constructors, accessers and modifiers for the declared ledNode struct.
 
 //#include <iostream>
 #include <ctime>
