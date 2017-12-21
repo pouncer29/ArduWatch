@@ -1,6 +1,6 @@
 //   Name: Ben Lewis
 //   Date: Nov 1st, 2017
-//   Synopsis:
+//   Synopsis: implementation for ledNode struct operations.
 
 #include "ledNode.h"
 

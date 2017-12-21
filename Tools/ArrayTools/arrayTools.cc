@@ -1,19 +1,8 @@
 //   Name: Ben Lewis
 //   Date: Oct 29th, 2017
-//   Synopsis: Arduino watch playground.
+//   Synopsis: implementation for arrayTools functions.
 
 #include "arrayTools.h"
-//#include <ctime>
-
-// time_t getTimeZero(){
-// 	time_t now = time(0);
-// 	return now;
-// }
-// 
-// tm* getLocalTime(time_t* time){
-// 	tm* localTime = localtime(time);
-// 	return localTime;
-// }
 
 
 ///////////////
