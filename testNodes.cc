@@ -3,15 +3,10 @@
 //   Synopsis: test file for ArduWatch
 
 #include <iostream>
-<<<<<<< HEAD
 #include <ctime> //For testing purposes
 #include "./Tools/ArrayTools/arrayTools.h"
 #include "./Tools/LedNode/ledNode.h"
-=======
-#include <ctime> //For testing purposes, hopefully will be from RTC in future.
-#include "arrayTools.h"
-#include "ledNode.h"
->>>>>>> ADWatch
+
 
 using namespace std ; 
 
