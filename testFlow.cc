@@ -35,19 +35,18 @@ void flourish(char* charTA){
 
 /*
  * pullTime()
- * - grabs a fresh time and uses it to generate an updated char-time-array (CTA)
- * returns: the updated array.
+ * - grabs a fresh time and uses it to update char-time-array (CTA)
+ * returns: nothing.
 */
-char* pullTime(){
-	
-
+void pullTime(char* oldCTA){
 	cout<<"Called PullTime"<<endl;
 	
 	time_t now = time(0);
 	tm* updatedTime = localtime(&now);
-	char* updatedCTA = genTimeArray(updatedTime);
+	populateTimeArray(oldCTA, updatedTime);
 	
-	return updatedCTA;
+	
+	return;
 	
 }
 	
@@ -77,7 +76,7 @@ int main() {
 		cin>>choice;
 		switch(choice){
 			case 'd': flourish(timeArrC);break;
-			case 'p': timeArrC=pullTime(); break;
+			case 'p': pullTime(timeArrC); break;
 			case 'b': cout<<"showBatteryLife()"<<endl; break;
 			case 'q': return EXIT_SUCCESS;
 			}

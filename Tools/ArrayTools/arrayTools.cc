@@ -25,12 +25,12 @@ int getHourIndex(tm* localTime){
 		return curHour - 12;
 	else
 		return curHour;
-	}
+}
 
 int getMinuteIndex(tm* localTime){
 	int curMinute = localTime->tm_min;
 	return curMinute/5;
-	}
+}
 
 char* genTimeArray(tm* localTime){
 
@@ -53,10 +53,34 @@ char* genTimeArray(tm* localTime){
 		}
 	
 		
-		return charArr;
-	}	
+	return charArr;
+}	
 
 
+/*
+ * populateTimeArray()
+ *	- to be used as a mans of updating a time array without having to create a new one.
+ *	  not really sure how memory works in .ino lang, also don't want to risk running out.
+ */
+void populateTimeArray(char* charArr, tm* localTime){
+	
+	for(int i=0;i<12;i++)
+		charArr[i] = '-';
+		
+	
+	//Grab Indices
+	int hr = getHourIndex(localTime);
+	int min = getMinuteIndex(localTime);
+	
+	if(hr == min){
+		charArr[min] = 'b';
+		}
+	else{
+		charArr[hr] = 'h';
+		charArr[min] = 'm';
+		}
+	return;
+}
 
 
 
