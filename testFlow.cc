@@ -29,8 +29,7 @@ void printArray(char charArr[]){
 void flourish(char* charTA){
 	cout<<"wow so pretty"<<endl;
 	printArray(charTA);
-	return;
-	
+	return;	
 }
 
 /*
@@ -39,7 +38,6 @@ void flourish(char* charTA){
  * returns: nothing.
 */
 void pullTime(char* oldCTA){
-	cout<<"Called PullTime"<<endl;
 	
 	time_t now = time(0);
 	tm* updatedTime = localtime(&now);
@@ -65,8 +63,6 @@ int main() {
 	printArray(timeArrC);
 	cout<<endl;
 	
-	//flourish(timeArrC, getHourIndex(testTime), getMinuteIndex(testTime));
-	
 	
 	while(1){
 		
@@ -82,5 +78,5 @@ int main() {
 			}
 		}
 
-	return EXIT_SUCCESS;
+	return EXIT_FAILURE;
 }
