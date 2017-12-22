@@ -8,15 +8,18 @@ CXXFLAGS = -Wall -Wextra #if wextra is a dick then rm it
 ARRAYTOOLS = ./Tools/ArrayTools/
 NODETOOLS = ./Tools/LedNode/
 
-.PHONEY: test clean
+.PHONEY: test flow clean
 
 default: test
 
-all: test clean
+all: test flow clean
 
 #Targets
 test: arrayTools.o ledNode.o testNodes.o
 	$(CXX) $(CXXFLAGS) -o test arrayTools.o ledNode.o testNodes.o
+
+flow: arrayTools.o ledNode.o testFlow.o
+	$(CXX) $(CXXFLAGS) -o flowTest arrayTools.o ledNode.o testFlow.o
 	
 #components
 arrayTools.o: $(ARRAYTOOLS)arrayTools.cc $(ARRAYTOOLS)arrayTools.h
