@@ -79,7 +79,7 @@ void setAverageCross(ledNode* hrNode, ledNode*minNode){
 * prints the stats of ledNode* n
 * precond: n != NULL
 * postcond: stats desplayed
-* return: nothing 
+* return: An array of colour value {red,green,blue};
 */
 int* nodeStats(ledNode* node){	
 
