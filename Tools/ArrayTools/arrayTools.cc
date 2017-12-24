@@ -32,30 +32,6 @@ int getMinuteIndex(tm* localTime){
 	return curMinute/5;
 }
 
-char* genTimeArray(tm* localTime){
-
-	char* charArr = new char[12];
-	
-	for(int i=0;i<12;i++)
-		charArr[i] = '-';
-		
-	
-	//Grab Indices
-	int hr = getHourIndex(localTime);
-	int min = getMinuteIndex(localTime);
-	
-	if(hr == min){
-		charArr[min] = 'b';
-		}
-	else{
-		charArr[hr] = 'h';
-		charArr[min] = 'm';
-		}
-	
-		
-	return charArr;
-}	
-
 
 /*
  * populateTimeArray()

@@ -27,7 +27,6 @@ void printArray(char charArr[]){
  * simulate the processof the ring flourish but it isn't really that similar.
 */
 void flourish(char* charTA){
-	cout<<"wow so pretty"<<endl;
 	printArray(charTA);
 	return;	
 }
@@ -38,12 +37,12 @@ void flourish(char* charTA){
  * returns: nothing.
 */
 void pullTime(char* oldCTA){
-	
+	//Grab a new time
 	time_t now = time(0);
 	tm* updatedTime = localtime(&now);
+	
+	//Remake the array.
 	populateTimeArray(oldCTA, updatedTime);
-	
-	
 	return;
 	
 }
@@ -54,10 +53,14 @@ void pullTime(char* oldCTA){
 int main() {
 	cout<<"Playing wit Control Flow"<<endl;
 	
-	time_t now = time(0);
-	tm* testTime = localtime(&now);
+// 	time_t now = time(0);
+// 	tm* testTime = localtime(&now);
 	
-	char* timeArrC = genTimeArray(testTime);
+	char* timeArrC = new char[12];
+	
+	pullTime(timeArrC);
+	
+	
 	
 	cout<<"Current Array"<<endl;
 	printArray(timeArrC);
@@ -67,7 +70,7 @@ int main() {
 	while(1){
 		
 		char choice;
-		cout<<" d = displayTime, p = pullTime, b = batteryLife, q=quit"<<endl;
+		cout<<"d = displayTime, p = pullTime, b = batteryLife, q=quit"<<endl;
 		
 		cin>>choice;
 		switch(choice){

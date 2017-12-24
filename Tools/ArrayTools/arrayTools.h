@@ -22,6 +22,6 @@ int getMinuteIndex(tm*);
  */
 void populateTimeArray(char* charArr, tm* localTime);
 
-char* genTimeArray(tm*);
+
 
 
