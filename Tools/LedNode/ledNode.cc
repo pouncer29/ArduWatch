@@ -4,8 +4,6 @@
 
 #include "ledNode.h"
 
-using namespace std ; 
-
 //constructor
 /*
 * newLedNode()
@@ -100,23 +98,25 @@ int* nodeStats(ledNode* node){
 	return rgbArr;
 }
 
-ledNode* genNodeArray(tm* time){
-	
-	ledNode* nodeArr = new ledNode[12];
-	
+/*
+ * populateNodeArray(ledNode[], tm*)
+ * Takes a node array, and a time and populates it with the propper indices flagged.
+ */
+void populateNodeArray(ledNode* nodeArr, tm* localTime){
+
 	for(int i = 0; i < 12; i++)
 		nodeArr[i] = *newLedNode();	
 
 	
-	int hrIndex = getHourIndex(time);
-	int minIndex = getMinuteIndex(time);
+	int hrIndex = getHourIndex(localTime);
+	int minIndex = getMinuteIndex(localTime);
 	
 	//Assign Values
 	
 	if(hrIndex==minIndex){
 		//Get interesting values to average.
 		setHourRGB(&nodeArr[hrIndex]);
-		setMinRGB(&nodeArr[minIndex], time->tm_sec);
+		setMinRGB(&nodeArr[minIndex], localTime->tm_sec);
 	
 		//and average them
 		setAverageCross(&nodeArr[hrIndex],&nodeArr[minIndex]);
@@ -124,7 +124,7 @@ ledNode* genNodeArray(tm* time){
 	else{
 		// otherwise do a regualr assignment.
 		setHourRGB(&nodeArr[hrIndex]);
-		setMinRGB(&nodeArr[minIndex], time->tm_sec);
+		setMinRGB(&nodeArr[minIndex], localTime->tm_sec);
 	}
 	
 	//if you wanna wolfFence and add a main...
@@ -132,6 +132,7 @@ ledNode* genNodeArray(tm* time){
 	nodeStats(&nodeArr[hrIndex]);
 	nodeStats(&nodeArr[minIndex]);
 	*/
-	return nodeArr;
+	return;
 }
+
 	

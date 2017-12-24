@@ -50,8 +50,8 @@ int main() {
 		use your Array!*/
 		
 	//char ledSim[12];
-	char* charArr = NULL;
-	charArr = genTimeArray(timeII);
+	char* charArr = new char[12];
+	populateTimeArray(charArr, timeII);
 	
 	cout<<"Length of the array is: "<< getArrLen(charArr)<<endl;
 
@@ -63,8 +63,8 @@ int main() {
 	
 	cout<<"Now lets try it with the ledNodes!"<<endl<<endl;
 	
-	ledNode* ledArr = genNodeArray(timeII);
-	
+	ledNode* ledArr = new ledNode[12];
+	populateNodeArray(ledArr,timeII);
 	//possible new way to check node stats. work on later!
 	
 	for(int i =0; i < 12; i++){

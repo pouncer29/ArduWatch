@@ -59,5 +59,5 @@ void setAverageCross(ledNode*,ledNode*);
 */
 int* nodeStats(ledNode*);
 
-ledNode* genNodeArray(tm*);
 
+void populateNodeArray(ledNode*,tm*);
