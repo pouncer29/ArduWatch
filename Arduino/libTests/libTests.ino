@@ -28,9 +28,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 
 
 //Special Colors
-uint32_t hrColour = strip.Color(255,255,70,10);
-uint32_t minColour = strip.Color(30,245,95,10);
-uint32_t secColour = strip.Color(56,94,234,10);
+uint32_t hrColour = strip.Color(255,255,70,5);
+uint32_t minColour = strip.Color(30,245,95,5);
+uint32_t secColour = strip.Color(56,94,234,5);
 uint32_t blank = strip.Color(0,0,0,0);
 void setup() {
 
@@ -47,8 +47,10 @@ void setup() {
   //pinMode(13, OUTPUT);
   setSyncProvider(requestSync);  //set function to call when sync required
   //Serial.println("Waiting for sync message");
+  
+  //Test Time for testing.
+  setTime(3,59,50,12,27,2017);
 
-  setTime(11,54,30,12,27,2017);
 
 }
 
@@ -56,11 +58,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   time_t t = now();
 
-  //My function that calls my index functions;
-
-  //Tests Time
-  //initStrip(t);
-
+  //secColour = strip.Color(56,95,234,0+minMod);
   trackTime(t);
   
   
@@ -183,7 +181,10 @@ void trackTime(time_t localTime){
   uint8_t minIdx = getMinuteIndex(localTime);
   uint8_t secIdx = getSecondIndex(localTime);
 
-
+  //modify Minutes colour
+  uint8_t minMod = minute(localTime);
+  minColour = strip.Color(30,(245-minMod),(95+minMod),5);
+ 
   //No Overlap regualr 
   strip.setPixelColor(hrIdx,hrColour);
   strip.setPixelColor(minIdx,minColour);
@@ -204,9 +205,7 @@ void trackTime(time_t localTime){
   }
 
   cleanupTrail(hrIdx,minIdx,secIdx);
-//    strip.setPixelColor(hrIdx,hrColour);
-//    strip.setPixelColor(minIdx,minColour);
-//    strip.setPixelColor(secIdx,secColour);
+
 
   strip.show();
 }
