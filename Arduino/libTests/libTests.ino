@@ -28,9 +28,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 
 
 //Special Colors
-uint32_t hrColour = strip.Color(255,255,70,5);
-uint32_t minColour = strip.Color(30,245,95,5);
-uint32_t secColour = strip.Color(56,94,234,5);
+uint32_t hrColour = strip.Color(255,100,0,5);
+uint32_t minColour = strip.Color(0,255,95,0);
+uint32_t secColour = strip.Color(0,160,255,0);
 uint32_t blank = strip.Color(0,0,0,0);
 void setup() {
 
@@ -49,7 +49,7 @@ void setup() {
   //Serial.println("Waiting for sync message");
   
   //Test Time for testing.
-  setTime(3,59,50,12,27,2017);
+  setTime(3,14,45,12,28,2017);
 
 
 }
@@ -176,20 +176,38 @@ void cleanupTrail(uint8_t hrIdx, uint8_t minIdx, uint8_t secIdx){
     strip.setPixelColor(hrIdx-1, blank);
   
 }
+
+void modMinuteRGB(time_t localTime){
+    //modify Minutes colour
+  uint32_t minMod = ((minute(localTime)%5)*64);
+  if(minMod > 0)
+    minMod--;
+
+  //Minute becomes more red as it progresses.
+  minColour = strip.Color(0+minMod,255-minMod,95,0);
+  return;
+}
+
 void trackTime(time_t localTime){
   uint8_t hrIdx  = getHourIndex(localTime);
   uint8_t minIdx = getMinuteIndex(localTime);
   uint8_t secIdx = getSecondIndex(localTime);
 
   //modify Minutes colour
-  uint8_t minMod = minute(localTime);
-  minColour = strip.Color(30,(245-minMod),(95+minMod),5);
+//  uint32_t minMod = ((minute(localTime)%5)*64);
+//  if(minMod > 0)
+//    minMod--;
+//
+//  //Minute becomes more red as it progresses.
+//  minColour = strip.Color(0+minMod,255-minMod,95,0);
  
+  modMinuteRGB(localTime); 
   //No Overlap regualr 
   strip.setPixelColor(hrIdx,hrColour);
   strip.setPixelColor(minIdx,minColour);
   strip.setPixelColor(secIdx,secColour);
-  // Overlap
+ 
+  // If Hands Cross, average them.
   if (secIdx == minIdx && minIdx == hrIdx){
     strip.setPixelColor(minIdx,getAverageCross((getAverageCross(secColour,minColour)),hrColour));
   }
@@ -204,9 +222,9 @@ void trackTime(time_t localTime){
     strip.setPixelColor(minIdx, getAverageCross(minColour,hrColour)); //Should only need one but things are goofy.
   }
 
-  cleanupTrail(hrIdx,minIdx,secIdx);
-
+  //cleanupTrail(hrIdx,minIdx,secIdx);
 
   strip.show();
+  clearStrip();
 }
 
