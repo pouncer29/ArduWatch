@@ -220,7 +220,7 @@ uint32_t getAverageCross(uint32_t colourA, uint32_t colourB){
  *  You trolls thought I forgot didn't you? you were all like "Ben, what the farts? What good is a watch that only
  *  tracks 5 minute intervals? Look, I was thinking the exact same thing, so I decided that minutes should start at
  *  their beautiful green and then, as the minute progresses, get slowly more red to finish with a beautiful purple
- *  at all of your 9 and 6 minute intervals. YOU'RE WELCOME. 
+ *  at all of your hh:m9 and hh:m4 minutes. YOU'RE WELCOME. 
  *  
  *  How does it work?
  *    You take the remainder of whatever minute it is and 5, multiply it by 64 (to get a max val of 256 and min of 0)
