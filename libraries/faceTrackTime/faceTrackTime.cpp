@@ -5,18 +5,18 @@
 	Synopsis: Implementation for time-tracking methods.
 */
 
-#include "trackTime.h"
+#include "faceTrackTime.h"
 
 
-Time_Tracker::Time_Tracker(Adafruit_NeoPixel s){
+Face_Show_Time::Face_Show_Time(Adafruit_NeoPixel strip){
 	
 	//Instantiate Attributes;
-	strip = s;
+	ring = strip;
 	
-	uint32_t hrColour = strip.Color(255,100,0,5);
-	uint32_t minColour = strip.Color(0,255,95,0);
-	uint32_t secColour = strip.Color(0,160,255,0);
-	uint32_t blank = strip.Color(0,0,0,0);
+    hrColour = ring.Color(255,100,0,5);
+    minColour = ring.Color(0,255,95,0);
+	secColour = ring.Color(0,160,255,0);
+	blank = ring.Color(0,0,0,0);
 }
 
 /* getHourIndex()
@@ -28,7 +28,7 @@ Time_Tracker::Time_Tracker(Adafruit_NeoPixel s){
  *  
  *  return: The offset corresponding to the current hour with 0 being 12/2400 and 11 being 11/2300
  */
-uint8_t Time_Tracker::getHourIndex(time_t localTime){
+uint8_t Face_Show_Time::getHourIndex(time_t localTime){
 
  uint8_t curHour = hour(localTime);
 
@@ -51,7 +51,7 @@ uint8_t Time_Tracker::getHourIndex(time_t localTime){
  *  return: The offset corresponding to the current 5 minute interval.
  * 
  */
-uint8_t Time_Tracker::getMinuteIndex(time_t localTime){
+uint8_t Face_Show_Time::getMinuteIndex(time_t localTime){
     return minute(localTime)/5;
 }
 
@@ -65,12 +65,12 @@ uint8_t Time_Tracker::getMinuteIndex(time_t localTime){
  *  return: the offset corresponding to the current 5 minute interval.
  * 
  */
-uint8_t Time_Tracker::getSecondIndex(time_t localTime){
+uint8_t Face_Show_Time::getSecondIndex(time_t localTime){
   return second(localTime)/5;
 }
 
 /* clearStrip()
- *  precond: strip is not null
+ *  precond: ring is not null
  *  postcond: all pixels in ring are set to blank 
  *  
  *  I love adafruit but I couldn't get their .show() to clear the ring like they said it would.
@@ -79,9 +79,9 @@ uint8_t Time_Tracker::getSecondIndex(time_t localTime){
  *  return: nothing
  * 
  */
-void Time_Tracker::clearStrip(void){
-  for(uint8_t i = 0; i < strip.numPixels(); i++)
-    strip.setPixelColor(i,blank);
+void Face_Show_Time::clearStrip(void){
+  for(uint8_t i = 0; i < 12; i++)
+    ring.setPixelColor(i,blank);
 }
 
 /* getAverageCross()
@@ -95,7 +95,7 @@ void Time_Tracker::clearStrip(void){
  *  return: the uint32 average of the two colours.
  * 
  */
-uint32_t Time_Tracker::getAverageCross(uint32_t colourA, uint32_t colourB){
+uint32_t Face_Show_Time::getAverageCross(uint32_t colourA, uint32_t colourB){
   return((colourA+colourB)/2);
 }
 
@@ -117,7 +117,7 @@ uint32_t Time_Tracker::getAverageCross(uint32_t colourA, uint32_t colourB){
  *  
  *  return: nothing 
  */
-void Time_Tracker::modMinColour(time_t localTime){
+void Face_Show_Time::modMinColour(time_t localTime){
 
   //minMod: Takes the remainder of the 
   uint16_t minMod = ((minute(localTime)%5)*64);
@@ -125,7 +125,7 @@ void Time_Tracker::modMinColour(time_t localTime){
     minMod--;   //So that subtact 1 from 256 to prevent wrapping and not from 0 to go out of bounds on the strip array.
 
   //Minute becomes more red as it progresses.
-  minColour = strip.Color(0+minMod,255-minMod,95,0);
+  minColour = ring.Color(0+minMod,255-minMod,95,0);
   return;
 }
 
@@ -133,10 +133,10 @@ void Time_Tracker::modMinColour(time_t localTime){
  *  This code is from Adafruit's NeoPixel Playground, I di not write it. It's what i use whith the modded min colour to create that 
  *  epic activation sequence.
  */
-void Time_Tracker::colorWipe(uint32_t c, uint16_t wait) {
-  for(uint8_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, c);    
-    strip.show();
+void Face_Show_Time::colorWipe(uint32_t c, uint16_t wait) {
+  for(uint8_t i=0; i<12; i++) {
+    ring.setPixelColor(i, c);    
+    ring.show();
     delay(wait);
   }
 }
@@ -152,7 +152,7 @@ void Time_Tracker::colorWipe(uint32_t c, uint16_t wait) {
  *  determines crossing indexes, and then clears it.
  * 
  */
-void Time_Tracker::trackTime(time_t localTime){
+void Face_Show_Time::trackTime(time_t localTime){
 
   //Grab our clockHand indecies
   uint8_t hrIdx  = getHourIndex(localTime);
@@ -165,22 +165,22 @@ void Time_Tracker::trackTime(time_t localTime){
   //Assign colours accordingly
   
   //Base case: No Overlap regualr 
-  strip.setPixelColor(hrIdx,hrColour);
-  strip.setPixelColor(minIdx,minColour);
-  strip.setPixelColor(secIdx,secColour);
+  ring.setPixelColor(hrIdx,hrColour);
+  ring.setPixelColor(minIdx,minColour);
+  ring.setPixelColor(secIdx,secColour);
  
   // Otherwise: If Hands Cross, Their indicies will be the same so I average their set colours.
   if (secIdx == minIdx && minIdx == hrIdx)
-    strip.setPixelColor(minIdx,getAverageCross((getAverageCross(secColour,minColour)),hrColour));
+    ring.setPixelColor(minIdx,getAverageCross((getAverageCross(secColour,minColour)),hrColour));
   else if(secIdx == minIdx)
-    strip.setPixelColor(minIdx,getAverageCross(secColour,minColour));
+    ring.setPixelColor(minIdx,getAverageCross(secColour,minColour));
   else if(secIdx == hrIdx)
-    strip.setPixelColor(hrIdx,getAverageCross(secColour,hrColour));
+    ring.setPixelColor(hrIdx,getAverageCross(secColour,hrColour));
   else if(hrIdx == minIdx)
-    strip.setPixelColor(hrIdx, getAverageCross(hrColour,minColour));
+    ring.setPixelColor(hrIdx, getAverageCross(hrColour,minColour));
 
   //Display and clear.
-  strip.show();
+  ring.show();
   clearStrip();
 }
 
