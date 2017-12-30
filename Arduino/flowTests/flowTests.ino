@@ -1,8 +1,7 @@
 #include <Adafruit_NeoPixel.h>
-//#include "arduinoTools.h"
 #include <TimeLib.h>
 
-/*From the RGBW TESTS (not everything)*/
+/*From the RGBW TESTS*/
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
@@ -11,24 +10,21 @@
 #define NUM_LEDS 12
 #define BRIGHTNESS 20
 
-//For Time
+//For Time?
 #define TIME_HEADER  "T"   // Header tag for serial time sync message
 #define TIME_REQUEST  7    // ASCII bell character requests a time sync message 
 
 //For Flow
 
 //ShowTimeButton
-const uint8_t startWatchPin = 8;     // the number of the pushbutton pin INPUT
-//const uint8_t watchPin =  6;      // the number of the LED pin OUTPUT
+const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
 boolean on = false;         //current output state
-int buttonState = 0;
+int buttonState = 0;       //the current flow through the button.
 
-//For Flourish
-bool flourish = true;
+bool flourish = true;     //whether or not to do the light show on button press
 
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
-
 
 //Special Colors
 uint32_t hrColour = strip.Color(255,100,0,5);
@@ -57,7 +53,6 @@ void setup() {
 
   //For Buttons
   pinMode(startWatchPin,INPUT);
- // pinMode(watchPin, OUTPUT);
   
   //Test Time for testing.
   setTime(1,14,45,12,28,2017);
@@ -66,12 +61,10 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   time_t t =now();
   
-
+ //Start Watch Button checker 
   buttonState=digitalRead(startWatchPin);
-
   if(buttonState == HIGH){
      if(on == true)
        on = false;
@@ -79,31 +72,31 @@ void loop() {
        on = true;
   }
 
+  //Start watch button code.
   if(on == true){
       t=now();
-      
       if(flourish){
-         modMinColour(t);
-         colorWipe(minColour,400);
-         clearStrip();
-         strip.show();
-         delay(700);
-         flourish = false;
+         modMinColour(t);           //1. get the flourish colour
+         colorWipe(minColour,400);  //2. do the colour wipe
+         clearStrip();              //3. reset ring to blank
+         strip.show();              //4. push the blank ring
+         delay(700);                
+         flourish = false;          //5. remember not to florish every time we show the time.
       }
-      trackTime(t);
+      trackTime(t);   
      
     }
    else{
-    clearStrip();
-    strip.show();
-    flourish = true;
+    clearStrip();                   //1. Button must be off, clear the strip
+    strip.show();                   //2. push the clear
+    flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
-    delay(200);
+    delay(200);                     //Apparently good for 'debounce' whatever that is.
   
 }
 
-
+//No clue.
 time_t requestSync(){
    Serial.write(TIME_REQUEST);
    return 0;
@@ -113,16 +106,27 @@ time_t requestSync(){
 //****************FUNCTIONS*********************
 
 //Time Index Functions
+
+/* getHourIndex()
+ *  precond: time is set
+ *  postcond: none.
+ *  
+ *  Variables
+ *    localTime: a time_t that we will harvest the hour from.
+ *  
+ *  return: The offset corresponding to the current hour with 0 being 12/2400 and 11 being 11/2300
+ */
 uint8_t getHourIndex(time_t localTime){
 
   uint8_t curHour = hour(localTime);
 
+  // if the hour is negative (traveling backwards in time) return -1 for error.
   if(curHour < 0)
-    return 0;
-  else if(curHour >= 12)
+    return -1;
+  else if(curHour >= 12)  // if it's >= than 12 (24hr format) just subract 12 from that sucker
     return curHour - 12;
   else
-    return curHour;
+    return curHour;      // if its not >=12 it must be before 12:00 so it has a reasonable index.
 }
 
 uint8_t getMinuteIndex(time_t localTime){
