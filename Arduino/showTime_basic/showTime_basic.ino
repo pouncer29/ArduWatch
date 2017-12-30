@@ -1,3 +1,22 @@
+/* Welcome to Ben's ArduWatch project!
+ * -----------------------------------
+ * Look, I know i wasn't the first person to get this idea but I'm trying to make this watch fairly pretty and kind of unique.
+ * 
+ * Basically I'm trying to use an Adafruit neopixel ring of 12 leds to display the time pulled from the NIST radio time clock (though that
+ * is looking more like a stretch goal every day).
+ * 
+ * Things you should know:
+ *  1. I spell colour the way it makes sense and Adafruit spells it "color" like a bunch of yankees. Oh well, lets see how you like to conform 
+ *  America.
+ *  
+ *  2. I am a computer science student. I don't know much besides how to write code, circuits and boards and all this hardware talk has me sh***ing my pants.
+ *     So I will try to make up for my lack of hardware knowledge with well documented, clear, and with any luck efficient code though all these infinite loops
+ *     make me nervous, so expect some funky functions.
+ *  
+ *  
+ * 
+ */
+
 #include <Adafruit_NeoPixel.h>
 #include <TimeLib.h>
 
@@ -77,7 +96,7 @@ void loop() {
       t=now();
       if(flourish){
          modMinColour(t);           //1. get the flourish colour
-         colorWipe(minColour,400);  //2. do the colour wipe
+         colorWipe(minColour,100);  //2. do the colour wipe
          clearStrip();              //3. reset ring to blank
          strip.show();              //4. push the blank ring
          delay(700);                
@@ -212,7 +231,7 @@ uint32_t getAverageCross(uint32_t colourA, uint32_t colourB){
 void modMinColour(time_t localTime){
 
   //minMod: Takes the remainder of the 
-  uint8_t minMod = ((minute(localTime)%5)*64);
+  uint16_t minMod = ((minute(localTime)%5)*64);
   if(minMod > 0)
     minMod--;   //So that subtact 1 from 256 to prevent wrapping and not from 0 to go out of bounds on the strip array.
 
@@ -225,7 +244,7 @@ void modMinColour(time_t localTime){
  *  Took this from the adafruit neopixel playground. It's what i use whith the modded min colour to create that 
  *  epic activation sequence.
  */
-void colorWipe(uint32_t c, uint8_t wait) {
+void colorWipe(uint32_t c, uint16_t wait) {
   for(uint8_t i=0; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);    
     strip.show();
