@@ -1,5 +1,0 @@
-I am headed to USST today to learn how to use arduinos and what not.
-Turns out adafruit has a bunch of tools for their neopixels so I can
-control the whole ring of 12 with one pin. I will need one of those to
-test that so for now I am just going to work on buttons, circuts, and how
-to test an arduino and its code rather than just the later.
