@@ -118,8 +118,11 @@ void loop() {
      
         if(pushButtonState != prevButtonState){
           if(pushButtonState == HIGH){
-            time_t startSet = now();        //Start the timer.                        
-            time_t endSet = startSet;
+
+            setTime(0,0,0,30,1,1997);
+            time_t startSet = now();
+            time_t endSet = now();
+
                 
             //First Press sets hour.
             if(pressedCount == 0){
@@ -132,7 +135,7 @@ void loop() {
           
               //Set Hour Loop
               //While we haven't pressed the button to push the change.
-              while((second(endSet)-second(startSet)) < 5){
+              while(second(endSet) < 5){
 
                 endSet = now();
 
@@ -144,12 +147,12 @@ void loop() {
   
                   //And we've pressed the move button
                   if(moveHrButtonState == HIGH){
-                  
-                    //Show the hr
-                    face.trackTime(t);
+                    face.clearStrip();
                     face.ring.show();
                     face.updateFaceTime(hr,0);
+                    
                     t = now();
+                    face.trackTime(t);
                     face.clearStrip();
                     
                     
@@ -176,7 +179,7 @@ void loop() {
           
               //Set Hour Loop
               //While we haven't pressed the button to push the change.
-              while((second(endSet)-second(startSet)) < 5){
+              while(second(endSet) < 5){
 
                 endSet = now();
 
@@ -190,14 +193,12 @@ void loop() {
                   if(moveMinButtonState == HIGH){
                   
                     //Show the hr
-                    face.trackTime(t);
+                    face.clearStrip();
                     face.ring.show();
                     face.updateFaceTime(hr,Min);
-                    t = now();
-
-                    face.trackTime(t);
-                    face.ring.show();
                     
+                    t = now();
+                    face.trackTime(t);
                     face.clearStrip();
                     
                     
@@ -218,7 +219,7 @@ void loop() {
       
 
             pressedCount++;
-            face.colorWipe(face.secColour,100);
+            face.colorWipe(face.rstTimeColour,100);
             face.clearStrip();
             face.ring.show();
             delay(50);
