@@ -5,14 +5,15 @@
 	Synopsis: Implementation for time-tracking methods.
 */
 
-#include "faceTrackTime.h"
+#include "watchFace.h"
 
 
-Face_Show_Time::Face_Show_Time(Adafruit_NeoPixel strip){
+Watch_Face::Watch_Face(Adafruit_NeoPixel strip){
 	
 	//Instantiate Attributes;
 	ring = strip;
 	
+	//Define special Colours
     hrColour = ring.Color(255,100,0,5);
     minColour = ring.Color(0,255,95,0);
 	secColour = ring.Color(0,160,255,0);
@@ -29,7 +30,7 @@ Face_Show_Time::Face_Show_Time(Adafruit_NeoPixel strip){
  *  
  *  return: The offset corresponding to the current hour with 0 being 12/2400 and 11 being 11/2300
  */
-uint8_t Face_Show_Time::getHourIndex(time_t localTime){
+uint8_t Watch_Face::getHourIndex(time_t localTime){
 
  uint8_t curHour = hour(localTime);
 
@@ -52,7 +53,7 @@ uint8_t Face_Show_Time::getHourIndex(time_t localTime){
  *  return: The offset corresponding to the current 5 minute interval.
  * 
  */
-uint8_t Face_Show_Time::getMinuteIndex(time_t localTime){
+uint8_t Watch_Face::getMinuteIndex(time_t localTime){
     return minute(localTime)/5;
 }
 
@@ -66,7 +67,7 @@ uint8_t Face_Show_Time::getMinuteIndex(time_t localTime){
  *  return: the offset corresponding to the current 5 minute interval.
  * 
  */
-uint8_t Face_Show_Time::getSecondIndex(time_t localTime){
+uint8_t Watch_Face::getSecondIndex(time_t localTime){
   return second(localTime)/5;
 }
 
@@ -80,7 +81,7 @@ uint8_t Face_Show_Time::getSecondIndex(time_t localTime){
  *  return: nothing
  * 
  */
-void Face_Show_Time::clearStrip(void){
+void Watch_Face::clearStrip(void){
   for(uint8_t i = 0; i < 12; i++)
     ring.setPixelColor(i,blank);
 }
@@ -96,7 +97,7 @@ void Face_Show_Time::clearStrip(void){
  *  return: the uint32 average of the two colours.
  * 
  */
-uint32_t Face_Show_Time::getAverageCross(uint32_t colourA, uint32_t colourB){
+uint32_t Watch_Face::getAverageCross(uint32_t colourA, uint32_t colourB){
   return((colourA+colourB)/2);
 }
 
@@ -118,7 +119,7 @@ uint32_t Face_Show_Time::getAverageCross(uint32_t colourA, uint32_t colourB){
  *  
  *  return: nothing 
  */
-void Face_Show_Time::modMinColour(time_t localTime){
+void Watch_Face::modMinColour(time_t localTime){
 
   //minMod: Takes the remainder of the 
   uint16_t minMod = ((minute(localTime)%5)*64);
@@ -134,7 +135,7 @@ void Face_Show_Time::modMinColour(time_t localTime){
  *  This code is from Adafruit's NeoPixel Playground, I di not write it. It's what i use whith the modded min colour to create that 
  *  epic activation sequence.
  */
-void Face_Show_Time::colorWipe(uint32_t c, uint16_t wait) {
+void Watch_Face::colorWipe(uint32_t c, uint16_t wait) {
   for(uint8_t i=0; i<12; i++) {
     ring.setPixelColor(i, c);    
     ring.show();
@@ -155,7 +156,7 @@ void Face_Show_Time::colorWipe(uint32_t c, uint16_t wait) {
  *  determines crossing indexes, and then clears it.
  * 
  */
-void Face_Show_Time::trackTime(time_t localTime){
+void Watch_Face::trackTime(time_t localTime){
 
   //Grab our clockHand indecies
   uint8_t hrIdx  = getHourIndex(localTime);
@@ -199,7 +200,7 @@ void Face_Show_Time::trackTime(time_t localTime){
  *
  * return: nothing.
  */
-void Face_Show_Time::updateFaceTime(uint8_t hr, uint8_t min){
+void Watch_Face::updateFaceTime(uint8_t hr, uint8_t min){
 	setTime(hr,min,0,15,4,2012);
 }
 
@@ -214,7 +215,7 @@ void Face_Show_Time::updateFaceTime(uint8_t hr, uint8_t min){
  *
  *	return: nothing
  */
-void Face_Show_Time::setFaceTime(uint8_t hr, uint8_t min, time_t localTime){
+void Watch_Face::setFaceTime(uint8_t hr, uint8_t min, time_t localTime){
 	
 	//blank the strip
 	clearStrip();

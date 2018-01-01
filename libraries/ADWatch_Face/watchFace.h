@@ -6,8 +6,8 @@
 			  between time and the ring of leds.
 */
 
-#ifndef trackTime_h
-#define	trackTime_h
+#ifndef watchFace_h
+#define	watchFace_h
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
@@ -27,7 +27,7 @@
    to track time accurately. I wasn't a huge fan of that, so for right now, I'm just going
    to updated it in the Arduino controller code.
 */
-class Face_Show_Time{
+class Watch_Face{
 	
 	public:
 		//Attributes
@@ -38,7 +38,7 @@ class Face_Show_Time{
 		uint32_t rstTimeColour;
 		uint32_t blank;
 		//Methods
-		Face_Show_Time(Adafruit_NeoPixel);
+		Watch_Face(Adafruit_NeoPixel);
 		void modMinColour(time_t);
 		void trackTime(time_t);
 		void colorWipe(uint32_t, uint16_t);

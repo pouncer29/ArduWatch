@@ -1,5 +1,5 @@
 #include <Adafruit_NeoPixel.h>
-#include <faceTrackTime.h>
+#include <watchFace.h>
 #include <TimeLib.h>
 
 /*From the RGBW TESTS (not everything)*/
@@ -18,7 +18,7 @@ time_t t;
 
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
-Face_Show_Time face = Face_Show_Time(strip);
+Watch_Face face = Watch_Face(strip);
 
 
 //For Flow
@@ -206,6 +206,8 @@ void loop() {
         prevButtonState = pushButtonState;
     }
   }
+
+  //**If you need to send updated info to an RTC this is the place to do it.
 }
  
 
