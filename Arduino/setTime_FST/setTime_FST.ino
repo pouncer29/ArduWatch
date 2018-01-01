@@ -24,14 +24,14 @@ Face_Show_Time face = Face_Show_Time(strip);
 //For Flow
 
 //ShowTimeButton
-const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
+const uint8_t buttonPinA = 8;// the number of the pushbutton pin INPUT
 boolean on = false;         //current output state
-int buttonState = 0;       //the current flow through the button.
+int buttonAState = 0;       //the current flow through the button.
 bool flourish = true;     //whether or not to do the light show on button press
 
 //SetTimeButton
-const uint8_t setTimePin = 4;
-int setTimeButtonState = 0;
+const uint8_t buttonPinB = 4;
+int buttonBState = 0;
 
 
 void setup() {
@@ -45,8 +45,8 @@ void setup() {
   face.ring.show(); // Initialize all pixels to 'off'
   
   //For Buttons
-  pinMode(startWatchPin,INPUT);
-  pinMode(setTimePin,INPUT);
+  pinMode(buttonPinA,INPUT);
+  pinMode(buttonPinB,INPUT);
   
   //Test Time for testing.
   setTime(1,24,30,12,28,2017);
@@ -63,8 +63,8 @@ void loop() {
   t =now();
   
  //Start Watch Button checker 
-  buttonState=digitalRead(startWatchPin);
-  if(buttonState == HIGH){
+  buttonAState=digitalRead(buttonPinA);
+  if(buttonAState == HIGH){
      if(on == true)
        on = false;
      else
@@ -74,10 +74,8 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         face.modMinColour(t);           //1. get the flourish colour
+         //face.modMinColour(t);           //1. get the flourish colour
          face.colorWipe(face.minColour,100);  //2. do the colour wipe
-         face.clearStrip();              //3. reset ring to blank
-         face.ring.show();              //4. push the blank ring
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
@@ -95,32 +93,32 @@ void loop() {
 
 
   //Set Time Code
-  setTimeButtonState = digitalRead(setTimePin);
-    if((setTimeButtonState == HIGH) && (!on)){
+  buttonBState = digitalRead(buttonPinB);
+    if((buttonBState == HIGH) && (!on)){
 
       //Show that we have entered the time reset mode
       face.colorWipe(face.rstTimeColour,100);
-      face.clearStrip();
-      face.ring.show();
-
+      
       //values to set
       uint8_t hr = 0;
       uint8_t Min = 0;
-      
+
+      //Loop Controllers & Counters
       uint8_t pressedCount = 0;
       int pushButtonState = 0;
       int prevButtonState = 0;
 
       //Press Once to set Hr, Twice to setMinute)
       while(pressedCount < 2){        
-        pushButtonState = digitalRead(startWatchPin);
+        pushButtonState = digitalRead(buttonPinA);
 
+        //Completley reset time to track change.
         setTime(0,0,0,30,1,1997);
-        time_t startSet = now();
-        time_t endSet = now();
-        t = endSet;
+        time_t startSet = now();  //Keeps the reset Time
+        time_t endSet = now();    //Is Updaed when hands are not moved.
+        t = endSet;               // set time t to the 0 time so we can track changes easily.
 
-     
+        //Very similar to the above loop to display time.
         if(pushButtonState != prevButtonState){
           if(pushButtonState == HIGH){
 
@@ -130,79 +128,61 @@ void loop() {
               int moveHrButtonState = 0;
               int prevMoveButtonState = 0;
 
-               
-          
               //Set Hour Loop
               while(second(endSet) < 5){
-                endSet = now();
 
+                //Cursor not advanced, update time.
+                endSet = now();
+                
                 //See if we want to move
-                moveHrButtonState = digitalRead(startWatchPin);
-  
-                //if we haven't yet tried to move
+                moveHrButtonState = digitalRead(buttonPinA);
                 if(moveHrButtonState != prevMoveButtonState){
   
                   //And we've pressed the move button
                   if(moveHrButtonState == HIGH){
-                    face.clearStrip();
-                    face.ring.show();
-                    face.updateFaceTime(hr,0);
-                    
-                    t = now();
-                    face.trackTime(t);
-                    face.clearStrip();
-                    
-                    
-  
-                    //move,
+                    //Update hour
                     hr++;
+                    face.setFaceTime(hr,Min,t); 
+                    
 
                     //reset Timer
                     endSet = startSet;
                   }
-                }  
-                //and remember that we did move.
+                }
+                  
+                //remember that we did move.
                 prevMoveButtonState = moveHrButtonState;
               }
 
-                //Show Hour was set with a wipe
+                //If time is up, Show that hour was set with a wipe
                 face.colorWipe(face.hrColour,100);
-                face.clearStrip();
-                face.ring.show();
             }
 
+            //Second Press sets minutes.
             else if (pressedCount == 1){
               Min = 0;
               int moveMinButtonState = 0;
               int prevMoveButtonState = 0;
           
-              //Set Hour Loop
+              //Set Minute Loop
               while(second(endSet) < 5){
+
+                //Minute hand not changed, update the timer.
                 endSet = now();
 
                 //See if we want to move
-                moveMinButtonState = digitalRead(startWatchPin);
+                moveMinButtonState = digitalRead(buttonPinA);
   
                 //if we haven't yet tried to move
                 if(moveMinButtonState != prevMoveButtonState){
   
                   //And we've pressed the move button
                   if(moveMinButtonState == HIGH){
-                  
-                    //Show the hr
-                    face.clearStrip();
-                    face.ring.show();
-                    face.updateFaceTime(hr,Min);
-                    
-                    t = now();
-                    face.trackTime(t);
-                    face.clearStrip();
-                    
-                    
-  
-                    //move,
-                    Min++;
 
+                    //update Minute (but keep that hour we changed)
+                    Min++;
+                    face.setFaceTime(hr,Min,t);
+  
                     //reset Timer
                     endSet = startSet;
                   }
@@ -210,19 +190,19 @@ void loop() {
                 //and remember that we did move.
                 prevMoveButtonState = moveMinButtonState;
               }
-  
+
+              //Show that minute was successfully updated with a minColour wipe!
               face.colorWipe(face.minColour,100);
-              face.clearStrip();
-              face.ring.show();
             }
 
       
-
+            //Update our press count.
             pressedCount++;
             delay(50);
           }
         }
 
+        //Remember what our last state was.
         prevButtonState = pushButtonState;
     }
   }

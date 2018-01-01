@@ -30,16 +30,21 @@
 class Face_Show_Time{
 	
 	public:
+		//Attributes
 		Adafruit_NeoPixel ring;
 		uint32_t hrColour;
 		uint32_t minColour;
 		uint32_t secColour;
+		uint32_t rstTimeColour;
 		uint32_t blank;
+		//Methods
 		Face_Show_Time(Adafruit_NeoPixel);
 		void modMinColour(time_t);
 		void trackTime(time_t);
 		void colorWipe(uint32_t, uint16_t);
 		void clearStrip(void);
+		void updateFaceTime(uint8_t,uint8_t);
+		void setFaceTime(uint8_t,uint8_t,time_t);
 		
 		
 	private:

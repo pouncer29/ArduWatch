@@ -16,6 +16,7 @@ Face_Show_Time::Face_Show_Time(Adafruit_NeoPixel strip){
     hrColour = ring.Color(255,100,0,5);
     minColour = ring.Color(0,255,95,0);
 	secColour = ring.Color(0,160,255,0);
+	rstTimeColour = ring.Color(255,0,0,0);
 	blank = ring.Color(0,0,0,0);
 }
 
@@ -139,6 +140,8 @@ void Face_Show_Time::colorWipe(uint32_t c, uint16_t wait) {
     ring.show();
     delay(wait);
   }
+  clearStrip();
+  ring.show();
 }
 
 /* trackTime()
@@ -179,12 +182,54 @@ void Face_Show_Time::trackTime(time_t localTime){
   else if(hrIdx == minIdx)
     ring.setPixelColor(hrIdx, getAverageCross(hrColour,minColour));
 
-  //Display and clear.
+  //Display 
   ring.show();
-  clearStrip();
 }
 
+/* updateFaceTime()
+ *	precond: hr and min are > 0
+ *	postcond: the current Time is updated.
+ *
+ *	paramaters:
+ *		hr: a uint8_t value for the hour.
+ *		min: a uint8_t value for the minute.
+ *
+ *	synopsis: Because we aren't tracking the date, they are really irrelevant, So I set
+ *			  them to to my birthday.
+ *
+ * return: nothing.
+ */
+void Face_Show_Time::updateFaceTime(uint8_t hr, uint8_t min){
+	setTime(hr,min,0,15,4,2012);
+}
 
-
-
+/* setFaceTime()
+ *	precond: hr & min are > 0, localTime is set
+ *	postcond: localTime tracks the hour and minute that are given.
+ *
+ *	paramaters:
+ *		hr: uint8_t that will be our hour value.
+ *		min: uint8_t that will be our minute value.
+ *		localTime: a time_t that is we will track while setting.
+ *
+ *	return: nothing
+ */
+void Face_Show_Time::setFaceTime(uint8_t hr, uint8_t min, time_t localTime){
+	
+	//blank the strip
+	clearStrip();
+	ring.show();
+	
+	//Get a new time
+	updateFaceTime(hr,min);
+	
+	//Track the new time.
+	localTime = now();
+	trackTime(localTime);
+	
+	//Remove tail
+	clearStrip();
+}
+	
+	
 	
