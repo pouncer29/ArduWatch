@@ -97,6 +97,9 @@ void loop() {
   //Set Time Code
   setTimeButtonState = digitalRead(setTimePin);
     if((setTimeButtonState == HIGH) && (!on)){
+
+      //Show that we have entered the time reset mode
+      face.colorWipe(face.rstTimeColour,100);
       face.clearStrip();
       face.ring.show();
 
@@ -109,34 +112,28 @@ void loop() {
       int prevButtonState = 0;
 
       //Press Once to set Hr, Twice to setMinute)
-      while(pressedCount < 2){
+      while(pressedCount < 2){        
+        pushButtonState = digitalRead(startWatchPin);
 
-        
-        face.clearStrip();
-        face.ring.show();
-        pushButtonState = digitalRead(setTimePin);
+        setTime(0,0,0,30,1,1997);
+        time_t startSet = now();
+        time_t endSet = now();
+        t = endSet;
+
      
         if(pushButtonState != prevButtonState){
           if(pushButtonState == HIGH){
 
-            setTime(0,0,0,30,1,1997);
-            time_t startSet = now();
-            time_t endSet = now();
-
-                
             //First Press sets hour.
             if(pressedCount == 0){
               hr = 0;
               int moveHrButtonState = 0;
               int prevMoveButtonState = 0;
-          
-              delay(20); // to give the button some time to cool off.
-              
+
+               
           
               //Set Hour Loop
-              //While we haven't pressed the button to push the change.
               while(second(endSet) < 5){
-
                 endSet = now();
 
                 //See if we want to move
@@ -167,6 +164,11 @@ void loop() {
                 //and remember that we did move.
                 prevMoveButtonState = moveHrButtonState;
               }
+
+                //Show Hour was set with a wipe
+                face.colorWipe(face.hrColour,100);
+                face.clearStrip();
+                face.ring.show();
             }
 
             else if (pressedCount == 1){
@@ -174,13 +176,8 @@ void loop() {
               int moveMinButtonState = 0;
               int prevMoveButtonState = 0;
           
-              delay(20); // to give the button some time to cool off.
-              
-          
               //Set Hour Loop
-              //While we haven't pressed the button to push the change.
               while(second(endSet) < 5){
-
                 endSet = now();
 
                 //See if we want to move
@@ -213,15 +210,15 @@ void loop() {
                 //and remember that we did move.
                 prevMoveButtonState = moveMinButtonState;
               }
-              
+  
+              face.colorWipe(face.minColour,100);
+              face.clearStrip();
+              face.ring.show();
             }
 
       
 
             pressedCount++;
-            face.colorWipe(face.rstTimeColour,100);
-            face.clearStrip();
-            face.ring.show();
             delay(50);
           }
         }
