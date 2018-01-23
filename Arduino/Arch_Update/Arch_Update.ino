@@ -44,9 +44,9 @@ void setup() {
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
   // End of trinket special code
-//  face.ring.setBrightness(BRIGHTNESS);
-//  face.ring.begin();
-//  face.ring.show(); // Initialize all pixels to 'off'
+  face.ring.setBrightness(BRIGHTNESS);
+  face.ring.begin();
+  face.ring.show(); // Initialize all pixels to 'off'
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -78,19 +78,20 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-//         face.modMinColour(t);           //1. get the flourish colour
-//         face.colorWipe(face.minColour,100);  //2. do the colour wipe
-//         face.clearStrip();              //3. reset ring to blank
-//         face.ring.show();              //4. push the blank ring
+         face.modMinColour(t);           //1. get the flourish colour
+         face.colorWipe(face.minColour,100);  //2. do the colour wipe
+         face.clearStrip();              //3. reset ring to blank
+         face.ring.show();              //4. push the blank ring
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       
-      //face.trackTime(t);  
+      //face.trackTime(t); 
+      testFACE(); //NOTE: Will not turn off until the function is done executing, press then
     }
    else{
-//    face.clearStrip();               //1. Button must be off, clear the strip
-//    face.ring.show();                   //2. push the clear
+    face.clearStrip();               //1. Button must be off, clear the strip
+    face.ring.show();                   //2. push the clear
     flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
@@ -99,7 +100,18 @@ void loop() {
 }
  
 
-
+void testFACE(){
+  t = now();
+  face.colorWipe(face.hrColour,200);
+  face.colorWipe(face.minColour,200);
+  face.colorWipe(face.secColour,200);
+  delay(300);
+  face.colorWipe(face.rstTimeColour,200);
+  delay(300);
+  face.showAvg(face.hrColour,face.minColour);
+  face.clearStrip();
+  
+}
 
 time_t requestSync(){
    Serial.write(TIME_REQUEST);
