@@ -40,6 +40,7 @@ class Face{
 		void modMinColour(time_t);
 		void clearStrip(void);
 		void colorWipe(uint32_t, uint16_t);
+		void showAvg(uint32_t,uint32_t);
 		
 		
 	private:

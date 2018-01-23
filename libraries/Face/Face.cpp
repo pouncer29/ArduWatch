@@ -97,7 +97,11 @@ void Face::colorWipe(uint32_t c, uint16_t wait) {
   ring.show();
 }
 
-
+//FOR TESTING ONLY
+void Face::showAvg(uint32_t A, uint32_t B){
+	colorWipe(getAverageCross(A,B),200);
+	return;
+}
 
 
 	
