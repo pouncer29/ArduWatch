@@ -1,6 +1,7 @@
 #include <Adafruit_NeoPixel.h>
-#include <Face.h>
-#include <Gears.h>
+#include <Face.h> //redundant if ADwatch works
+#include <Gears.h> // ditto
+#include <ADWatch.h>
 #include <TimeLib.h>
 
 /*From the RGBW TESTS (not everything)*/
@@ -24,6 +25,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 //ADWatch watch = ADWatch();
 Face face = Face(strip); // SHOULD BE REMOVED AFTER TESTING
 Gears gears = Gears(t);
+ADWatch watch = ADWatch(t,strip);
 
 
 //For Flow
@@ -90,8 +92,9 @@ void loop() {
       
       //face.trackTime(t); 
       //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
-      gears.updateTime(t);
-      testGEARS(); 
+//      gears.updateTime(t);
+//      testGEARS(); 
+      watch.trackTime(t);
     }
    else{
     face.clearStrip();               //1. Button must be off, clear the strip
