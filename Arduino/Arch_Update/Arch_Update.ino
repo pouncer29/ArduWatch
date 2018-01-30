@@ -1,5 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 #include <Face.h>
+#include <Gears.h>
 #include <TimeLib.h>
 
 /*From the RGBW TESTS (not everything)*/
@@ -112,6 +113,12 @@ void testFACE(){
   face.clearStrip();
   
 }
+
+
+void testGEARS(){
+  t = now();
+}
+
 
 time_t requestSync(){
    Serial.write(TIME_REQUEST);
