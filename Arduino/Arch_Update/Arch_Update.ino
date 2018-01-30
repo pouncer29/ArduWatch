@@ -23,6 +23,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 //Using a master watch Class
 //ADWatch watch = ADWatch();
 Face face = Face(strip); // SHOULD BE REMOVED AFTER TESTING
+Gears gears = Gears(t);
 
 
 //For Flow
@@ -88,7 +89,9 @@ void loop() {
       }
       
       //face.trackTime(t); 
-      testFACE(); //NOTE: Will not turn off until the function is done executing, press then
+      //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
+      gears.updateTime(t);
+      testGEARS(); 
     }
    else{
     face.clearStrip();               //1. Button must be off, clear the strip
@@ -116,7 +119,12 @@ void testFACE(){
 
 
 void testGEARS(){
-  t = now();
+  face.ring.setPixelColor(gears.getHourIndex(),face.hrColour);
+  face.ring.setPixelColor(gears.getMinuteIndex(),face.minColour);
+  face.ring.setPixelColor(gears.getSecondIndex(),face.secColour);
+  face.ring.show();
+  
+  
 }
 
 
