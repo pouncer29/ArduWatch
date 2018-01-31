@@ -13,8 +13,8 @@ class ADWatch{
 	public:
 		//Attributes
 		//Adafruit_NeoPixel ring;
-		Face face(Adafruit_NeoPixel);
-		Gears gears(time_t);
+		Face face;
+		Gears gears;
 		//time_t trackMe;
 
 	//Methods

@@ -6,8 +6,8 @@
 ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
 	
 	/**WILL COMPILE**/
-	Face	face(neoP);
-	Gears	gears(t);
+	face = Face(neoP);
+	gears = Gears(t);
 }
 
 void ADWatch::trackTime(time_t t){
