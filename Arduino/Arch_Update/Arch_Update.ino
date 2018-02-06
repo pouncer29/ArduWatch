@@ -48,9 +48,9 @@ void setup() {
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
   // End of trinket special code
-  watch.face.ring.setBrightness(BRIGHTNESS);
-  watch.face.ring.begin();
-  watch.face.ring.show(); // Initialize all pixels to 'off'
+  watch.face->ring.setBrightness(BRIGHTNESS);
+  watch.face->ring.begin();
+  watch.face->ring.show(); // Initialize all pixels to 'off'
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -82,23 +82,23 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         watch.face.modMinColour(t);           //1. get the flourish colour
-         watch.face.colorWipe(watch.face.minColour,100);  //2. do the colour wipe
-         watch.face.clearStrip();              //3. reset ring to blank
-         watch.face.ring.show();              //4. push the blank ring
+         watch.face->modMinColour(t);           //1. get the flourish colour
+         watch.face->colorWipe(watch.face->minColour,100);  //2. do the colour wipe
+         watch.face->clearStrip();              //3. reset ring to blank
+         watch.face->ring.show();              //4. push the blank ring
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       
-      //face.trackTime(t); 
+      //face->trackTime(t); 
       //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
-//      watch.gears.updateTime(t);
+//      watch.gears->updateTime(t);
 //      testGEARS(); 
       //watch.trackTime(t);
     }
    else{
-    watch.face.clearStrip();               //1. Button must be off, clear the strip
-    watch.face.ring.show();                   //2. push the clear
+    watch.face->clearStrip();               //1. Button must be off, clear the strip
+    watch.face->ring.show();                   //2. push the clear
     flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
@@ -109,23 +109,23 @@ void loop() {
 
 void testFACE(){
   t = now();
-  watch.face.colorWipe(watch.face.hrColour,200);
-  watch.face.colorWipe(watch.face.minColour,200);
-  watch.face.colorWipe(watch.face.secColour,200);
+  watch.face->colorWipe(watch.face->hrColour,200);
+  watch.face->colorWipe(watch.face->minColour,200);
+  watch.face->colorWipe(watch.face->secColour,200);
   delay(300);
-  watch.face.colorWipe(watch.face.rstTimeColour,200);
+  watch.face->colorWipe(watch.face->rstTimeColour,200);
   delay(300);
-  watch.face.showAvg(watch.face.hrColour,watch.face.minColour);
-  watch.face.clearStrip();
+  watch.face->showAvg(watch.face->hrColour,watch.face->minColour);
+  watch.face->clearStrip();
   
 }
 
 
 void testGEARS(){
-  watch.face.ring.setPixelColor(watch.gears.getHourIndex(),watch.face.hrColour);
-  watch.face.ring.setPixelColor(watch.gears.getMinuteIndex(),watch.face.minColour);
-  watch.face.ring.setPixelColor(watch.gears.getSecondIndex(),watch.face.secColour);
-  watch.face.ring.show();
+  watch.face->ring.setPixelColor(watch.gears->getHourIndex(),watch.face->hrColour);
+  watch.face->ring.setPixelColor(watch.gears->getMinuteIndex(),watch.face->minColour);
+  watch.face->ring.setPixelColor(watch.gears->getSecondIndex(),watch.face->secColour);
+  watch.face->ring.show();
   
   
 }

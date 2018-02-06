@@ -27,16 +27,16 @@ class ADWatch{
 		class Gears;
 		class Gears{
 			public:
-			//Attributes
-			/*none*/
+				//Attributes
+				//ADWatch* parent; // I'd like to access 
 			
-			//Methods
-			Gears(time_t);
-			uint8_t getHourIndex(void);
-			uint8_t getMinuteIndex(void);
-			uint8_t getSecondIndex(void);
-			void updateTime(time_t);
-			//void trackTime(void);			
+				//Methods
+				Gears(time_t*);
+				uint8_t getHourIndex(void);
+				uint8_t getMinuteIndex(void);
+				uint8_t getSecondIndex(void);
+				void updateTime(time_t);
+				//void trackTime(void);			
 	
 			private:
 			//Attributes
@@ -59,6 +59,8 @@ class ADWatch{
 		class Face;
 		class Face{
 			public:
+				//ADWatch* parent; //I want to access the members of the ADWatch like strip
+									//Couldn't think of a better name. Will try later.
 				//Attributes
 				Adafruit_NeoPixel ring;
 				uint32_t hrColour;
@@ -67,7 +69,7 @@ class ADWatch{
 				uint32_t rstTimeColour;
 				
 				//Methods
-				Face(Adafruit_NeoPixel);
+				Face(Adafruit_NeoPixel*);
 				uint32_t getAverageCross(uint32_t,uint32_t);
 				void modMinColour(time_t);
 				void clearStrip(void);
@@ -79,10 +81,12 @@ class ADWatch{
 		};
 		
 		//Attributes
-		//Adafruit_NeoPixel ring;
-		Face face;
-		Gears gears;
-		//time_t trackMe;
+		Adafruit_NeoPixel strip;
+		time_t trackMe;
+		
+		Face* face;
+		Gears* gears;
+		
 
 	//Methods
 		ADWatch(time_t,Adafruit_NeoPixel);

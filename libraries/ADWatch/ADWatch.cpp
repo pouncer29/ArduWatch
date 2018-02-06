@@ -14,8 +14,14 @@ Synopsis: The union of Gears and Face. ADWatch
 //AD WATCH//
 //*************************************************************
 ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
-	face = Face(neoP);
-	gears = Gears(t);
+	trackMe = t;
+	strip = neoP;
+	
+	face = new Face(strip);
+	gears = new Gears(trackMe);
+	
+
+
 }
 
 void ADWatch::trackTime(time_t t){
@@ -57,9 +63,9 @@ void ADWatch::trackTime(time_t t){
 //GEARS//
 //****************************************************************************************
 
-ADWatch::Gears::Gears(time_t localTime){
+ADWatch::Gears::Gears(time_t* t){
 	
-	curTime = localTime;	
+	curTime = t;	
 }
 
 /*
@@ -111,10 +117,10 @@ void ADWatch::Gears::updateTime(time_t newTime){
 //FACE//
 //****************************************************************************************
 
-ADWatch::Face::Face(Adafruit_NeoPixel strip){
+ADWatch::Face::Face(Adafruit_NeoPixel* s){
 	
 	//Instantiate Attributes;
-	ring = strip;
+	ring = s;
 	
 	//Define special Colours
     hrColour = ring.Color(255,100,0,5);
