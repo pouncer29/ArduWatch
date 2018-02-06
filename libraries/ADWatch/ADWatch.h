@@ -69,7 +69,7 @@ class ADWatch{
 				uint32_t rstTimeColour;
 				
 				//Methods
-				Face(Adafruit_NeoPixel*);
+				Face(Adafruit_NeoPixel);
 				uint32_t getAverageCross(uint32_t,uint32_t);
 				void modMinColour(time_t);
 				void clearStrip(void);

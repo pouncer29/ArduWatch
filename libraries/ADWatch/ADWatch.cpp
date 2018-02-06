@@ -117,7 +117,7 @@ void ADWatch::Gears::updateTime(time_t newTime){
 //FACE//
 //****************************************************************************************
 
-ADWatch::Face::Face(Adafruit_NeoPixel* s){
+ADWatch::Face::Face(Adafruit_NeoPixel s){
 	
 	//Instantiate Attributes;
 	ring = s;
