@@ -8,6 +8,9 @@ Synopsis: The union of Gears and Face. ADWatch
 
 #include "ADWatch.h"
 
+
+
+//****************************************************************************************
 //AD WATCH//
 //*************************************************************
 ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
@@ -16,7 +19,8 @@ ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
 }
 
 void ADWatch::trackTime(time_t t){
-
+	return;
+	/*
   	gears.updateTime(t);
 
 	uint8_t hrIdx  = gears.getHourIndex();
@@ -45,15 +49,15 @@ void ADWatch::trackTime(time_t t){
 		face.ring.setPixelColor(hrIdx, face.getAverageCross(face.hrColour,face.minColour));
 
   //Display 
-  face.ring.show();
+  face.ring.show();*/
 }
 
-//****************************************************************************************
 
+//****************************************************************************************
 //GEARS//
 //****************************************************************************************
 
-Gears::Gears(time_t localTime){
+ADWatch::Gears::Gears(time_t localTime){
 	
 	curTime = localTime;	
 }
@@ -62,7 +66,7 @@ Gears::Gears(time_t localTime){
  getHourIndex()
 	- Checks whether or not the index is in 24 hour notation and returns the appropriate hour index for time "curTime".
 */
-uint8_t Gears::getHourIndex(void){
+uint8_t ADWatch::Gears::getHourIndex(void){
   	//store hour
 	uint8_t	hr = hour(curTime);
 	
@@ -79,7 +83,7 @@ uint8_t Gears::getHourIndex(void){
  getMinuteIndex()
 	- takes the minute value of the instance time "curTime" and returns a valid clock offset for it.
 */
-uint8_t Gears::getMinuteIndex(void){
+uint8_t ADWatch::Gears::getMinuteIndex(void){
 	return minute(curTime)/5;
 }
 
@@ -87,7 +91,7 @@ uint8_t Gears::getMinuteIndex(void){
  getSecondIndex()
 	- takes the second value of the instance time "curTime" and returns a valid clock offset for it.
 */
-uint8_t Gears::getSecondIndex(void){
+uint8_t ADWatch::Gears::getSecondIndex(void){
 	return second(curTime)/5;
 }
 
@@ -95,20 +99,19 @@ uint8_t Gears::getSecondIndex(void){
  updateTime()
 	- takes in a time_t and updates its curTime attribute to be it.
 */
-void Gears::updateTime(time_t newTime){
+void ADWatch::Gears::updateTime(time_t newTime){
 	curTime = newTime;
 }
 
-void Gears::trackTime(void){
-	return;
-}
+// void ADWatch::Gears::trackTime(void){
+// 	return;
+// }
 
 //****************************************************************************************
-
 //FACE//
 //****************************************************************************************
 
-Face::Face(Adafruit_NeoPixel strip){
+ADWatch::Face::Face(Adafruit_NeoPixel strip){
 	
 	//Instantiate Attributes;
 	ring = strip;
@@ -121,8 +124,6 @@ Face::Face(Adafruit_NeoPixel strip){
 	blank = ring.Color(0,0,0,0);
 }
 
-
-
 /* clearStrip()
  *  precond: ring is not null
  *  postcond: all pixels in ring are set to blank 
@@ -133,7 +134,7 @@ Face::Face(Adafruit_NeoPixel strip){
  *  return: nothing
  * 
  */
-void Face::clearStrip(void){
+void ADWatch::Face::clearStrip(void){
   for(uint8_t i = 0; i < 12; i++)
     ring.setPixelColor(i,blank);
 }
@@ -149,7 +150,7 @@ void Face::clearStrip(void){
  *  return: the uint32 average of the two colours.
  * 
  */
-uint32_t Face::getAverageCross(uint32_t colourA, uint32_t colourB){
+uint32_t ADWatch::Face::getAverageCross(uint32_t colourA, uint32_t colourB){
   return((colourA+colourB)/2);
 }
 
@@ -171,7 +172,7 @@ uint32_t Face::getAverageCross(uint32_t colourA, uint32_t colourB){
  *  
  *  return: nothing 
  */
-void Face::modMinColour(time_t localTime){
+void ADWatch::Face::modMinColour(time_t localTime){
 
   //minMod: Takes the remainder of the 
   uint16_t minMod = ((minute(localTime)%5)*64);
@@ -187,7 +188,7 @@ void Face::modMinColour(time_t localTime){
  *  This code is from Adafruit's NeoPixel Playground, I di not write it. It's what i use whith the modded min colour to create that 
  *  epic activation sequence.
  */
-void Face::colorWipe(uint32_t c, uint16_t wait) {
+void ADWatch::Face::colorWipe(uint32_t c, uint16_t wait) {
   for(uint8_t i=0; i<12; i++) {
     ring.setPixelColor(i, c);    
     ring.show();
@@ -198,14 +199,10 @@ void Face::colorWipe(uint32_t c, uint16_t wait) {
 }
 
 //FOR TESTING ONLY
-void Face::showAvg(uint32_t A, uint32_t B){
+void ADWatch::Face::showAvg(uint32_t A, uint32_t B){
 	colorWipe(getAverageCross(A,B),200);
 	return;
 }
-
-
-//****************************************************************************************
-
 
 
 

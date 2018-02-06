@@ -1,6 +1,6 @@
 #include <Adafruit_NeoPixel.h>
-#include <Face.h> //redundant if ADwatch works
-#include <Gears.h> // ditto
+//#include <Face.h> //redundant if ADwatch works
+//#include <Gears.h> // ditto
 #include <ADWatch.h>
 #include <TimeLib.h>
 
@@ -23,8 +23,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 
 //Using a master watch Class
 //ADWatch watch = ADWatch();
-Face face = Face(strip); // SHOULD BE REMOVED AFTER TESTING
-Gears gears = Gears(t);
+//Face face = Face(strip); // SHOULD BE REMOVED AFTER TESTING
+//Gears watch.gears = Gears(t);
 ADWatch watch = ADWatch(t,strip);
 
 
@@ -48,9 +48,9 @@ void setup() {
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
   // End of trinket special code
-  face.ring.setBrightness(BRIGHTNESS);
-  face.ring.begin();
-  face.ring.show(); // Initialize all pixels to 'off'
+  watch.face.ring.setBrightness(BRIGHTNESS);
+  watch.face.ring.begin();
+  watch.face.ring.show(); // Initialize all pixels to 'off'
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -82,23 +82,23 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         face.modMinColour(t);           //1. get the flourish colour
-         face.colorWipe(face.minColour,100);  //2. do the colour wipe
-         face.clearStrip();              //3. reset ring to blank
-         face.ring.show();              //4. push the blank ring
+         watch.face.modMinColour(t);           //1. get the flourish colour
+         watch.face.colorWipe(watch.face.minColour,100);  //2. do the colour wipe
+         watch.face.clearStrip();              //3. reset ring to blank
+         watch.face.ring.show();              //4. push the blank ring
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       
       //face.trackTime(t); 
       //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
-//      gears.updateTime(t);
+//      watch.gears.updateTime(t);
 //      testGEARS(); 
       //watch.trackTime(t);
     }
    else{
-    face.clearStrip();               //1. Button must be off, clear the strip
-    face.ring.show();                   //2. push the clear
+    watch.face.clearStrip();               //1. Button must be off, clear the strip
+    watch.face.ring.show();                   //2. push the clear
     flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
@@ -109,23 +109,23 @@ void loop() {
 
 void testFACE(){
   t = now();
-  face.colorWipe(face.hrColour,200);
-  face.colorWipe(face.minColour,200);
-  face.colorWipe(face.secColour,200);
+  watch.face.colorWipe(watch.face.hrColour,200);
+  watch.face.colorWipe(watch.face.minColour,200);
+  watch.face.colorWipe(watch.face.secColour,200);
   delay(300);
-  face.colorWipe(face.rstTimeColour,200);
+  watch.face.colorWipe(watch.face.rstTimeColour,200);
   delay(300);
-  face.showAvg(face.hrColour,face.minColour);
-  face.clearStrip();
+  watch.face.showAvg(watch.face.hrColour,watch.face.minColour);
+  watch.face.clearStrip();
   
 }
 
 
 void testGEARS(){
-  face.ring.setPixelColor(gears.getHourIndex(),face.hrColour);
-  face.ring.setPixelColor(gears.getMinuteIndex(),face.minColour);
-  face.ring.setPixelColor(gears.getSecondIndex(),face.secColour);
-  face.ring.show();
+  watch.face.ring.setPixelColor(watch.gears.getHourIndex(),watch.face.hrColour);
+  watch.face.ring.setPixelColor(watch.gears.getMinuteIndex(),watch.face.minColour);
+  watch.face.ring.setPixelColor(watch.gears.getSecondIndex(),watch.face.secColour);
+  watch.face.ring.show();
   
   
 }
