@@ -94,7 +94,7 @@ void loop() {
       //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
 //      gears.updateTime(t);
 //      testGEARS(); 
-      watch.trackTime(t);
+      //watch.trackTime(t);
     }
    else{
     face.clearStrip();               //1. Button must be off, clear the strip
@@ -131,10 +131,7 @@ void testGEARS(){
 }
 
 
-time_t requestSync(){
-   Serial.write(TIME_REQUEST);
-   return 0;
-}
+
 
 
 
