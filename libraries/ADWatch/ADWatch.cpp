@@ -24,6 +24,23 @@ ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
 
 }
 
+/*
+ placeHands()
+ 
+ precond: none
+ postcond: Color values are assigned to their designated indicies (times)
+ 
+ Paramaters: uint_8's 'hrIdx', representing the position of the hour hand on our ring.
+ 					  'minIdx', representing the position of the minute hand on our ring.
+ 					  'secIdx', representing the postion of the second hand on our ring.
+ 
+ Synopsis:
+ 	Grabs the current time from gears and uses it to modify the minute colour. then
+ 	assigns the appropriate colour of hand to each 'hand' or 'index' in the ring.
+ 	
+ 	in the case that the hands overlap we call getAverageCross() with the two (or sometimes
+ 	three) colour values of the hands that intersect there.
+*/
 void ADWatch::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
 	
 	//Grab our modified minute colour.
@@ -49,21 +66,27 @@ void ADWatch::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
 	return;
 }
 
-
+/*
+ trackTime()
+ 
+ precond: none
+ postcond: ring is activated to show the current time.
+ 
+ Paramaters: time_t 't' representing the time we will be tracking.
+ 
+ Synopsis: over-writes whatever the previous time was using 'updateTime()' and then with
+ 		  the updated time, it places, and assigns colours to the hands before showing the
+ 		  time as a set of up to 3 coloured led's on the ring!
+ 		  
+*/
 void ADWatch::trackTime(time_t t){
 
 	//Grab New Time
 	gears->updateTime(t);
 
-// 	//encapsulate indicies for ease of use
-// 	uint8_t hrIdx  = gears->getHourIndex();
-// 	uint8_t minIdx = gears->getMinuteIndex();
-// 	uint8_t secIdx = gears->getSecondIndex();
-
-	
+	//Assign colours to the appropriate indicies.	
 	placeHands(gears->getHourIndex(),gears->getMinuteIndex(),gears->getSecondIndex());
 	
-
 	//Display 
 	face->ring.show();
 }
