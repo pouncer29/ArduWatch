@@ -24,17 +24,9 @@ ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
 
 }
 
-void ADWatch::trackTime(time_t t){
-  	
-  	//Grab New Time
-  	gears->updateTime(t);
-
-	//encapsulate indicies for ease of use
-	uint8_t hrIdx  = gears->getHourIndex();
-	uint8_t minIdx = gears->getMinuteIndex();
-	uint8_t secIdx = gears->getSecondIndex();
-
-	//Track minutes with minHand.
+void ADWatch::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
+	
+	//Grab our modified minute colour.
 	face->modMinColour(gears->getCurTime()); 
 
 	//Assign colours accordingly
@@ -53,10 +45,27 @@ void ADWatch::trackTime(time_t t){
 		face->ring.setPixelColor(hrIdx,face->getAverageCross(face->secColour,face->hrColour));
 	else if(hrIdx == minIdx)
 		face->ring.setPixelColor(hrIdx, face->getAverageCross(face->hrColour,face->minColour));
+	
+	return;
+}
 
-  //Display 
-  //face->ring.setPixelColor(11,face->ring.Color(0,0,0,0)); //Eliminates anything at 11:00. no good.
-  face->ring.show();
+
+void ADWatch::trackTime(time_t t){
+
+	//Grab New Time
+	gears->updateTime(t);
+
+// 	//encapsulate indicies for ease of use
+// 	uint8_t hrIdx  = gears->getHourIndex();
+// 	uint8_t minIdx = gears->getMinuteIndex();
+// 	uint8_t secIdx = gears->getSecondIndex();
+
+	
+	placeHands(gears->getHourIndex(),gears->getMinuteIndex(),gears->getSecondIndex());
+	
+
+	//Display 
+	face->ring.show();
 }
 
 
@@ -195,7 +204,7 @@ void ADWatch::Face::modMinColour(time_t localTime){
 
   //Minute becomes more red as it progresses.
   minColour = ring.Color(0+minMod,255-minMod,95,0);
-  ring.setPixelColor(11,blank);
+  ring.setPixelColor(11,blank); // Band-aid for magic 11 bug.
   return;
 }
 

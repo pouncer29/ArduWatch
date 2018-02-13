@@ -1,6 +1,4 @@
 #include <Adafruit_NeoPixel.h>
-//#include <Face.h> //redundant if ADwatch works
-//#include <Gears.h> // ditto
 #include <ADWatch.h>
 #include <TimeLib.h>
 
@@ -128,8 +126,6 @@ void testGEARS(){
   watch.face->ring.setPixelColor(watch.gears->getHourIndex(),watch.face->hrColour);
   watch.face->ring.setPixelColor(watch.gears->getMinuteIndex(),watch.face->minColour);
   watch.face->ring.setPixelColor(watch.gears->getSecondIndex(),watch.face->secColour);
-  
-   
    watch.face->ring.show();
   
   
