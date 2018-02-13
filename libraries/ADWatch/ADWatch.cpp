@@ -25,37 +25,35 @@ ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
 }
 
 void ADWatch::trackTime(time_t t){
-	return;
-	/*
-  	gears.updateTime(t);
+  	gears->updateTime(t);
 
-	uint8_t hrIdx  = gears.getHourIndex();
-	uint8_t minIdx = gears.getMinuteIndex();
-	uint8_t secIdx = gears.getSecondIndex();
+	uint8_t hrIdx  = gears->getHourIndex();
+	uint8_t minIdx = gears->getMinuteIndex();
+	uint8_t secIdx = gears->getSecondIndex();
 
 	//Track minutes with minHand.
-	face.modMinColour(t); 
+	face->modMinColour(gears->getCurTime()); 
 
 	//Assign colours accordingly
 
 	//Base case: No Overlap regualr 
-	face.ring.setPixelColor(hrIdx,hrColour);
-	face.ring.setPixelColor(minIdx,minColour);
-	face.ring.setPixelColor(secIdx,secColour);
+	face->ring.setPixelColor(hrIdx,face->hrColour);
+	face->ring.setPixelColor(minIdx,face->minColour);
+	face->ring.setPixelColor(secIdx,face->secColour);
 
 	// Otherwise: If Hands Cross, Their indicies will be the same so I average their set colours.
 	//This particuairly nasty block is only so nasty because I take the average of an average. will work on shortening 
 	if (secIdx == minIdx && minIdx == hrIdx)
-		face.ring.setPixelColor(minIdx,face.getAverageCross((face.getAverageCross(face.secColour,face.minColour)),face.hrColour));
+		face->ring.setPixelColor(minIdx,face->getAverageCross((face->getAverageCross(face->secColour,face->minColour)),face->hrColour));
 	else if(secIdx == minIdx)
-		face.ring.setPixelColor(minIdx,face.getAverageCross(face.secColour,face.minColour));
+		face->ring.setPixelColor(minIdx,face->getAverageCross(face->secColour,face->minColour));
 	else if(secIdx == hrIdx)
-		face.ring.setPixelColor(hrIdx,face.getAverageCross(face.secColour,face.hrColour));
+		face->ring.setPixelColor(hrIdx,face->getAverageCross(face->secColour,face->hrColour));
 	else if(hrIdx == minIdx)
-		face.ring.setPixelColor(hrIdx, face.getAverageCross(face.hrColour,face.minColour));
+		face->ring.setPixelColor(hrIdx, face->getAverageCross(face->hrColour,face->minColour));
 
   //Display 
-  face.ring.show();*/
+  face->ring.show();
 }
 
 
@@ -102,6 +100,13 @@ uint8_t ADWatch::Gears::getSecondIndex(void){
 }
 
 /*
+ getCurTime()
+	- A simple getter method for the private attribute 'curTime'
+*/
+time_t ADWatch::Gears::getCurTime(void){
+	return curTime;
+}
+/*
  updateTime()
 	- takes in a time_t and updates its curTime attribute to be it.
 */
@@ -109,9 +114,7 @@ void ADWatch::Gears::updateTime(time_t newTime){
 	curTime = newTime;
 }
 
-// void ADWatch::Gears::trackTime(void){
-// 	return;
-// }
+
 
 //****************************************************************************************
 //FACE//
@@ -123,8 +126,8 @@ ADWatch::Face::Face(Adafruit_NeoPixel s){
 	ring = s;
 	
 	//Define special Colours
-    hrColour = ring.Color(255,100,0,5);
-    minColour = ring.Color(0,255,95,0);
+    	hrColour = ring.Color(255,100,0,5);
+    	minColour = ring.Color(0,255,95,0);
 	secColour = ring.Color(0,160,255,0);
 	rstTimeColour = ring.Color(255,0,0,0);
 	blank = ring.Color(0,0,0,0);

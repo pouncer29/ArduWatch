@@ -22,9 +22,6 @@ time_t t;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
 //Using a master watch Class
-//ADWatch watch = ADWatch();
-//Face face = Face(strip); // SHOULD BE REMOVED AFTER TESTING
-//Gears watch.gears = Gears(t);
 ADWatch watch = ADWatch(t,strip);
 
 
@@ -50,6 +47,7 @@ void setup() {
   // End of trinket special code
   watch.face->ring.setBrightness(BRIGHTNESS);
   watch.face->ring.begin();
+  watch.face->clearStrip();
   watch.face->ring.show(); // Initialize all pixels to 'off'
   
   //For Buttons
@@ -69,7 +67,6 @@ void setup() {
 void loop() {
 
   t =now();
-  
  //Start Watch Button checker 
   buttonState=digitalRead(startWatchPin);
   if(buttonState == HIGH){
@@ -82,6 +79,7 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
+         //watch.gears->updateTime(t);
          watch.face->modMinColour(t);           //1. get the flourish colour
          watch.face->colorWipe(watch.face->minColour,100);  //2. do the colour wipe
          watch.face->clearStrip();              //3. reset ring to blank
@@ -92,8 +90,9 @@ void loop() {
       
       //face->trackTime(t); 
       //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
-//      watch.gears->updateTime(t);
-//      testGEARS(); 
+      watch.face->clearStrip();
+      watch.gears->updateTime(t);
+      testGEARS(); 
       //watch.trackTime(t);
     }
    else{
@@ -116,6 +115,9 @@ void testFACE(){
   watch.face->colorWipe(watch.face->rstTimeColour,200);
   delay(300);
   watch.face->showAvg(watch.face->hrColour,watch.face->minColour);
+  delay(300);
+  
+  
   watch.face->clearStrip();
   
 }
@@ -125,7 +127,9 @@ void testGEARS(){
   watch.face->ring.setPixelColor(watch.gears->getHourIndex(),watch.face->hrColour);
   watch.face->ring.setPixelColor(watch.gears->getMinuteIndex(),watch.face->minColour);
   watch.face->ring.setPixelColor(watch.gears->getSecondIndex(),watch.face->secColour);
-  watch.face->ring.show();
+  
+   
+   watch.face->ring.show();
   
   
 }
