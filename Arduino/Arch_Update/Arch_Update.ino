@@ -90,10 +90,11 @@ void loop() {
       
       //face->trackTime(t); 
       //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
+      //watch.face->clearStrip();
+      //watch.gears->updateTime(t);
+      //testGEARS(); 
       watch.face->clearStrip();
-      watch.gears->updateTime(t);
-      testGEARS(); 
-      //watch.trackTime(t);
+      watch.trackTime(t);
     }
    else{
     watch.face->clearStrip();               //1. Button must be off, clear the strip

@@ -37,7 +37,7 @@ class ADWatch{
 				uint8_t getSecondIndex(void);
 				time_t getCurTime(void);	
 				void updateTime(time_t);
-				void trackTime(void);			
+				//void trackTime(void);			
 					
 			private:
 			//Attributes

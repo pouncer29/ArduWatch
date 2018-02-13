@@ -25,8 +25,11 @@ ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
 }
 
 void ADWatch::trackTime(time_t t){
+  	
+  	//Grab New Time
   	gears->updateTime(t);
 
+	//encapsulate indicies for ease of use
 	uint8_t hrIdx  = gears->getHourIndex();
 	uint8_t minIdx = gears->getMinuteIndex();
 	uint8_t secIdx = gears->getSecondIndex();
@@ -35,7 +38,6 @@ void ADWatch::trackTime(time_t t){
 	face->modMinColour(gears->getCurTime()); 
 
 	//Assign colours accordingly
-
 	//Base case: No Overlap regualr 
 	face->ring.setPixelColor(hrIdx,face->hrColour);
 	face->ring.setPixelColor(minIdx,face->minColour);
@@ -53,8 +55,10 @@ void ADWatch::trackTime(time_t t){
 		face->ring.setPixelColor(hrIdx, face->getAverageCross(face->hrColour,face->minColour));
 
   //Display 
+  //face->ring.setPixelColor(11,face->ring.Color(0,0,0,0)); //Eliminates anything at 11:00. no good.
   face->ring.show();
 }
+
 
 
 //****************************************************************************************
@@ -126,8 +130,8 @@ ADWatch::Face::Face(Adafruit_NeoPixel s){
 	ring = s;
 	
 	//Define special Colours
-    	hrColour = ring.Color(255,100,0,5);
-    	minColour = ring.Color(0,255,95,0);
+	hrColour = ring.Color(255,100,0,5);
+	minColour = ring.Color(0,255,95,0);
 	secColour = ring.Color(0,160,255,0);
 	rstTimeColour = ring.Color(255,0,0,0);
 	blank = ring.Color(0,0,0,0);
@@ -146,6 +150,7 @@ ADWatch::Face::Face(Adafruit_NeoPixel s){
 void ADWatch::Face::clearStrip(void){
   for(uint8_t i = 0; i < 12; i++)
     ring.setPixelColor(i,blank);
+    
 }
 
 /* getAverageCross()
@@ -190,6 +195,7 @@ void ADWatch::Face::modMinColour(time_t localTime){
 
   //Minute becomes more red as it progresses.
   minColour = ring.Color(0+minMod,255-minMod,95,0);
+  ring.setPixelColor(11,blank);
   return;
 }
 
