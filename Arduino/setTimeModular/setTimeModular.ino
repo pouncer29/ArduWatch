@@ -1,5 +1,5 @@
 #include <Adafruit_NeoPixel.h>
-#include <watchFace.h>
+#include <ADWatch.h>
 #include <TimeLib.h>
 
 /*From the RGBW TESTS (not everything)*/
@@ -18,7 +18,8 @@ time_t t;
 
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
-Watch_Face face = Watch_Face(strip);
+
+ADWatch watch = ADWatch(t,strip);
 
 
 //For Flow
@@ -26,12 +27,12 @@ Watch_Face face = Watch_Face(strip);
 //ShowTimeButton
 const uint8_t buttonPinA = 8;// the number of the pushbutton pin INPUT
 boolean on = false;         //current output state
-int buttonAState = 0;       //the current flow through the button.
+byte buttonAState = 0;       //the current flow through the button.
 bool flourish = true;     //whether or not to do the light show on button press
 
 //SetTimeButton
 const uint8_t buttonPinB = 4;
-int buttonBState = 0;
+byte buttonBState = 0;
 
 
 void setup() {
@@ -40,9 +41,10 @@ void setup() {
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
   // End of trinket special code
-  face.ring.setBrightness(BRIGHTNESS);
-  face.ring.begin();
-  face.ring.show(); // Initialize all pixels to 'off'
+  watch.face->ring.setBrightness(BRIGHTNESS);
+  watch.face->ring.begin();
+  //watch.face->clearStrip(); Quite possibly redundant.
+  watch.face->ring.show(); // Initialize all pixels to 'off'
   
   //For Buttons
   pinMode(buttonPinA,INPUT);
@@ -74,18 +76,21 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         //face.modMinColour(t);           //1. get the flourish colour
-         face.colorWipe(face.minColour,100);  //2. do the colour wipe
+         //watch.gears->updateTime(t);
+         watch.face->modMinColour(t);           //1. get the flourish colour
+         watch.face->colorWipe(watch.face->minColour,100);  //2. do the colour wipe
+         watch.face->clearStrip();              //3. reset ring to blank
+         watch.face->ring.show();              //4. push the blank ring
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       
-      face.trackTime(t);
-      face.clearStrip();  
+      watch.trackTime(t);
+      watch.face->clearStrip();  
     }
    else{
-    face.clearStrip();               //1. Button must be off, clear the strip
-    face.ring.show();                   //2. push the clear
+    watch.face->clearStrip();               //1. Button must be off, clear the strip
+    watch.face->ring.show();                   //2. push the clear
     flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
@@ -97,7 +102,7 @@ void loop() {
     if((buttonBState == HIGH) && (!on)){
 
       //Show that we have entered the time reset mode
-      face.colorWipe(face.rstTimeColour,100);
+      watch.face->colorWipe(watch.face->rstTimeColour,100);
       
       //values to set
       uint8_t hr = 0;
@@ -144,7 +149,7 @@ void loop() {
                   if(moveHrButtonState == HIGH){
                     //Update hour
                     hr++;
-                    face.setFaceTime(hr,Min,t); 
+                    watch.setFaceTime(hr,Min,t); 
                     
 
                     //reset Timer
@@ -157,7 +162,7 @@ void loop() {
               }
 
                 //If time is up, Show that hour was set with a wipe
-                face.colorWipe(face.hrColour,100);
+                watch.face->colorWipe(watch.face->hrColour,100);
             }
 
             //Second Press sets minutes.
@@ -184,7 +189,7 @@ void loop() {
 
                     //update Minute (but keep that hour we changed)
                     Min++;
-                    face.setFaceTime(hr,Min,t);
+                    watch.setFaceTime(hr,Min,t);
   
                     //reset Timer
                     endSet = startSet;
@@ -195,7 +200,7 @@ void loop() {
               }
 
               //Show that minute was successfully updated with a minColour wipe!
-              face.colorWipe(face.minColour,100);
+              watch.face->colorWipe(watch.face->minColour,100);
             }
 
       
