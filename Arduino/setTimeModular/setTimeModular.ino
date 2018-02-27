@@ -2,6 +2,7 @@
 #include <ADWatch.h>
 #include <TimeLib.h>
 
+
 /*From the RGBW TESTS (not everything)*/
 #ifdef __AVR__
   #include <avr/power.h>
@@ -84,9 +85,11 @@ void loop() {
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
-      
+
+      //Where the magic happens.
+     /*******************/
       watch.trackTime(t);
-      //watch.face->clearStrip();  
+     /*******************/
     }
    else{
     watch.face->clearStrip();               //1. Button must be off, clear the strip
@@ -96,127 +99,129 @@ void loop() {
 
     delay(200);                     //Apparently good for 'debounce' whatever that is.
 
-
   //Set Time Code
   buttonBState = digitalRead(buttonPinB);
     if((buttonBState == HIGH) && (!on)){
-
-      //Show that we have entered the time reset mode
-      watch.face->colorWipe(watch.face->rstTimeColour,100);
-      
-      //values to set
-      uint8_t hr = 0;
-      uint8_t Min = 0;
-
-      //Loop Controllers & Counters
-      uint8_t pressedCount = 0;
-      byte pushButtonState = 0;
-      byte prevButtonState = 0;
-
-      //Press Once to set Hr, Twice to setMinute)
-      while(pressedCount < 2){        
-        pushButtonState = digitalRead(buttonPinA);
-
-        //Completley reset time to track change.
-        setTime(0,0,0,30,1,1997);
-         t = now();
-        uint8_t startSet = second(t);  //Keeps the reset Time
-        uint8_t endSet = second(t);    //Is Updaed when hands are not moved.
-       // uint8_t stopper = endSet;               // set time t to the 0 time so we can track changes easily.
-
-        //Very similar to the above loop to display time.
-        if(pushButtonState != prevButtonState){
-          if(pushButtonState == HIGH){
-
-            //First Press sets hour.
-            if(pressedCount == 0){
-              hr = 0;
-              byte moveHrButtonState = 0;
-              byte prevMoveButtonState = 0;
-
-              //Set Hour Loop
-              while(endSet < 5){
-
-                //Cursor not advanced, update time.
-                t = now();
-                endSet = second(t);
-                
-                //See if we want to move
-                moveHrButtonState = digitalRead(buttonPinA);
-                if(moveHrButtonState != prevMoveButtonState){
-  
-                  //And we've pressed the move button
-                  if(moveHrButtonState == HIGH){
-                    //Update hour
-                    hr++;
-                    watch.setWatchTime(hr,Min,t); 
-                    
-                    //reset Timer
-                    endSet = startSet;
-                  }
-                }
-                  
-                //remember that we did move.
-                prevMoveButtonState = moveHrButtonState;
-              }
-
-                //If time is up, Show that hour was set with a wipe
-                watch.face->colorWipe(watch.face->hrColour,100);
-            }
-
-            //Second Press sets minutes.
-            else if (pressedCount == 1){
-              Min = 0;
-              byte moveMinButtonState = 0;
-              byte prevMoveButtonState = 0;
-          
-              //Set Minute Loop
-              while(endSet < 5){
-
-                //Minute hand not changed, update the timer.
-                t = now();
-                endSet = second(t);
-
-                //See if we want to move
-                moveMinButtonState = digitalRead(buttonPinA);
-  
-                //if we haven't yet tried to move
-                if(moveMinButtonState != prevMoveButtonState){
-  
-                  //And we've pressed the move button
-                  if(moveMinButtonState == HIGH){
-
-                    //update Minute (but keep that hour we changed)
-                    Min++;
-                    watch.setWatchTime(hr,Min,t);
-  
-                    //reset Timer
-                    endSet = startSet;
-                  }
-                }  
-                //and remember that we did move.
-                prevMoveButtonState = moveMinButtonState;
-              }
-
-              //Show that minute was successfully updated with a minColour wipe!
-              watch.face->colorWipe(watch.face->minColour,100);
-            }
-
-      
-            //Update our press count.
-            pressedCount++;
-            delay(50);
-          }
-        }
-
-        //Remember what our last state was.
-        prevButtonState = pushButtonState;
+      manualSetTime();
     }
-  }
+}
+  
 
   //**If you need to send updated info to an RTC this is the place to do it.
-}
+
  
+void manualSetTime(){
+  //Show that we have entered the time reset mode
+  watch.face->colorWipe(watch.face->rstTimeColour,100);
+      
+  //values to set
+  uint8_t hr = 0;
+  uint8_t Min = 0;
+
+  //Loop Controllers & Counters
+  uint8_t pressedCount = 0;
+  byte pushButtonState = 0;
+  byte prevButtonState = 0;
+
+      //Press Once to set Hr, Twice to setMinute)
+  while(pressedCount < 2){        
+    pushButtonState = digitalRead(buttonPinA);
+
+    //Completley reset time to track change.
+    setTime(0,0,0,30,1,1997);
+    t = now();
+    uint8_t startSet = second(t);  //Keeps the reset Time
+    uint8_t endSet = second(t);    //Is Updaed when hands are not moved.
+
+    //Very similar to the above loop to display time.
+    if(pushButtonState != prevButtonState){
+      if(pushButtonState == HIGH){
+
+        //First Press sets hour.
+        if(pressedCount == 0){
+          hr = 0;
+          byte moveHrButtonState = 0;
+          byte prevMoveButtonState = 0;
+
+          //Set Hour Loop
+          while(endSet < 5){
+
+            //Cursor not advanced, update time.
+            t = now();
+            endSet = second(t);
+            
+            //See if we want to move
+            moveHrButtonState = digitalRead(buttonPinA);
+            if(moveHrButtonState != prevMoveButtonState){
+
+              //And we've pressed the move button
+              if(moveHrButtonState == HIGH){
+                //Update hour
+                hr++;
+                watch.setWatchTime(hr,Min,t); 
+                
+                //reset Timer
+                endSet = startSet;
+              }
+            }
+              
+            //remember that we did move.
+            prevMoveButtonState = moveHrButtonState;
+          }
+
+            //If time is up, Show that hour was set with a wipe
+            watch.face->colorWipe(watch.face->hrColour,100);
+        }
+
+        //Second Press sets minutes.
+        else if (pressedCount == 1){
+          Min = 0;
+          byte moveMinButtonState = 0;
+          byte prevMoveButtonState = 0;
+      
+          //Set Minute Loop
+          while(endSet < 5){
+
+            //Minute hand not changed, update the timer.
+            t = now();
+            endSet = second(t);
+
+            //See if we want to move
+            moveMinButtonState = digitalRead(buttonPinA);
+
+            //if we haven't yet tried to move
+            if(moveMinButtonState != prevMoveButtonState){
+
+              //And we've pressed the move button
+              if(moveMinButtonState == HIGH){
+
+                //update Minute (but keep that hour we changed)
+                Min++;
+                watch.setWatchTime(hr,Min,t);
+
+                //reset Timer
+                endSet = startSet;
+              }
+            }  
+            //and remember that we did move.
+            prevMoveButtonState = moveMinButtonState;
+          }
+
+          //Show that minute was successfully updated with a minColour wipe!
+          watch.face->colorWipe(watch.face->minColour,100);
+        }
+
+  
+        //Update our press count.
+        pressedCount++;
+        delay(50);
+      }
+    }
+
+    //Remember what our last state was.
+    prevButtonState = pushButtonState;
+  }
+ }
 
 
 //

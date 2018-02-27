@@ -51,6 +51,8 @@ void ADWatch::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
 	face->ring.setPixelColor(hrIdx,face->hrColour);
 	face->ring.setPixelColor(minIdx,face->minColour);
 	face->ring.setPixelColor(secIdx,face->secColour);
+	
+
 
 	// Otherwise: If Hands Cross, Their indicies will be the same so I average their set colours.
 	//This particuairly nasty block is only so nasty because I take the average of an average. will work on shortening 
@@ -63,8 +65,39 @@ void ADWatch::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
 	else if(hrIdx == minIdx)
 		face->ring.setPixelColor(hrIdx, face->getAverageCross(face->hrColour,face->minColour));
 	
+	//Remove Tail
+	removeTail(hrIdx-1,hrIdx,minIdx,secIdx);
+	removeTail(minIdx-1,hrIdx,minIdx,secIdx);
+	removeTail(secIdx-1,hrIdx,minIdx,secIdx);
+	
+	
 	return;
 }
+
+/*
+ removeTail()
+ 
+ precond:none
+ postcond: Removed the tail without having to loop through everything everytime.
+ 
+ paramaters: a hand locations as a uint8_t index. 
+ 
+ Synopsis: Looks behind an index, if in bound, blank whats behind, else get fancy.
+*/
+void ADWatch::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t secIdx){
+	
+	//At 12:00 v !@12.
+	//handIdx--; //become the tail!
+	if(tailIdx < 0)
+		tailIdx = 11; 
+	
+	//Don't blank important indicies.
+	if (tailIdx == hrIdx || tailIdx == minIdx || tailIdx == secIdx)
+		return;
+
+	face->ring.setPixelColor(tailIdx,face->blank);
+	return;
+	}
 
 /*
  trackTime()
@@ -89,6 +122,37 @@ void ADWatch::trackTime(time_t t){
 	
 	//Display 
 	face->ring.show();
+}
+
+/* setWatchTime()
+ *	precond: hr & min are > 0, localTime is set
+ *	postcond: localTime tracks the hour and minute that are given.
+ *
+ *	paramaters:
+ *		hr: uint8_t that will be our hour value.
+ *		min: uint8_t that will be our minute value.
+ *		localTime: a time_t that is we will track while setting.
+ *
+ *	return: nothing
+ */
+void ADWatch::setWatchTime(uint8_t hr, uint8_t min, time_t localTime){
+
+	//gears->updateTime(localtime) //Also redundant? Unless! this is the time we show,,,
+	
+	//blank the strip
+	face->clearStrip();
+	face->ring.show();
+	
+	//Get a new time'
+	setTime(hr,min,0,15,4,2012);
+	gears->updateTime(now());
+	
+	
+	//Track the time being set.
+	trackTime(localTime); //Aids in showing where we are. A lot.
+	
+	//Remove tail
+	face->clearStrip();
 }
 
 
@@ -173,16 +237,13 @@ ADWatch::Face::Face(Adafruit_NeoPixel s){
  *  precond: ring is not null
  *  postcond: all pixels in ring are set to blank 
  *  
- *  I love adafruit but I couldn't get their .show() to clear the ring like they said it would.
- *  maybe should consider adding the .show() to the end of this one but that could be a mess.
+ * UPDATE: Found the fucntion I was looking for. it was built in. sorry I doubted you Ada
  *  
  *  return: nothing
  * 
  */
 void ADWatch::Face::clearStrip(void){
-  for(uint8_t i = 0; i < 12; i++)
-    ring.setPixelColor(i,blank);
-    
+	ring.clear();
 }
 
 /* getAverageCross()
@@ -241,15 +302,15 @@ void ADWatch::Face::colorWipe(uint32_t c, uint16_t wait) {
     ring.show();
     delay(wait);
   }
-  clearStrip();
+  ring.clear();
   ring.show();
 }
 
-//FOR TESTING ONLY
-void ADWatch::Face::showAvg(uint32_t A, uint32_t B){
-	colorWipe(getAverageCross(A,B),200);
-	return;
-}
+// FOR TESTING ONLY
+// void ADWatch::Face::showAvg(uint32_t A, uint32_t B){
+// 	colorWipe(getAverageCross(A,B),200);
+// 	return;
+// }
 
 
 

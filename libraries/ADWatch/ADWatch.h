@@ -29,6 +29,8 @@ class ADWatch{
 		ADWatch(time_t,Adafruit_NeoPixel);
 		void trackTime(time_t);
 		void placeHands(uint8_t,uint8_t,uint8_t);
+		void setWatchTime(uint8_t,uint8_t,time_t);
+		void removeTail(uint8_t,uint8_t,uint8_t,uint8_t);
 };
 
 /* Gears
@@ -49,13 +51,11 @@ class ADWatch::Gears{
 		uint8_t getMinuteIndex(void);
 		uint8_t getSecondIndex(void);
 		time_t getCurTime(void);	
-		void updateTime(time_t);
-		//void trackTime(void);			
+		void updateTime(time_t);		
 			
 	private:
 	//Attributes
 	time_t curTime;
-	//Methods
 };
 
 /* Face
@@ -80,6 +80,7 @@ class ADWatch::Face{
 		uint32_t minColour;
 		uint32_t secColour;
 		uint32_t rstTimeColour;
+		uint32_t blank;
 		
 		//Methods
 		Face(Adafruit_NeoPixel);
@@ -88,9 +89,7 @@ class ADWatch::Face{
 		void clearStrip(void);
 		void colorWipe(uint32_t, uint16_t);
 		void showAvg(uint32_t,uint32_t);
-
-	private:
-		uint32_t blank;
+	
 };
 
 
