@@ -105,8 +105,8 @@ void loop() {
 
       //Loop Controllers & Counters
       uint8_t pressedCount = 0;
-      int pushButtonState = 0;
-      int prevButtonState = 0;
+      byte pushButtonState = 0;
+      byte prevButtonState = 0;
 
       //Press Once to set Hr, Twice to setMinute)
       while(pressedCount < 2){        
@@ -114,9 +114,10 @@ void loop() {
 
         //Completley reset time to track change.
         setTime(0,0,0,30,1,1997);
-        time_t startSet = now();  //Keeps the reset Time
-        time_t endSet = now();    //Is Updaed when hands are not moved.
-        t = endSet;               // set time t to the 0 time so we can track changes easily.
+         t = now();
+        uint8_t startSet = second(t);  //Keeps the reset Time
+        uint8_t endSet = second(t);    //Is Updaed when hands are not moved.
+       // uint8_t stopper = endSet;               // set time t to the 0 time so we can track changes easily.
 
         //Very similar to the above loop to display time.
         if(pushButtonState != prevButtonState){
@@ -125,14 +126,15 @@ void loop() {
             //First Press sets hour.
             if(pressedCount == 0){
               hr = 0;
-              int moveHrButtonState = 0;
-              int prevMoveButtonState = 0;
+              byte moveHrButtonState = 0;
+              byte prevMoveButtonState = 0;
 
               //Set Hour Loop
-              while(second(endSet) < 5){
+              while(endSet < 5){
 
                 //Cursor not advanced, update time.
-                endSet = now();
+                t = now();
+                endSet = second(t);
                 
                 //See if we want to move
                 moveHrButtonState = digitalRead(buttonPinA);
@@ -161,14 +163,15 @@ void loop() {
             //Second Press sets minutes.
             else if (pressedCount == 1){
               Min = 0;
-              int moveMinButtonState = 0;
-              int prevMoveButtonState = 0;
+              byte moveMinButtonState = 0;
+              byte prevMoveButtonState = 0;
           
               //Set Minute Loop
-              while(second(endSet) < 5){
+              while(endSet < 5){
 
                 //Minute hand not changed, update the timer.
-                endSet = now();
+                t = now();
+                endSet = second(t);
 
                 //See if we want to move
                 moveMinButtonState = digitalRead(buttonPinA);
