@@ -86,7 +86,7 @@ void loop() {
       }
       
       watch.trackTime(t);
-      watch.face->clearStrip();  
+      //watch.face->clearStrip();  
     }
    else{
     watch.face->clearStrip();               //1. Button must be off, clear the strip
@@ -149,9 +149,8 @@ void loop() {
                   if(moveHrButtonState == HIGH){
                     //Update hour
                     hr++;
-                    watch.setFaceTime(hr,Min,t); 
+                    watch.setWatchTime(hr,Min,t); 
                     
-
                     //reset Timer
                     endSet = startSet;
                   }
@@ -189,7 +188,7 @@ void loop() {
 
                     //update Minute (but keep that hour we changed)
                     Min++;
-                    watch.setFaceTime(hr,Min,t);
+                    watch.setWatchTime(hr,Min,t);
   
                     //reset Timer
                     endSet = startSet;
