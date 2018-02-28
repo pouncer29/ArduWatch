@@ -88,8 +88,7 @@ void ADWatch::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t s
 	
 	//At 12:00 v !@12.
 	//handIdx--; //become the tail!
-	if(tailIdx < 0)
-		tailIdx = 11; 
+	tailIdx = tailIdx % 12;
 	
 	//Don't blank important indicies.
 	if (tailIdx == hrIdx || tailIdx == minIdx || tailIdx == secIdx)
@@ -97,7 +96,7 @@ void ADWatch::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t s
 
 	face->ring.setPixelColor(tailIdx,face->blank);
 	return;
-	}
+}
 
 /*
  trackTime()
@@ -175,12 +174,7 @@ uint8_t ADWatch::Gears::getHourIndex(void){
 	uint8_t	hr = hour(curTime);
 	
 	//determine index
-	if(hr < 0)
-		return -1;
-	else if (hr >= 12)	//Handles 24hr time (no 24th neopixel)
-		return hr - 12;
-	else
-		return hr;
+	return hr % 12;
 }
 
 /*
