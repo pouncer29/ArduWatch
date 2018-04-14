@@ -12,16 +12,26 @@ Synopsis: The union of Gears and Face. ADWatch
 
 //****************************************************************************************
 //AD WATCH//
-//*************************************************************
+//****************************************************************************************
+
+/*
+	ADWatch()
+
+	precond: timeT is a valid time and Neopixel is instantiated
+	postcond: A new ADWatch object is created
+
+	Paramaters: 
+		time_t trackMe - the Time we will track with our Gears
+		Adafruit_NeoPixel neoP - the neoPixel ring that will serve as our Face
+
+	Synopsis: 
+		Uses the time to create the *Gears* for the watch and *neoP* to set a face for the watch
+*/
 ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
-	trackMe = t;
-	strip = neoP;
-	
-	face = new Face(strip);
-	gears = new Gears(trackMe);
-	
-
-
+	//trackMe = t; // Add back in if things go wacky
+	//strip = neoP;
+	face = new Face(neoP);
+	gears = new Gears(t);
 }
 
 /*
@@ -30,9 +40,9 @@ ADWatch::ADWatch(time_t t, Adafruit_NeoPixel neoP){
  precond: none
  postcond: Color values are assigned to their designated indicies (times)
  
- Paramaters: uint_8's 'hrIdx', representing the position of the hour hand on our ring.
- 					  'minIdx', representing the position of the minute hand on our ring.
- 					  'secIdx', representing the postion of the second hand on our ring.
+ Paramaters: uint_8's hrIdx - representing the position of the hour hand on our ring.
+ 					  minIdx - representing the position of the minute hand on our ring.
+ 					  secIdx - representing the postion of the second hand on our ring.
  
  Synopsis:
  	Grabs the current time from gears and uses it to modify the minute colour. then
@@ -78,9 +88,12 @@ void ADWatch::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
  removeTail()
  
  precond:none
- postcond: Removed the tail without having to loop through everything everytime.
+ postcond: Removed the residual illumination left by passing hands
  
- paramaters: a hand locations as a uint8_t index. 
+ paramaters: uint8_t's tailIdx - the index who's tail e will remove
+			 		   hrIdx - the index occupied by hour hand
+					   minIdx - the index occupied by minute hand
+					   secIdx - the inex occupied by the secons hand
  
  Synopsis: Looks behind an index, if in bound, blank whats behind, else get fancy.
 */
@@ -94,6 +107,7 @@ void ADWatch::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t s
 	if (tailIdx == hrIdx || tailIdx == minIdx || tailIdx == secIdx)
 		return;
 
+	//Blank the tail
 	face->ring.setPixelColor(tailIdx,face->blank);
 	return;
 }
@@ -104,7 +118,7 @@ void ADWatch::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t s
  precond: none
  postcond: ring is activated to show the current time.
  
- Paramaters: time_t 't' representing the time we will be tracking.
+ Paramaters: time_t t - representing the time we will be tracking.
  
  Synopsis: over-writes whatever the previous time was using 'updateTime()' and then with
  		  the updated time, it places, and assigns colours to the hands before showing the
