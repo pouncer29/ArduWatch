@@ -3,27 +3,26 @@
 #include <TimeLib.h>
 
 
-/*From the RGBW TESTS (not everything)*/
+// Adafruit prerequisites from Circit Playground
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
-
 #define PIN 6
 #define NUM_LEDS 12
 #define BRIGHTNESS 20
 
-//For Time
+
+//For Time (Possibly for RTC...)
 #define TIME_HEADER  "T"   // Header tag for serial time sync message
 #define TIME_REQUEST  7    // ASCII bell character requests a time sync message
-time_t t;
 
-//For Ring
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
-
+//Construct watch
+time_t t; // Time to track
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800); //Face
 ADWatch watch = ADWatch(t,strip);
 
 
-//For Flow
+/***** BUTTONS For Flow *****/
 
 //ShowTimeButton
 const uint8_t buttonPinA = 8;// the number of the pushbutton pin INPUT
@@ -37,32 +36,30 @@ byte buttonBState = 0;
 
 
 void setup() {
-    // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
+
+  //Trinket Special code
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-  #endif
+  #endif 
   // End of trinket special code
+
+  //Configure ring
   watch.face->ring.setBrightness(BRIGHTNESS);
   watch.face->ring.begin();
   //watch.face->clearStrip(); Quite possibly redundant.
   watch.face->ring.show(); // Initialize all pixels to 'off'
   
-  //For Buttons
+  //Configure buttons
   pinMode(buttonPinA,INPUT);
   pinMode(buttonPinB,INPUT);
   
   //Test Time for testing.
   setTime(1,24,30,12,28,2017);
-  
-
-  //Testing our Tracker Library Function
- 
-
 
 }
 
-void loop() {
-
+// Run Forest!
+void loop() {	
   t =now();
   
  //Start Watch Button checker 
@@ -77,7 +74,6 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         //watch.gears->updateTime(t);
          watch.face->modMinColour(t);           //1. get the flourish colour
          watch.face->colorWipe(watch.face->minColour,100);  //2. do the colour wipe
          watch.face->clearStrip();              //3. reset ring to blank
@@ -222,13 +218,6 @@ void manualSetTime(){
     prevButtonState = pushButtonState;
   }
  }
-
-
-//
-//time_t requestSync(){
-//   Serial.write(TIME_REQUEST);
-//   return 0;
-//}
 
 
 

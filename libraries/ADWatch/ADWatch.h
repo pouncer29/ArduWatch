@@ -8,10 +8,17 @@
 
 /* ADWatch
    -----------
-   After trying to use a separate module for each component of the watch I decide to say f it.
-   I'll just put everything in one document. Probably a decent choice because I bought an
-   Adafruit trinket to run this on and has far less memory on it.
+	After Complications arose with trying to put everything in seperate modules (as they SHOULD BE), I decided to just
+	chuck everything into this one header file. 
 
+	ADWatch Contains Class Definitions for:
+	----------------------------------------
+	0) ADWatch - the Union of Face and gears
+	
+	1) Gears - The class responsible for communicating time_t* objects to their appropriate indexes
+
+	2) Face - The class responsible for communicating with the Neopixel ring to determine colour.
+	
 */
 class ADWatch{
 	public:
@@ -35,16 +42,11 @@ class ADWatch{
 
 /* Gears
    --------------
-  So I've decided to name the class that actually gets the time the "Gears" Class. This class should literally just give out the indicies
-  for hours, minutes, and seconds. Should it track time? Probably. How can I do that? Not enirely sure. Will think about it. I could maybe 
-  make some function that will set indecies at the time and just pass that somehow to the Face for it to display but we will worry about that
-  later. For now I just want it to give me the proper indecies, and have NO IDEA about neopixels and no Idea about Arduino if possible.   
+	- Contains methods to get indecies for the Hour, Minute and Second hands which are used internally to their postition relative
+      to the time it has been give to track!
 */
 class ADWatch::Gears{
-	public:
-		//Attributes
-		//ADWatch* parent; // I'd like to access 
-	
+	public:	
 		//Methods
 		Gears(time_t*);
 		uint8_t getHourIndex(void);
@@ -69,11 +71,14 @@ class ADWatch::Gears{
 	This class now has but one pupose: Manage colours. It will still be the interface between
 	time and the ring but now that time and it's indices will be coming from elsewhere. 
 	It is going to be a right nasty refactor but I think is for the best!
+
+
+	- Contains the Hard-Coded colour values for the hands as well as other special colours like
+	  "reset time Colour" and if you're feeling adventerous, "blank" as well as defines methods
+	  to be used by the ADWatch to aid in state representation and time tracking
 */
 class ADWatch::Face{
 	public:
-		//ADWatch* parent; //I want to access the members of the ADWatch like strip
-							//Couldn't think of a better name. Will try later.
 		//Attributes
 		Adafruit_NeoPixel ring;
 		uint32_t hrColour;
