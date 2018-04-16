@@ -66,7 +66,7 @@ int main() {
 	printArray(timeArrC);
 	cout<<endl;
 	
-	
+	/*
 	while(1){
 		
 		char choice;
@@ -77,9 +77,26 @@ int main() {
 			case 'd': flourish(timeArrC);break;
 			case 'p': pullTime(timeArrC); break;
 			case 'b': cout<<"showBatteryLife()"<<endl; break;
-			case 'q': return EXIT_SUCCESS;
+			case 'q': break;break;
 			}
 		}
+	*/
+	int i = 0;
+	char x;
+	//Could use while offButton not pressed in the real deal
+	while(cin>>x){
+		if(i>3)
+			i = 0;
 
-	return EXIT_FAILURE;
+		switch(i){
+			case 0 : cout<<"CHOICE 0"<<endl;break; // Track Time
+			case 1 : cout<<"CHOICE 1"<<endl;break; // Compass
+			case 2 : cout<<"CHOICE 2"<<endl;break; // Spedometer	
+			case 3 : cout<<"CHOICE 3"<<endl;break; // Refresh
+		}
+		i++;
+	}
+
+	
+	return EXIT_SUCCESS;
 }
