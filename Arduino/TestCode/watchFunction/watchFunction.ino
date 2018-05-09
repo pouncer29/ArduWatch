@@ -1,5 +1,6 @@
 #include <Adafruit_NeoPixel.h>
-#include <ADWatch.h>
+#include <WatchFunction.h>
+#include <Clock.h>
 #include <Adafruit_GPS.h>
 #include <TimeLib.h>
 
@@ -21,7 +22,7 @@ time_t t;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
 //Using a master watch Class
-ADWatch watch = ADWatch(t,strip);
+Clock watch = Clock(strip);
 
 
 //For Flow
@@ -44,10 +45,16 @@ void setup() {
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
   // End of trinket special code
+
+  //INIT RING
   watch.face->ring.setBrightness(BRIGHTNESS);
   watch.face->ring.begin();
   watch.face->clearStrip();
   watch.face->ring.show(); // Initialize all pixels to 'off'
+
+
+  //INIT CLOCK
+  watch.init();
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -87,13 +94,8 @@ void loop() {
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       
-      //face->trackTime(t); 
-      //testFACE(); //NOTE: Will not turn off until the function is done executing, press then
-      //watch.face->clearStrip();
-      //watch.gears->updateTime(t);
-      //testGEARS(); 
       watch.face->clearStrip();
-      watch.trackTime(t);
+      watch.exec(t);
     }
    else{
     watch.face->clearStrip();               //1. Button must be off, clear the strip
