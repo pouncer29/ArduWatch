@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 #include <TimeLib.h>
+#include "Face.h"
+#include "Gears.h"
 #include <Adafruit_NeoPixel.h>
 
 
@@ -23,8 +25,8 @@
 class ADWatch{
 	public:
 		//Classes
-		class Gears;
-		class Face;
+		//class Gears;
+		//class Face;
 		
 		//Attributes
 		Adafruit_NeoPixel strip;
@@ -44,7 +46,7 @@ class ADWatch{
    --------------
 	- Contains methods to get indecies for the Hour, Minute and Second hands which are used internally to their postition relative
       to the time it has been give to track!
-*/
+
 class ADWatch::Gears{
 	public:	
 		//Methods
@@ -60,7 +62,7 @@ class ADWatch::Gears{
 	time_t curTime;
 };
 
-/* Face
+ Face
 --------------
 	Look, Nobody can get it right the first time. I just wanted a working watch. Now that I kind
 	of have that, It's time to rethink our architecture. That is what this branch is for. 
@@ -76,7 +78,7 @@ class ADWatch::Gears{
 	- Contains the Hard-Coded colour values for the hands as well as other special colours like
 	  "reset time Colour" and if you're feeling adventerous, "blank" as well as defines methods
 	  to be used by the ADWatch to aid in state representation and time tracking
-*/
+
 class ADWatch::Face{
 	public:
 		//Attributes
@@ -97,7 +99,7 @@ class ADWatch::Face{
 	
 };
 
-
+*/
 
 #endif
 
