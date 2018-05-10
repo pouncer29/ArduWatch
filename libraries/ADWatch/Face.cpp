@@ -1,6 +1,6 @@
 /*
 	Author: Ben Lewis
-	Date: January 23rd, 201ljkj:jkjkjkjkjjkjklljhhljkkjkjk8
+	Date: January 23rd, 2018
 	
 	Synopsis: Implementation for time-tracking methods.
 */

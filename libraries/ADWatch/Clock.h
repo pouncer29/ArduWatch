@@ -14,10 +14,6 @@
 */
 class Clock{
 	public:
-		//Classes
-		//class Gears;
-		//class Face;
-		
 		//Attributes
 		Adafruit_NeoPixel strip;
 		time_t trackMe;

@@ -1,6 +1,5 @@
 #include <Adafruit_NeoPixel.h>
-#include <WatchFunction.h>
-#include <Clock.h>
+#include <ADWatch.h>
 #include <Adafruit_GPS.h>
 #include <TimeLib.h>
 
@@ -22,7 +21,7 @@ time_t t;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
 //Using a master watch Class
-Clock watch = Clock(strip);
+ADWatch watch = ADWatch(t,strip);
 
 
 //For Flow
@@ -47,14 +46,7 @@ void setup() {
   // End of trinket special code
 
   //INIT RING
-  watch.face->ring.setBrightness(BRIGHTNESS);
-  watch.face->ring.begin();
-  watch.face->clearStrip();
-  watch.face->ring.show(); // Initialize all pixels to 'off'
-
-
-  //INIT CLOCK
-  watch.init();
+  watch.initRing(BRIGTNESS);
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -85,21 +77,16 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         //watch.gears->updateTime(t);
-         watch.face->modMinColour(t);           //1. get the flourish colour
-         watch.face->colorWipe(watch.face->minColour,100);  //2. do the colour wipe
-         watch.face->clearStrip();              //3. reset ring to blank
-         watch.face->ring.show();              //4. push the blank ring
+         watch.flourish();
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       
-      watch.face->clearStrip();
-      watch.exec(t);
+      watch.clearStrip();
+      watch.showTime();
     }
    else{
-    watch.face->clearStrip();               //1. Button must be off, clear the strip
-    watch.face->ring.show();                   //2. push the clear
+    watch.clearStrip();               //1. Button must be off, clear the strip
     flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
