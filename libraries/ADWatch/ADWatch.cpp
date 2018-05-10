@@ -23,7 +23,7 @@ Synopsis:
  *
  *	Synopsis:
  */
-ADWatch::ADWatch(Adafruit_GPS g, Adafruit_NeoPixel neoP){}
+//ADWatch::ADWatch(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
 ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel ring){
 	clock = new Clock(trackMe,ring);
@@ -41,19 +41,19 @@ void ADWatch::showSpeed(void){return;}
 void ADWatch::showHeading(void){return;}
 
 //TODO implement
-void ADWatch:: flashLight(void){return;}
+void ADWatch:: flashlight(void){return;}
 
 
 //Flow tools
 void ADWatch::flourish(void){
-		clock.face->modMinColour(clock.gears->getCurTime()); //Can maybe be replaced with a direct GPS pull
-		clock.face->colourWipe(clock.face->minColour,100);
-		clock.face->clearStrip(); //Could maybe use fn() below! It's just an accessor fn().
-		clock.face->ring.show();
+		clock->face->modMinColour(clock->gears->getCurTime()); //Can maybe be replaced with a direct GPS pull
+		clock->face->colorWipe(clock->face->minColour,100);
+		clock->face->clearStrip(); //Could maybe use fn() below! It's just an accessor fn().
+		clock->face->ring.show();
 }
 
 void ADWatch::clearStrip(void){
-	strip.clear;
+	strip.clear();
 	strip.show();
 }
 

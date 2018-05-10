@@ -46,7 +46,7 @@ void setup() {
   // End of trinket special code
 
   //INIT RING
-  watch.initRing(BRIGTNESS);
+  watch.initRing(BRIGHTNESS);
   
   //For Buttons
   pinMode(startWatchPin,INPUT);

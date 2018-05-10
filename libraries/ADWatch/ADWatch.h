@@ -17,12 +17,12 @@ class ADWatch{
 		//Attributes
 		//Implements
 		Adafruit_NeoPixel strip;
-		Adafruit_GPS gps;	
+		//Adafruit_GPS gps;	
 		
-		/****Methods*****/
+		//****Methods*****/
 		//Initializers
-		ADWatch(Adafuit_GPS,Adafruit_NeoPixel);
-		ADWatch(time_t,Adafruit_NeoPixel);
+		//ADWatch(Adafuit_GPS, Adafruit_NeoPixel); //For when GPS is incorperated
+		ADWatch(time_t, Adafruit_NeoPixel);
 		
 		//Views
 		void showTime(void);
