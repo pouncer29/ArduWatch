@@ -20,8 +20,11 @@ time_t t;
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
+
+
 //Using a master watch Class
 ADWatch watch = ADWatch(t,strip);
+
 
 
 //For Flow
@@ -44,9 +47,12 @@ void setup() {
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
   // End of trinket special code
-
+  
   //INIT RING
-  watch.initRing(BRIGHTNESS);
+  strip.begin();    
+  strip.clear();
+  strip.show(); //Supposedly initilizes all to off  
+
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -81,16 +87,17 @@ void loop() {
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
-      
-      watch.clearStrip();
-      watch.showTime();
+
+      watch.clearRing();
+      watch.showTime(t);
     }
    else{
-    watch.clearStrip();               //1. Button must be off, clear the strip
+    watch.clearRing();               //1. Button must be off, clear the strip
     flourish = true;                //3. remember to flourish when we turn it back on.
+    setFlag(0);
    }
 
-    delay(200);                     //Apparently good for 'debounce' whatever that is.
+    delay(200);                     //Apparently good for 'debounce' whatever that is
 
 }
  
@@ -121,6 +128,11 @@ void loop() {
 //  
 //}
 
+void setFlag(int n){
+  uint32_t  err = strip.Color(255,0,0,0);
+  strip.setPixelColor(n,err);
+  strip.show();
+}
 
 
 

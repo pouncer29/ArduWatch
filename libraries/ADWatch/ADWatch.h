@@ -16,7 +16,7 @@ class ADWatch{
 		
 		//Attributes
 		//Implements
-		Adafruit_NeoPixel strip;
+		Adafruit_NeoPixel ring;
 		//Adafruit_GPS gps;	
 		
 		//****Methods*****/
@@ -25,17 +25,15 @@ class ADWatch{
 		ADWatch(time_t, Adafruit_NeoPixel);
 		
 		//Views
-		void showTime(void);
+		void showTime(time_t);//Can probably be void when GPS gets here!
 		void showSpeed(void);
 		void showHeading(void);
 		void flashlight(void);
 
 		//Flow tools
 		void flourish(void);
-		void clearStrip(void);
+		void clearRing(void);
 
-		//Component init tools
-		void initRing(uint8_t);
 
 	private:
 		//Features
