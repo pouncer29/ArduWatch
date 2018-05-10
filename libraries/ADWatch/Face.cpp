@@ -1,41 +1,49 @@
 /*
 	Author: Ben Lewis
-	Date: January 23rd, 2018
+	Date: January 23rd, 201ljkj:jkjkjkjkjjkjklljhhljkkjkjk8
 	
 	Synopsis: Implementation for time-tracking methods.
 */
 
 #include "Face.h"
 
-
-Face::Face(Adafruit_NeoPixel strip){
+/*
+ *Face()
+ * precond: none
+ * postcond: a new Face object is created
+ * 
+ * Parameters:
+ *    Adafruit_Neopixel leds - the chain of Neopixels that will serve as our face.
+ *
+ * Synopsis: assigns the Faces ring to the ledRing and assigns special colours
+ *
+ * return: a new Face Object
+ */
+Face::Face(Adafruit_NeoPixel leds){
 	
 	//Instantiate Attributes;
-	ring = strip;
+	ring = leds;
 	
 	//Define special Colours
-    hrColour = ring.Color(255,100,0,5);
-    minColour = ring.Color(0,255,95,0);
+	hrColour = ring.Color(255,100,0,5);
+	minColour = ring.Color(0,255,95,0);
 	secColour = ring.Color(0,160,255,0);
 	rstTimeColour = ring.Color(255,0,0,0);
 	blank = ring.Color(0,0,0,0);
 }
 
 
-
-/* clearStrip()
- *  precond: ring is not null
+/*
+clearStrip()
+ *  precond: none
  *  postcond: all pixels in ring are set to blank 
  *  
- *  I love adafruit but I couldn't get their .show() to clear the ring like they said it would.
- *  maybe should consider adding the .show() to the end of this one but that could be a mess.
- *  
- *  return: nothing
+ *	Synopsis: clears all of the colours from the rings indicies.
  * 
+ *  return: nothing
  */
 void Face::clearStrip(void){
-  for(uint8_t i = 0; i < 12; i++)
-    ring.setPixelColor(i,blank);
+	ring.clear();
 }
 
 /* getAverageCross()
@@ -80,11 +88,12 @@ void Face::modMinColour(time_t localTime){
 
   //Minute becomes more red as it progresses.
   minColour = ring.Color(0+minMod,255-minMod,95,0);
+  ring.setPixelColor(11,blank);
   return;
 }
 
 /* colorWipe
- *  This code is from Adafruit's NeoPixel Playground, I di not write it. It's what i use whith the modded min colour to create that 
+ *  This code is from Adafruit's NeoPixel Playground, I did not write it. It's what i use whith the modded min colour to create that 
  *  epic activation sequence.
  */
 void Face::colorWipe(uint32_t c, uint16_t wait) {
