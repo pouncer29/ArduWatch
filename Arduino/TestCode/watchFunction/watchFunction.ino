@@ -53,6 +53,7 @@ void setup() {
   strip.clear();
   strip.show(); //Supposedly initilizes all to off  
 
+
   
   //For Buttons
   pinMode(startWatchPin,INPUT);
@@ -94,7 +95,6 @@ void loop() {
    else{
     watch.clearRing();               //1. Button must be off, clear the strip
     flourish = true;                //3. remember to flourish when we turn it back on.
-    setFlag(0);
    }
 
     delay(200);                     //Apparently good for 'debounce' whatever that is
@@ -133,7 +133,11 @@ void setFlag(int n){
   strip.setPixelColor(n,err);
   strip.show();
 }
-
+void removeFlag(int n){
+  uint32_t blank = strip.Color(0,0,0,0);
+  strip.setPixelColor(n,blank);
+  strip.show();
+}
 
 
 
