@@ -93,7 +93,8 @@ void loop() {
       watch.showTime(t);
     }
    else{
-    watch.clearRing();               //1. Button must be off, clear the strip
+    strip.clear();             //1. Button must be off, clear the strip
+    strip.show();
     flourish = true;                //3. remember to flourish when we turn it back on.
    }
 
