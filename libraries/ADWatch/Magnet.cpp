@@ -28,7 +28,7 @@ Magnet::Magnet(float h){
  getCurTime()
 	- A simple getter method for the private attribute 'curTime'
  */
-float Heading::getCurHeading(void){
+float Magnet::getCurHeading(void){
 	return curHeading;
 }
 

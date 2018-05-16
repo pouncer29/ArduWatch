@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <TimeLib.h>
 #include "Clock.h"
+#include "Compass.h"
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
@@ -27,7 +28,7 @@ class ADWatch{
 		//Views
 		void showTime(time_t);//Can probably be void when GPS gets here!
 		void showSpeed(void);
-		void showHeading(void);
+		void showHeading(float);
 		void flashlight(void);
 
 		//Flow tools
@@ -39,7 +40,7 @@ class ADWatch{
 		//Features
 		Clock* clock;
 		//Speedometer* speedo;
-		//Compass* compass;
+		Compass* compass;
 		//FlashLight* flash;
 
 };

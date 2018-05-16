@@ -14,7 +14,7 @@ class Magnet{
 	public:	
 		//Methods
 		Magnet(float);
-		uint8_t getCurHeading(void);	
+		float getCurHeading(void);	
 		uint8_t getHeadingIndex(void);
 		void updateHeading(float);		
 			

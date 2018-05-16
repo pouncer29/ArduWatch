@@ -25,8 +25,8 @@ Needle::Needle(Adafruit_NeoPixel leds){
 	ring = leds;
 	
 	//Define special Colours
-	northColour = ring.color(255,100,0,5);
-	needleColour = ring.color(221,224,208,0);
-	blank = ring.color(0,0,0,0);
+	northColour = ring.Color(255,100,0,5);
+	needleColour = ring.Color(221,224,208,0);
+	blank = ring.Color(0,0,0,0);
 
 }	

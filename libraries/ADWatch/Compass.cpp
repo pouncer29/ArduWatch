@@ -50,7 +50,7 @@ void Compass::placeNeedle(uint8_t headingIdx){
 
 	//Check for overlap
 	if (headingIdx == 0)
-		needle->ring.setPixelColour(0,needle->getAverageCross(needle->needleColour,needle->northColour));
+		needle->ring.setPixelColor(0,needle->getAverageCross(needle->needleColour,needle->northColour));
 		
 	//Remove Tail
 	removeTail(headingIdx-1);
@@ -102,7 +102,7 @@ void Compass::trackHeading(float h){
 	setCompassHeading(h);
 
 	//Assign colours to the appropriate indicies.	
-	placeNeedle(magnet->getHeadingIndex(h));
+	placeNeedle(magnet->getHeadingIndex());
 	
 	//Display 
 	needle->ring.show();

@@ -29,6 +29,7 @@ ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel strip){
 	ring = strip;
 	ring.setBrightness(20);
 	clock = new Clock(trackMe,ring);
+	compass = new Compass(0,ring);
 	return;
 }
 
@@ -42,7 +43,9 @@ void ADWatch::showTime(time_t t){
 void ADWatch::showSpeed(void){return;}
 
 //TODO implement
-void ADWatch::showHeading(void){return;}
+void ADWatch::showHeading(float h){
+	compass->trackHeading(h);
+}
 
 //TODO implement
 void ADWatch:: flashlight(void){return;}
