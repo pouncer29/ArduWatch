@@ -19,6 +19,7 @@ class ADWatch{
 		//Implements
 		Adafruit_NeoPixel ring;
 		//Adafruit_GPS gps;	
+		Compass* compass;
 		
 		//****Methods*****/
 		//Initializers
@@ -34,13 +35,13 @@ class ADWatch{
 		//Flow tools
 		void flourish(void);
 		void clearRing(void);
-
+		
 
 	private:
 		//Features
 		Clock* clock;
 		//Speedometer* speedo;
-		Compass* compass;
+		//Compass* compass;
 		//FlashLight* flash;
 
 };

@@ -79,7 +79,7 @@ void loop() {
        on = false;
      else
        on = true;
-  }
+   }
 
   //Start watch button code.
   if(on == true){
@@ -89,8 +89,12 @@ void loop() {
          flourish = false;          //5. remember not to florish every time we show the time.
       }
 
-      watch.clearRing();
-      watch.showTime(t);
+      //watch.clearRing(); //TODO: NEEDED IF FOLLOWED BY SHOWTIME
+      //watch.compass->setCompassHeading(180);
+      delay(1000);
+      watch.showHeading(randFloat());
+      delay(1000);
+      
     }
    else{
     strip.clear();             //1. Button must be off, clear the strip
@@ -138,6 +142,12 @@ void removeFlag(int n){
   uint32_t blank = strip.Color(0,0,0,0);
   strip.setPixelColor(n,blank);
   strip.show();
+}
+
+float randFloat(){
+  float num = random(0,360);
+  Serial.print(num);
+  return num;
 }
 
 

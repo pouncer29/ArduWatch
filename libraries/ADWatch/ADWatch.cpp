@@ -26,10 +26,11 @@ Synopsis:
 //ADWatch::ADWatch(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
 ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel strip){
+	strip.setBrightness(20);
 	ring = strip;
-	ring.setBrightness(20);
-	clock = new Clock(trackMe,ring);
-	compass = new Compass(0,ring);
+	//ring.setBrightness(20);
+	//clock = new Clock(trackMe,strip);
+	compass = new Compass(0,strip);
 	return;
 }
 

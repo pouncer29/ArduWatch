@@ -24,6 +24,8 @@ class Compass{
 		void placeNeedle(uint8_t);
 		void setCompassHeading(float);
 		void removeTail(uint8_t);
+
+		float curHeading;
 };
 
 #endif

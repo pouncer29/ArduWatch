@@ -57,7 +57,10 @@ void Magnet::updateHeading(float newHeading){
  * return: nothing.
  */
 uint8_t Magnet::getHeadingIndex(void){
-	return curHeading/30;
+	if(curHeading >= 360)
+		return 0; //TODO throw an exception. the magic 11 bug will eat you!
+
+	return uint8_t(curHeading/30);
 }
 
 
