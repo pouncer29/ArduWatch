@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <TimeLib.h>
 #include "Clock.h"
+#include "Compass.h"
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
@@ -18,6 +19,7 @@ class ADWatch{
 		//Implements
 		Adafruit_NeoPixel ring;
 		//Adafruit_GPS gps;	
+		Compass* compass;
 		
 		//****Methods*****/
 		//Initializers
@@ -27,13 +29,13 @@ class ADWatch{
 		//Views
 		void showTime(time_t);//Can probably be void when GPS gets here!
 		void showSpeed(void);
-		void showHeading(void);
+		void showHeading(float);
 		void flashlight(void);
 
 		//Flow tools
 		void flourish(void);
 		void clearRing(void);
-
+		
 
 	private:
 		//Features

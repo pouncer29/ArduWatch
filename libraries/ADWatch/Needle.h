@@ -21,7 +21,7 @@ class Needle: public RingInterface{
 	public:
 		//Attributes
 		uint32_t northColour;
-		uint32_t needleColor;
+		uint32_t needleColour;
 
 		//Methods
 		Needle(Adafruit_NeoPixel);
