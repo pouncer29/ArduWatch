@@ -1,5 +1,5 @@
 #include <Adafruit_NeoPixel.h>
-#include <ADWatch.h>
+#include <OldWatch.h>
 #include <Adafruit_GPS.h>
 #include <TimeLib.h>
 
@@ -23,7 +23,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 
 
 //Using a master watch Class
-ADWatch watch = ADWatch(t,strip);
+OldWatch watch = OldWatch(t,strip);
 
 
 
