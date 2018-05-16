@@ -29,6 +29,9 @@ Compass::Compass(float h, Adafruit_NeoPixel neoP){
 	strip = neoP;
 	needle = new Needle(neoP);
 	magnet = new Magnet(h);
+
+	curHeadIdx = magnet->getHeadingIndex();
+	prevHeadIdx = -1;
 }
 
 /*
@@ -70,25 +73,19 @@ void Compass::placeNeedle(uint8_t headingIdx){
  * Synopsis: Goes to an index, if it isn't important, blank it.
  * return: nothing
 */
-void Compass::removeTail(uint8_t tailIdx){
+void Compass::removeTail(float h){
+
+	//Store old Heading	
+	prevHeadIdx = magnet->getHeadingIndex();
+	//Grab New Time
+	magnet->updateHeading(h);
+	//Reset Current heading
+	curHeadIdx = magnet->getHeadingIndex();
+
+	//If we have a new heading, remove the old one.
+	if(curHeadIdx != prevHeadIdx)
+		needle->ring.setPixelColor(prevHeadIdx,needle->blank);
 	
-	//if The index of the needle changes, blank where it was
-	if (tailIdx != magnet->getHeadingIndex())
-		needle->ring.setPixelColor(tailIdx,needle->blank);
-		
-	/*
-	//Don't blank important indicies.
-	if (tailIdx != 0)
-		//Blank the tail
-		needle->ring.setPixelColor(tailIdx,needle->blank);
-
-	if (tailIdx < 0)
-		needle->ring.setPixelColor(11,needle->blank);
-
-	//Magic 11 Strikes again...
-	if (tailIdx+1 != 11)
-		needle->ring.setPixelColor(11,needle->blank);
-	*/
 	return;
 }
 
@@ -104,14 +101,16 @@ void Compass::removeTail(uint8_t tailIdx){
  * return: nothing 		  
  */
 void Compass::trackHeading(float h){
-
-	//Grab New Time
-	magnet->updateHeading(h);
-	//setCompassHeading(h);
-
+	
+	//Remvoe tail also handels update now.
+	removeTail(h);
+	
 	//Assign colours to the appropriate indicies.	
 	placeNeedle(magnet->getHeadingIndex());
 	
+	//magic 11
+	if(curHeadIdx != 11)
+		needle->ring.setPixelColor(11,needle->blank);
 	//Display 
 	needle->ring.show();
 	

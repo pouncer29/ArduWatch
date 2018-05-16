@@ -23,9 +23,11 @@ class Compass{
 		void trackHeading(float);
 		void placeNeedle(uint8_t);
 		void setCompassHeading(float);
-		void removeTail(uint8_t);
+		void removeTail(float);
 
 		float curHeading;
+		uint8_t curHeadIdx;
+		uint8_t prevHeadIdx;
 };
 
 #endif
