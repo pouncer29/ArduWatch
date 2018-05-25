@@ -87,13 +87,12 @@ void Speedometer::removeTail(float h){
 void Speedometer::trackSpeed(float kn){
 	
 	//Remvoe tail also handels update now.
-	
 	//Assign colours to the appropriate indicies.	
 	setDial(gauge->getSpeedIndex());
 	
 	//magic 11
-	if(curHeadIdx < 11)
-		dial->ring.setPixelColor(11,dial->blank);
+//	if(curHeadIdx < 11)
+//		dial->ring.setPixelColor(11,dial->blank);
 	
 	//Display 
 	dial->ring.show();

@@ -30,8 +30,8 @@ ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel strip){
 	ring = strip;
 	//ring.setBrightness(20);
 	//clock = new Clock(trackMe,strip);
-	compass = new Compass(0,strip);
-	speedo = new Speedometer(80,strip);
+	//compass = new Compass(0,strip);
+	speedo = new Speedometer(0,strip);
 	return;
 }
 

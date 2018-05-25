@@ -69,7 +69,7 @@ void setup() {
   
 
   //Init Flourish Colours
-  compassColour = watch.compass->needle->needleColour;
+  //compassColour = watch.compass->needle->needleColour;
   speedoColour = watch.speedo->dial->regionAColour;
  
 
@@ -91,7 +91,7 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-        //setFlag(6);
+        setFlag(6);
          watch.flourish(speedoColour);
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
