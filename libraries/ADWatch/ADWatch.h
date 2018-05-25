@@ -5,6 +5,7 @@
 #include <TimeLib.h>
 #include "Clock.h"
 #include "Compass.h"
+#include "Speedometer.h"
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
@@ -20,7 +21,7 @@ class ADWatch{
 		Adafruit_NeoPixel ring;
 		//Adafruit_GPS gps;	
 		Compass* compass;
-		
+		Speedometer* speedo;
 		//****Methods*****/
 		//Initializers
 		//ADWatch(Adafuit_GPS, Adafruit_NeoPixel); //For when GPS is incorperated
@@ -28,7 +29,7 @@ class ADWatch{
 		
 		//Views
 		void showTime(time_t);//Can probably be void when GPS gets here!
-		void showSpeed(void);
+		void showSpeed(float);
 		void showHeading(float);
 		void flashlight(void);
 
