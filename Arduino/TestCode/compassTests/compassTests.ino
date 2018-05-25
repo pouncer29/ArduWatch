@@ -68,7 +68,7 @@ void setup() {
   
 
   //Init Flourish Colours
-  compassColour = strip.Color(255,100,0,5);
+  compassColour = watch.compass->needle->needleColour;
  
 
 
