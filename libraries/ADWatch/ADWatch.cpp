@@ -53,12 +53,13 @@ void ADWatch:: flashlight(void){return;}
 
 
 //Flow tools
-void ADWatch::flourish(void){
-		//setTime(1,30,0,15,4,2012);
-		clock->face->modMinColour(clock->gears->getCurTime()); //Can maybe be replaced with a direct GPS pull
-		clock->face->modMinColour(now());
-		clock->face->colorWipe(clock->face->minColour,100);
-		clearRing(); //Could maybe use fn() below! It's just an accessor fn().
+void ADWatch::flourish(uint32_t colour){
+		for(uint8_t i=0; i <12;i++){
+			ring.setPixelColor(i,colour);
+			ring.show();
+			delay(100);
+			}
+		ring.clear(); //Could maybe use fn() below! It's just an accessor fn().
 		ring.show();
 }
 

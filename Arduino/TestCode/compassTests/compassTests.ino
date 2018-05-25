@@ -27,6 +27,7 @@ ADWatch watch = ADWatch(t,strip);
 
 
 
+
 //For Flow
 
 //ShowTimeButton
@@ -38,6 +39,9 @@ bool flourish = true;     //whether or not to do the light show on button press
 //SetTimeButton
 const uint8_t setTimePin = 4;
 int setTimeButtonState = 0;
+
+//Flourish Colours
+uint32_t compassColour;
 
 
 void setup() {
@@ -63,14 +67,15 @@ void setup() {
   setTime(1,24,30,12,28,2017);
   
 
-  //Testing our Tracker Library Function
+  //Init Flourish Colours
+  compassColour = strip.Color(255,100,0,5);
  
 
 
 }
 
 void loop() {
-
+ // setFlag(6);
   t =now();
  //Start Watch Button checker 
   buttonState=digitalRead(startWatchPin);
@@ -84,22 +89,25 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         watch.flourish();
+        //setFlag(6);
+         watch.flourish(compassColour);
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
 
+      //setFlag(1);
       //watch.clearRing(); //TODO: NEEDED IF FOLLOWED BY SHOWTIME
       //watch.compass->setCompassHeading(180);
-      delay(1000);
+      delay(200);
       watch.showHeading(randFloat());
-      delay(1000);
+      delay(200);
       
     }
    else{
     strip.clear();             //1. Button must be off, clear the strip
     strip.show();
     flourish = true;                //3. remember to flourish when we turn it back on.
+    //removeFlag(6);
    }
 
     delay(200);                     //Apparently good for 'debounce' whatever that is
@@ -107,31 +115,6 @@ void loop() {
 }
  
 
-//void testFACE(){
-//  t = now();
-//  watch.face->colorWipe(watch.face->hrColour,200);
-//  watch.face->colorWipe(watch.face->minColour,200);
-//  watch.face->colorWipe(watch.face->secColour,200);
-//  delay(300);
-//  watch.face->colorWipe(watch.face->rstTimeColour,200);
-//  delay(300);
-//  watch.face->showAvg(watch.face->hrColour,watch.face->minColour);
-//  delay(300);
-//  
-//  
-//  watch.face->clearStrip();
-//  
-//}
-//
-//
-//void testGEARS(){
-//  watch.face->ring.setPixelColor(watch.gears->getHourIndex(),watch.face->hrColour);
-//  watch.face->ring.setPixelColor(watch.gears->getMinuteIndex(),watch.face->minColour);
-//  watch.face->ring.setPixelColor(watch.gears->getSecondIndex(),watch.face->secColour);
-//   watch.face->ring.show();
-//  
-//  
-//}
 
 void setFlag(int n){
   uint32_t  err = strip.Color(255,0,0,0);

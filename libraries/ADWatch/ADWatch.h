@@ -33,7 +33,7 @@ class ADWatch{
 		void flashlight(void);
 
 		//Flow tools
-		void flourish(void);
+		void flourish(uint32_t);
 		void clearRing(void);
 		
 
