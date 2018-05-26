@@ -36,11 +36,13 @@ Speedometer::Speedometer(float kn, Adafruit_NeoPixel neoP){
 
 
 void Speedometer::setRegionA(uint8_t offsA){
+	dial->ring.setPixelColor(11,dial->blank);
 	for (uint8_t i = 6; i <= offsA;i++)
 		dial->ring.setPixelColor(i,dial->regionAColour);
 }
 
 void Speedometer::setRegionB(uint8_t offsB){
+	dial->ring.setPixelColor(11,dial->blank);
 	for(uint8_t i=9;i < offsB;i++){ // Watch out for potential offset errors...
 		dial->ring.setPixelColor(i,dial->regionBColour);
 	}
@@ -101,13 +103,12 @@ void Speedometer::removeTail(float h){
  */
 void Speedometer::trackSpeed(float kn){
 	
+	//Magic 11 fix.
 	//Remvoe tail also handels update now.
 	//Assign colours to the appropriate indicies.	
-	setDial(3);
+	gauge->updateSpeed(kn);
+	setDial(gauge->getSpeedIndex());
 	
-	//magic 11
-//	if(curHeadIdx < 11)
-//		dial->ring.setPixelColor(11,dial->blank);
 	
 	//Display 
 	dial->ring.show();

@@ -96,7 +96,7 @@ void loop() {
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       delay(200);
-      watch.showSpeed(40.0);
+      watch.showSpeed(98);
       delay(200);
       
     }

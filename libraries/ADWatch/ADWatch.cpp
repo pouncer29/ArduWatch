@@ -43,6 +43,7 @@ void ADWatch::showTime(time_t t){
 
 //TODO implement
 void ADWatch::showSpeed(float s){
+	speedo->setSpeed(s);
 	speedo->trackSpeed(s);
 }
 
