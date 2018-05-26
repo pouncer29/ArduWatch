@@ -21,9 +21,12 @@ class Speedometer{
 		//Methods
 		Speedometer(float,Adafruit_NeoPixel); //TODO maybe change from float but hey, maybe not.
 		void trackSpeed(float);
-		void setDial(uint8_t);
 		void setSpeed(float);
 		void removeTail(float);
+		void setDial(uint8_t);
+		void setRegionA(uint8_t);
+		void setRegionB(uint8_t);
+		void setRegionC(uint8_t);
 
 		float curSpeed;
 		uint8_t curHeadIdx;

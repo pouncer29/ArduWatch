@@ -30,10 +30,3 @@ Dial::Dial(Adafruit_NeoPixel leds){
 	blank = ring.Color(0,0,0,0);
 }	
 
-void Dial::setRegions(){
-	colorWipe(regionAColour,70);
-	colorWipe(regionBColour,70);
-	colorWipe(regionCColour,70);
-
-	return;
-}

@@ -32,16 +32,13 @@ float Gauge::getCurSpeed(void){
 
 uint8_t Gauge::getSpeedIndex(void) {
 	float speed = getCurSpeed();
-		if (speed <= 120)	
-			speed *= -1;
+	uint8_t idx = 0;
 
-		uint8_t idx = speed/20 - 6;
-	
-		//For testing, return above if error free.
-		if (idx>0)
-			return idx;
-
-		return 5;
+	if (speed <= 120)
+		idx= -1 * ((-1 * speed/20) - 6);
+	else
+		idx = (speed/20) - 6;
+	return idx;
 }
 
 void Gauge::updateSpeed(float newSpeed){

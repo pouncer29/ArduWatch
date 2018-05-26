@@ -77,7 +77,7 @@ void setup() {
 }
 
 void loop() {
- // setFlag(6);
+ //setFlag(0);
   t =now();
  //Start Watch Button checker 
   buttonState=digitalRead(startWatchPin);
@@ -91,13 +91,12 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-        setFlag(6);
          watch.flourish(speedoColour);
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
       delay(200);
-      watch.showSpeed(80);
+      watch.showSpeed(40.0);
       delay(200);
       
     }
