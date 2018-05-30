@@ -28,5 +28,6 @@ Dial::Dial(Adafruit_NeoPixel leds){
 	regionBColour = ring.Color(155,247,35); //yellow
 	regionCColour = ring.Color(255,39,28); //red
 	blank = ring.Color(0,0,0,0);
+	errorColour = ring.Color(255,0,0,0);
 }	
 

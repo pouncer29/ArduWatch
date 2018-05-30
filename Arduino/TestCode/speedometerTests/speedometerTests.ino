@@ -95,9 +95,13 @@ void loop() {
          delay(700);                
          flourish = false;          //5. remember not to florish every time we show the time.
       }
-      delay(200);
-      watch.showSpeed(98);
-      delay(200);
+      delay(400);
+
+      //RECALL SPEED IS IN KNOTS
+      watch.showSpeed(97.1923);
+      
+      //watch.showSpeed(randFloat());
+      delay(700);
       
     }
    else{
@@ -124,10 +128,11 @@ void removeFlag(int n){
 }
 
 float randFloat(){
-  float num = random(0,360);
+  float num = random(0,98);
   Serial.print(num);
   return num;
 }
+
 
 
 
