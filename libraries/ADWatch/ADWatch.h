@@ -6,6 +6,7 @@
 #include "Clock.h"
 #include "Compass.h"
 #include "Speedometer.h"
+#include "Flashlight.h"
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
@@ -21,8 +22,10 @@ class ADWatch{
 		//Implements
 		Adafruit_NeoPixel ring;
 		//Adafruit_GPS gps;	
+		Clock* clock;
 		Compass* compass;
 		Speedometer* speedo;
+		Flashlight* light;
 
 		//****Methods*****/
 		//Initializers
@@ -33,6 +36,8 @@ class ADWatch{
 		void showTime(time_t);//Can probably be void when GPS gets here!
 		void showSpeed(float);
 		void showHeading(float);
+		void showLight(void);
+		void showStrobe(uint8_t);
 	
 		//Internal Features
 		void flashlight(void);
@@ -45,7 +50,7 @@ class ADWatch{
 		
 	private:
 		//Features
-		Clock* clock;
+	//	Clock* clock;
 	//	Speedometer* speedo;
 	//	Compass* compass;
 

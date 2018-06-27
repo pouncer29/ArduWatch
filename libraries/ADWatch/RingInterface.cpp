@@ -61,8 +61,8 @@ void RingInterface::colorWipe(uint32_t c, uint16_t wait) {
     ring.show();
     delay(wait);
   }
-  clearStrip();
-  ring.show();
+  //clearStrip();
+  //ring.show();
 }
 
 //FOR TESTING ONLY

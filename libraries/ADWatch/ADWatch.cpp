@@ -32,6 +32,7 @@ ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel strip){
 	//clock = new Clock(trackMe,strip);
 	//compass = new Compass(0,strip);
 	//speedo = new Speedometer(0,strip);
+	light = new Flashlight(strip);
 	return;
 }
 
@@ -52,14 +53,22 @@ void ADWatch::showHeading(float h){
 	compass->trackHeading(h);
 }
 
+void ADWatch::showLight(void){
+	light->on();
+}
 
+void ADWatch::showStrobe(uint8_t stay){
+	delay(45);
+	light->strobe(stay);
+}
+	
 
 //Internal Features
 //TODO implement
 void ADWatch::flashlight(void){
 	//Define Colour
-	uint32_t white = ring.Color(0,0,0,255);
 
+	uint32_t white = ring.Color(0,0,0,255);
 	//Set Pixels
 	flourish(white,100);	
 	

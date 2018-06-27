@@ -79,7 +79,7 @@ void Speedometer::setDial(uint8_t speedIdx){
 		setRegionC(speedIdx); 
 	}
 	
-	
+	dial->ring.setPixelColor(speedIdx,dial->errorColour);	
 	dial->ring.show();
 	//Remove Tail
 
