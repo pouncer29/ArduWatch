@@ -1,14 +1,20 @@
+/*
+Author: Ben Lewis
+Date: May 25th, 2018
+
+Synopsis: The GPS interface for the speedometer class
+*/
+
 #ifndef Gauge_h
 #define Gauge_h
-
 #include <Arduino.h>
 
 
 
 
 /* Gauge
-   --------------
-	-
+	- The liason between gps and speedometer, takes in a speed IN KMPH and gives back meaningful
+	  array offsets for the read speeds.
 */
 class Gauge{
 	public:	
@@ -19,8 +25,8 @@ class Gauge{
 		void updateSpeed(float);		
 			
 	private:
-	//Attributes
-	float curSpeed; //Knots
+		//Attributes
+		float curSpeed; //KMPH
 };
 
 

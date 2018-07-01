@@ -8,8 +8,8 @@
 
 
 /* Speedometer
-   -----------
-	
+   - The union of Gauge and Dial. Takes a speed in knots from the gps, converts it to kmph,
+	 and then displays it in 20kmph starting from index 6 (0kmph) to 4 ( > 180kmph).	
 */
 class Speedometer{
 	public:

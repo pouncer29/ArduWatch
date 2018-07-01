@@ -7,17 +7,15 @@
 
 #include "Dial.h"
 
-/*
- *Dial()
- * precond: none
- * postcond: 
- * 
- * Parameters:
- *    Adafruit_Neopixel leds - the chain of Neopixels that will serve as our needle
- *
- * Synopsis: assigns the Faces ring to the ledRing and assigns special colours
- *
- * return: a new Needle Object
+/* Dial()
+   precond: none
+   postcond: 
+   
+   Parameters: leds - the chain of Neopixels that will serve as our needle
+  
+   Synopsis: assigns special colours and inits ring to the LEDs
+  
+   return: a new Needle Object
  */
 Dial::Dial(Adafruit_NeoPixel leds){
 	//Instantiate Attributes;
