@@ -7,17 +7,15 @@
 
 #include "Needle.h"
 
-/*
- *Needle()
- * precond: none
- * postcond: 
- * 
- * Parameters:
- *    Adafruit_Neopixel leds - the chain of Neopixels that will serve as our needle
- *
- * Synopsis: assigns the Faces ring to the ledRing and assigns special colours
- *
- * return: a new Needle Object
+/* Needle()
+   precond: none
+   postcond: leds is initialized
+   
+   Parameters: leds - the chain of Adafruit_Neopixels that will represent our needle locations
+  
+   Synopsis: Assigns the special colours needed for the compass function. North Yellow, heading blue or someting.
+  
+   return: a new Needle Object
  */
 Needle::Needle(Adafruit_NeoPixel leds){
 	

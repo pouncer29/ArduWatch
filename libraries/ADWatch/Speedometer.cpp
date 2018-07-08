@@ -30,13 +30,35 @@ Speedometer::Speedometer(float kn, Adafruit_NeoPixel neoP){
 	gauge = new Gauge(kn);
 }
 
+/* setRegionA()
+	precond: offsA is a valid array offset
+	postcond: Pixels are set for region A
 
+	Parameters: offsA - an integer that corresponds to the current speed
+	
+	Synopsis: Clears the magic 11 bug then sets pixels from 6 (0km/h) to the provided
+			  Index in regionAColour(green)
+	
+	return: nothing
+*/
 void Speedometer::setRegionA(uint8_t offsA){
 	dial->ring.setPixelColor(11,dial->blank);
 	for (uint8_t i = 6; i <= offsA;i++)
 		dial->ring.setPixelColor(i,dial->regionAColour);
 }
 
+
+/* setRegionB()
+	precond: offsB is a valid array offset
+	postcond: Pixels are set for region B
+
+	Parameters: offsB - an integer that corresponds to the current speed
+	
+	Synopsis: Clears the magic 11 bug then sets pixels from 9 (60km/h) to the provided
+			  Index in regionBColour(Yellow).
+	
+	return: nothing
+*/
 void Speedometer::setRegionB(uint8_t offsB){
 	dial->ring.setPixelColor(11,dial->blank);
 	for(uint8_t i=9;i < offsB;i++){ // Watch out for potential offset errors...
@@ -44,10 +66,22 @@ void Speedometer::setRegionB(uint8_t offsB){
 	}
 }
 
+/* setRegionC()
+	precond: offsC is a valid array offset
+	postcond: Pixels are set for region C
+
+	Parameters: offsC - an integer that corresponds to the current speed
+	
+	Synopsis: Clears the magic 11 bug then sets pixels from 0 (120km/h) to the provided
+			  Index in regionCColour(red)
+	
+	return: nothing
+*/
 void Speedometer::setRegionC(uint8_t offsC){
 	for(uint8_t i=0; i <= offsC; i++)		//Using < in place will reduce to 3 if you change your mind
 		dial->ring.setPixelColor(i,dial->regionCColour);
 }
+
 /* placeNeedle()
 	precond: speed is set
 	postcond: speed is displayed
@@ -56,6 +90,7 @@ void Speedometer::setRegionC(uint8_t offsC){
   
 	Synopsis: Takes a speed in (kmph) and puts it through a series of if statemetns to determine
 			  which speed quadrents need to be illuminated.
+			  Note- with each progressive region, the overlap is overwritten by the higher speed's colour.
   
 	return: nothing
   
@@ -81,8 +116,11 @@ void Speedometer::setDial(uint8_t speedIdx){
 	
 	return;
 }
-void Speedometer::removeTail(float h){
 
+/*
+	a vestigial method as no tail is left by this one.... I think.
+*/
+void Speedometer::removeTail(float h){
 	return;
 }
 

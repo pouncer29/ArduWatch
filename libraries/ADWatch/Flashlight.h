@@ -12,7 +12,7 @@
 
 /* Flashlight
    -----------
-	- A simple class to handle the setting of all lights on the ring to on
+	- A simple class to handle the setting of all lights on the ring to on (and sometimes off and on really fast)
 	
 */
 class Flashlight: public RingInterface{

@@ -8,18 +8,11 @@
 #define	RingInterface_h
 
 #include <Adafruit_NeoPixel.h>
-/* Face
-   --------------
-   
-   Look, Nobody can get it right the first time. I just wanted a working watch. Now that I kind
-   of have that, It's time to rethink our architecture. That is what this branch is for. 
-   Why? Becuase unless you can tell me why we are setting the time and the colours for the 
-   hands in the same class, I'm going to stick with my gut and say it was a poor design 
-   choice. 
-   
-   This class now has but one pupose: Manage colours. It will still be the interface between
-   time and the ring but now that time and it's indices will be coming from elsewhere. 
-   It is going to be a right nasty refactor but I think is for the best!
+/* RingInterface
+	------------
+	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 
+	Speedometer, Compass, Clock, Flashlight. They all need special colours, they for the most part all 
+	implement average, clear, or wipe. This class provides them that.
 */
 class RingInterface{
 	

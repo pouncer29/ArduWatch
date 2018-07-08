@@ -4,9 +4,6 @@
 #include <Arduino.h>
 #include <TimeLib.h>
 
-
-
-
 /* Gears
    --------------
 	- Contains methods to get indecies for the Hour, Minute and Second hands which are used internally to their postition relative
@@ -26,8 +23,6 @@ class Gears{
 	//Attributes
 	time_t curTime;
 };
-
-
 
 #endif
 

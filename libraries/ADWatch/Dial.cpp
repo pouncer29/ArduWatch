@@ -2,20 +2,20 @@
 	Author: Ben Lewis
 	Date: May 10th, 2018
 	
-	Synopsis: Implementation for Needle.h
+	Synopsis: Implementation for Dial.h
 */
 
 #include "Dial.h"
 
 /* Dial()
-   precond: none
-   postcond: 
+   precond: Leds initialized
+   postcond: New Dial is created
    
-   Parameters: leds - the chain of Neopixels that will serve as our needle
+   Parameters: leds - the chain of Neopixels that will serve as our Dial
   
    Synopsis: assigns special colours and inits ring to the LEDs
   
-   return: a new Needle Object
+   return: a new Dial Object
  */
 Dial::Dial(Adafruit_NeoPixel leds){
 	//Instantiate Attributes;

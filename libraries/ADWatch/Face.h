@@ -13,8 +13,8 @@
 #include <TimeLib.h>
 #include "RingInterface.h"
 /* Face
-   --------------
-   
+   -------------- 
+   *******************************************************************************************
    Look, Nobody can get it right the first time. I just wanted a working watch. Now that I kind
    of have that, It's time to rethink our architecture. That is what this branch is for. 
    Why? Becuase unless you can tell me why we are setting the time and the colours for the 
@@ -24,24 +24,23 @@
    This class now has but one pupose: Manage colours. It will still be the interface between
    time and the ring but now that time and it's indices will be coming from elsewhere. 
    It is going to be a right nasty refactor but I think is for the best!
+   *******************************************************************************************
+
+	Kept the above comment block for comedic purposes. This class had a lot of weight taken off of it's shoulders
+	during the architecture update. Now it is a subclass of 'RingInterface' which holds some of the bulkier and more
+	trivial functions that all feature classes must use on the ring. Defines Hand colours and the 'modMinColour' function
+	that is so crutial to the clock function
 */
 class Face: public RingInterface{
 	
 	public:
 		//Attributes
-		//Adafruit_NeoPixel ring;
 		uint32_t hrColour;
 		uint32_t minColour;
 		uint32_t secColour;
-		uint32_t rstTimeColour;
-		// uint32_t blank;
 		//Methods
 		Face(Adafruit_NeoPixel);
-		//uint32_t getAverageCross(uint32_t,uint32_t);
 		void modMinColour(time_t);
-		//void clearStrip(void);
-		//void colorWipe(uint32_t, uint16_t);
-		//void showAvg(uint32_t,uint32_t);
 		
 		
 

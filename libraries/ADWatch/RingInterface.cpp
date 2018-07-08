@@ -7,45 +7,41 @@
 
 #include "RingInterface.h"
 
-/*
- *RingInterface()
- * precond: none
- * postcond: a new Face object is created
- * 
- * Parameters:
- *    Adafruit_Neopixel leds - the chain of Neopixels that will serve as our face.
- *
- * Synopsis: assigns the Faces ring to the ledRing and assigns special colours
- *
- * return: a new Face Object
+/* RingInterface()
+   precond: none
+   postcond: a new Face object is created
+   
+   Parameters: leds - the chain of Neopixels that will serve as our UI.
+  
+   Synopsis: Defines interface specific display methods and allows universal colour definition.
+  
+   return: a new Face Object
  */
 RingInterface::RingInterface(){
 }
 
 
-/*
-clearStrip()
- *  precond: none
- *  postcond: all pixels in ring are set to blank 
- *  
- *	Synopsis: clears all of the colours from the rings indicies.
- * 
- *  return: nothing
+/* clearStrip()
+    precond: none
+    postcond: all pixels in ring are set to blank 
+    
+  	Synopsis: clears all of the colours from the rings indicies.
+   
+    return: nothing
  */
 void RingInterface::clearStrip(void){
 	ring.clear();
 }
 
 /* getAverageCross()
- *  precond: none
- *  postcond: none
- *  
- *  Paramaters
- *    colourA/B: Both are unsigned 32 bit unsigned integers that represent 2 colours who's RGBW values will 
- *               be averaged why? Because what else would happen when two clock hands cross?
- *               
- *  return: the uint32 average of the two colours.
- * 
+    precond: none
+    postcond: none
+    
+    Paramaters: colourA/B - Both are unsigned 32 bit unsigned integers that represent 2 colours who's RGBW values will be
+							averaged and returned. Used for crossing indecies.
+                 
+    return: the uint32 average of the two colours.
+   
  */
 uint32_t RingInterface::getAverageCross(uint32_t colourA, uint32_t colourB){
   return((colourA+colourB)/2);
