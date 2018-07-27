@@ -19,6 +19,10 @@ class ADWatch{
 	public:
 		
 		//Attributes
+		uint32_t clock_colour;
+		uint32_t speedo_colour;
+		uint32_t compass_colour;
+		uint32_t light_colour;
 		
 		//Implements
 		Adafruit_NeoPixel ring;

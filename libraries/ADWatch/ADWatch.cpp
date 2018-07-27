@@ -15,12 +15,20 @@ Synopsis:
 //ADWatch::ADWatch(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
 ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel strip){
-	strip.setBrightness(20);
+	ring.setBrightness(20);
 	ring = strip;
-	//clock = new Clock(trackMe,strip);
-	//compass = new Compass(0,strip);
-	//speedo = new Speedometer(0,strip);
-	light = new Flashlight(strip);
+	
+	// init functions
+	clock = new Clock(trackMe,ring);
+	speedo = new Speedometer(0,ring);
+	compass = new Compass(0,ring);
+	light = new Flashlight(ring);
+
+	//grab colours for flourish/fn() switch
+	clock_colour =	clock->face->minColour;
+	speedo_colour = speedo->dial->regionBColour;
+	compass_colour = compass->needle->needleColour;
+	
 	return;
 }
 
@@ -39,6 +47,7 @@ ADWatch::ADWatch(time_t trackMe, Adafruit_NeoPixel strip){
 	return: nothing
 */
 void ADWatch::showTime(time_t t){
+	clock = new Clock(t,ring);
 	clock->trackTime(t); 
 }
 
@@ -55,6 +64,7 @@ void ADWatch::showTime(time_t t){
 	return: nothing.
 */
 void ADWatch::showSpeed(float s){
+	speedo = new Speedometer(0,ring);
 	speedo->setSpeed(s);
 	speedo->trackSpeed(s);
 }
@@ -74,6 +84,7 @@ void ADWatch::showSpeed(float s){
 	return: nothing
 */
 void ADWatch::showHeading(float h){
+	compass = new Compass(0,ring);
 	compass->trackHeading(h);
 }
 
@@ -90,6 +101,7 @@ void ADWatch::showHeading(float h){
 	return: nothing
 */
 void ADWatch::showLight(void){
+	light = new Flashlight(ring);
 	light->on();
 }
 
@@ -103,7 +115,9 @@ void ADWatch::showLight(void){
 	synopsis: gets the party started, strobes at a rate of <idk> /s in white (for now)
 */
 void ADWatch::showStrobe(uint8_t ceasePin){
+	bool stay = digitalRead(ceasePin);
 	delay(45);
+	light = new Flashlight(ring);
 	light->strobe(stay);
 }
 	

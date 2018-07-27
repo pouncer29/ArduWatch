@@ -21,13 +21,13 @@ Synopsis: The implementation for Speedometer.h
   	Paramaters: kn - the raw speed from the gps in knots
 				neoP - the neopixel ring/strip/face/iMadeBadDecisionsNaming
   
-  	Synopsis: Saves and converts the current speed and creates a new NeoPixel ring connection
+  	Synopsis: Sets current speed and creates a new NeoPixel ring connection
  */
-Speedometer::Speedometer(float kn, Adafruit_NeoPixel neoP){
-	curSpeed = convertSpeed(kn);
+Speedometer::Speedometer(float kmph, Adafruit_NeoPixel neoP){
+	curSpeed = kmph; //convertSpeed(kn);
 	strip = neoP;
 	dial = new Dial(neoP);
-	gauge = new Gauge(kn);
+	gauge = new Gauge(kmph*1.825);
 }
 
 /* setRegionA()
@@ -128,19 +128,19 @@ void Speedometer::removeTail(float h){
 	precond: speed is valid
     postcond: ring is activated to show the current speed.
   
-    Paramaters: km -  the speed that we will be tracking
+    Paramaters: kmph -  the speed that we will be tracking
 
     Synopsis: grab a speed and set the dial to the appropriate index where it can be passed
 			  to setDial to have the appropriate indicies illuminated via the Dial.
   
     return: nothing 		  
 */
-void Speedometer::trackSpeed(float km){
+void Speedometer::trackSpeed(float kmph){
 	
 	//Magic 11 fix.
 	//Remvoe tail also handels update now.
 	//Assign colours to the appropriate indicies.	
-	gauge->updateSpeed(kn);
+	gauge->updateSpeed(kmph);
 	setDial(gauge->getSpeedIndex());
 	
 	
@@ -156,24 +156,12 @@ void Speedometer::trackSpeed(float km){
   
   	 paramaters: newSpeed - what we update speed to.
   
-  	Synopsis: Takes in a speed in kn, converts it, then updates the speedometer with it.	
+  	Synopsis: Takes in a speed then updates the speedometer with it.	
    
   	return: nothing
  */
-void Speedometer::setSpeed(float newSpeed){
-	newSpeed = convertSpeed(newSpeed);
-	gauge->updateSpeed(newSpeed);
+void Speedometer::setSpeed(float kmph){
+	gauge->updateSpeed(kmph);
 	dial->clearStrip();
 }
 
-/*
-	precond: given speed is > 0
-	postcond: none
-
-	paramters: knSpeed - a speed in knots to be converted
-
-	synopsis: Takes in a kn speed and converts it to a kmph speed
-*/
-float Speedometer::convertSpeed(float knSpeed){
-	return knSpeed * 1.852;
-}

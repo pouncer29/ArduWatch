@@ -1,0 +1,153 @@
+#include <Adafruit_NeoPixel.h>
+#include <ADWatch.h>
+#include <TimeLib.h>
+
+/*From the RGBW TESTS (not everything)*/
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
+
+#define PIN 6
+#define NUM_LEDS 12
+#define BRIGHTNESS 20
+
+//For Time
+#define TIME_HEADER  "T"   // Header tag for serial time sync message
+#define TIME_REQUEST  7    // ASCII bell character requests a time sync message
+time_t t;
+
+//For Ring
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
+
+
+
+//Using a master watch Class
+ADWatch watch = ADWatch(t,strip);
+
+
+
+
+//For Flow
+
+//ShowTimeButton
+const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
+boolean on = false;         //current output state
+int buttonState = 0;       //the current flow through the button.
+bool flourish = true;     //whether or not to do the light show on button press
+
+//SetTimeButton
+const uint8_t setTimePin = 4;
+int setTimeButtonState = 0;
+
+//Flourish Colours
+uint32_t compassColour;
+uint32_t speedoColour;
+uint32_t clockColour;
+uint32_t flashColour;
+
+//test values
+ float testSpeed = 45.5;
+ float testHeading = 30.0;
+// time_t t;
+
+void setup() {
+
+    // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
+  #if defined (__AVR_ATtiny85__)
+    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+  #endif
+  // End of trinket special code
+  
+  //INIT RING
+  strip.begin();    
+  strip.clear();
+  strip.show(); //Supposedly initilizes all to off  
+
+
+  
+  //For Buttons
+  pinMode(startWatchPin,INPUT);
+  pinMode(setTimePin,INPUT);
+  
+  //Test values
+  setTime(1,24,30,12,28,2017);
+
+  
+
+  //Init Flourish Colours
+    compassColour = watch.compass_colour;
+    speedoColour = watch.speedo_colour;
+    clockColour = watch.clock_colour;
+    flashColour = watch.light_colour;
+
+
+}
+
+void loop() {
+  setFlag(0);
+  t =now();
+ //Start Watch Button checker 
+  buttonState=digitalRead(startWatchPin);
+  if(buttonState == HIGH){
+     if(on == true)
+       on = false;
+     else
+       on = true;
+   }
+
+  //Start watch button code.
+  if(on == true){
+      if(flourish){
+         setFlag(1);
+         //watch.flourish(strip.Color(255,0,0,0),100);
+         delay(700);                
+         flourish = false;          //5. remember not to florish every time we show the time
+        }
+      delay(200);
+      /*************************
+      PUT WATCH CODE HERE falsl:e
+      **************************/
+      watch.showTime(t);
+      delay(500);
+      watch.showSpeed(testSpeed);
+      delay(500);
+      watch.showHeading(testHeading);
+      delay(500);
+      watch.showLight();
+      /**********************************/
+      delay(700);
+      
+    }
+   else{
+    strip.clear();             //1. Button must be off, clear the strip
+    strip.show();
+    flourish = true;                //3. remember to flourish when we turn it back on.
+   }
+
+    delay(200);                     //Apparently good for 'debounce' whatever that is
+
+}
+ 
+
+
+void setFlag(int n){
+  uint32_t  err = strip.Color(255,0,0,0);
+  strip.setPixelColor(n,err);
+  strip.show();
+}
+void removeFlag(int n){
+  uint32_t blank = strip.Color(0,0,0,0);
+  strip.setPixelColor(n,blank);
+  strip.show();
+}
+
+float randFloat(){
+  float num = random(0,98);
+//  Serial.print(num);
+  return num;
+}
+
+
+
+
+
