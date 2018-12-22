@@ -49,9 +49,9 @@ uint32_t flashColour;
 void setup() {
 
     // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
-  #if defined (__AVR_ATtiny85__)
-    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-  #endif
+//  #if defined (__AVR_ATtiny85__)
+//    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+//  #endif
   // End of trinket special code
   
   //INIT RING
@@ -72,7 +72,7 @@ void setup() {
   //Init Flourish Colours
   //compassColour = watch.compass->needle->needleColour;
 //  speedoColour = watch.speedo->dial->regionAColour;
-    flashColour = watch.ring.Color(0,0,0,255);
+//    flashColour = watch.ring.Color(0,0,0,255);
 
 
 }
@@ -92,19 +92,20 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
-         setFlag(1);
-         //watch.flourish(strip.Color(255,0,0,0),100);
-         delay(700);                
+         //setFlag(1);
+         watch.flourish(strip.Color(25,10,150,0),100);
+         delay(500);                
          flourish = false;          //5. remember not to florish every time we show the time
         }
       delay(200);
       /*************************
       PUT WATCH CODE HERE falsl:e
       **************************/
-      watch.showStrobe(startWatchPin);
+       watch.showTime(t);
+      //watch.showSpeed(randFloat());
       //watch.ring.setPixelColor(watch.light->lightColour,0);
       //setFlag(0);
-      //watch.ring.show(); 
+      watch.ring.show(); 
      
       /**********************************/
       delay(700);
