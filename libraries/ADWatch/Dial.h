@@ -18,15 +18,8 @@
 class Dial: public RingInterface{
 	
 	public:
-		//Attributes
-		uint32_t regionAColour; //[0,60)
-		uint32_t regionBColour; // [60,120)
-		uint32_t regionCColour; // [120,180)
-		uint32_t blank;
-
 		//Methods
-		Dial(Adafruit_NeoPixel);
-		void setRegions(void);
+		Dial();
 };
 #endif
 		

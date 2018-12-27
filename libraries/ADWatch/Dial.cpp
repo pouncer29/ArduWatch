@@ -17,9 +17,8 @@
   
    return: a new Dial Object
  */
-Dial::Dial(Adafruit_NeoPixel leds){
+Dial::Dial(){
 	//Instantiate Attributes;
-	ring = leds;
 	
 	//Define special Colours
 	regionAColour = ring.Color(1,188,1,0); //green
@@ -28,4 +27,5 @@ Dial::Dial(Adafruit_NeoPixel leds){
 	blank = ring.Color(0,0,0,0);
 	errorColour = ring.Color(255,0,0,0);
 }	
+
 

@@ -20,8 +20,8 @@ Synopsis: Gears for the watch
    
  	return: a New gears object that tracks time t  
  */
-Gears::Gears(time_t* t){
-	curTime = t;	
+Gears::Gears(){
+	curTime = now();
 }
 
 /* getHourIndex()
@@ -85,11 +85,3 @@ void Gears::updateTime(time_t newTime){
 	curTime = newTime;
 }
 
-
-
-
-
-
-
-
-	

@@ -16,15 +16,12 @@
   
    return: a new Face Object
  */
-Face::Face(Adafruit_NeoPixel leds){
+Face::Face(){
 	
-	//Instantiate Attributes;
-	ring = leds;
 	//Define special Colours
 	hrColour = ring.Color(255,100,0,5);
 	minColour = ring.Color(0,255,95,0);
 	secColour = ring.Color(0,160,255,0);
-
 	blank = ring.Color(0,0,0,0);
 }
 
@@ -46,7 +43,7 @@ Face::Face(Adafruit_NeoPixel leds){
     
     return: nothing 
  */
-void Face::modMinColour(time_t localTime){
+void Face::modMinColour(time_t localTime,Adafruit_NeoPixel ring){
 
   //minMod: Takes the remainder of the minute and 5 to cycle through values of 0-4
   uint16_t minMod = ((minute(localTime)%5)*64);
@@ -63,4 +60,4 @@ void Face::modMinColour(time_t localTime){
 
 	
 	
-	
+

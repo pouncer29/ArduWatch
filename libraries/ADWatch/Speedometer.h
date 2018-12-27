@@ -14,19 +14,18 @@
 class Speedometer{
 	public:
 		//Attributes
-		Adafruit_NeoPixel strip;
 		Dial* dial;
 		Gauge* gauge;
 		
 		//Methods
-		Speedometer(float,Adafruit_NeoPixel); //TODO maybe change from float but hey, maybe not.
-		void trackSpeed(float);
+		Speedometer(); //TODO maybe change from float but hey, maybe not.
+		void trackSpeed(float,Adafruit_NeoPixel*);
 		void setSpeed(float);
-		void removeTail(float);
-		void setDial(uint8_t);
-		void setRegionA(uint8_t);
-		void setRegionB(uint8_t);
-		void setRegionC(uint8_t);
+		void removeTail(float,Adafruit_NeoPixel*);
+		void setDial(uint8_t,Adafruit_NeoPixel*);
+		void setRegionA(uint8_t,Adafruit_NeoPixel*);
+		void setRegionB(uint8_t,Adafruit_NeoPixel*);
+		void setRegionC(uint8_t,Adafruit_NeoPixel*);
 
 		float curSpeed;
 		uint8_t curHeadIdx;

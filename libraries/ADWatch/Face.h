@@ -34,13 +34,9 @@
 class Face: public RingInterface{
 	
 	public:
-		//Attributes
-		uint32_t hrColour;
-		uint32_t minColour;
-		uint32_t secColour;
-		//Methods
-		Face(Adafruit_NeoPixel);
-		void modMinColour(time_t);
+	//Methods
+		Face();
+		void modMinColour(time_t,Adafruit_NeoPixel);
 		
 		
 

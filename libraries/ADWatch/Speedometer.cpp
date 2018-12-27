@@ -23,11 +23,10 @@ Synopsis: The implementation for Speedometer.h
   
   	Synopsis: Sets current speed and creates a new NeoPixel ring connection
  */
-Speedometer::Speedometer(float kmph, Adafruit_NeoPixel neoP){
-	curSpeed = kmph; //convertSpeed(kn);
-	strip = neoP;
-	dial = new Dial(neoP);
-	gauge = new Gauge(kmph*1.825);
+Speedometer::Speedometer(){
+	//curSpeed = kmph; //convertSpeed(kn);
+	dial = new Dial();
+	gauge = new Gauge(0);
 }
 
 /* setRegionA()
@@ -41,10 +40,11 @@ Speedometer::Speedometer(float kmph, Adafruit_NeoPixel neoP){
 	
 	return: nothing
 */
-void Speedometer::setRegionA(uint8_t offsA){
-	dial->ring.setPixelColor(11,dial->blank);
+void Speedometer::setRegionA(uint8_t offsA,Adafruit_NeoPixel* ring){
+	
+	ring->setPixelColor(11,dial->blank);
 	for (uint8_t i = 6; i <= offsA;i++)
-		dial->ring.setPixelColor(i,dial->regionAColour);
+		ring->setPixelColor(i,dial->regionAColour);
 }
 
 
@@ -59,10 +59,10 @@ void Speedometer::setRegionA(uint8_t offsA){
 	
 	return: nothing
 */
-void Speedometer::setRegionB(uint8_t offsB){
-	dial->ring.setPixelColor(11,dial->blank);
+void Speedometer::setRegionB(uint8_t offsB,Adafruit_NeoPixel* ring){
+	ring->setPixelColor(11,dial->blank);
 	for(uint8_t i=9;i < offsB;i++){ // Watch out for potential offset errors...
-		dial->ring.setPixelColor(i,dial->regionBColour);
+		ring->setPixelColor(i,dial->regionBColour);
 	}
 }
 
@@ -77,9 +77,9 @@ void Speedometer::setRegionB(uint8_t offsB){
 	
 	return: nothing
 */
-void Speedometer::setRegionC(uint8_t offsC){
+void Speedometer::setRegionC(uint8_t offsC,Adafruit_NeoPixel* ring){
 	for(uint8_t i=0; i <= offsC; i++)		//Using < in place will reduce to 3 if you change your mind
-		dial->ring.setPixelColor(i,dial->regionCColour);
+		ring->setPixelColor(i,dial->regionCColour);
 }
 
 /* placeNeedle()
@@ -95,32 +95,28 @@ void Speedometer::setRegionC(uint8_t offsC){
 	return: nothing
   
  */
-void Speedometer::setDial(uint8_t speedIdx){	
+void Speedometer::setDial(uint8_t speedIdx,Adafruit_NeoPixel* ring){	
 	
 	//Regular offset Assignment
 	if(speedIdx >= 6 && speedIdx < 9){
-		setRegionA(speedIdx);
+		setRegionA(speedIdx,ring);
 	}
 	else if(speedIdx >= 9 && speedIdx < 12){
-		setRegionA(8);
-		setRegionB(speedIdx);
+		setRegionA(8,ring);
+		setRegionB(speedIdx,ring);
 	}
 	else if(speedIdx >= 0 && speedIdx < 4){
-		setRegionA(8);
-		setRegionB(12); // ensuring complete zone coverage by giving upper range bound
-		setRegionC(speedIdx); 
-	}
-
-	dial->ring.setPixelColor(speedIdx,dial->errorColour);//Was This for debug??	
-	dial->ring.show();
-	
+		setRegionA(8,ring);
+		setRegionB(12,ring); // ensuring complete zone coverage by giving upper range bound
+		setRegionC(speedIdx,ring); 
+	}	
 	return;
 }
 
 /*
 	a vestigial method as no tail is left by this one.... I think.
 */
-void Speedometer::removeTail(float h){
+void Speedometer::removeTail(float h,Adafruit_NeoPixel* r){
 	return;
 }
 
@@ -135,19 +131,16 @@ void Speedometer::removeTail(float h){
   
     return: nothing 		  
 */
-void Speedometer::trackSpeed(float kmph){
+void Speedometer::trackSpeed(float kmph,Adafruit_NeoPixel* ring){
 	
 	//Magic 11 fix.
-	//Remvoe tail also handels update now.
+	//Remove tail also handels update now.
 	//Assign colours to the appropriate indicies.	
 	gauge->updateSpeed(kmph);
-	setDial(gauge->getSpeedIndex());
-	
+	setDial(gauge->getSpeedIndex(),ring);
 	
 	//Display 
-	dial->ring.show();
-	dial->clearStrip();
-	
+	ring->show();
 }
 
 /*setSpeed()
@@ -162,6 +155,6 @@ void Speedometer::trackSpeed(float kmph){
  */
 void Speedometer::setSpeed(float kmph){
 	gauge->updateSpeed(kmph);
-	dial->clearStrip();
+	//dial->clearStrip(); // Don't want to add a NeoPixel Parameter.
 }
 

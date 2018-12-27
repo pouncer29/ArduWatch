@@ -24,11 +24,9 @@ Synopsis:
  *
  *	Synopsis: 
  */
-Compass::Compass(float h, Adafruit_NeoPixel neoP){
-	curHeading = h;
-	strip = neoP;
-	needle = new Needle(neoP);
-	magnet = new Magnet(h);
+Compass::Compass(){
+	needle = new Needle();
+	magnet = new Magnet(0);
 
 	curHeadIdx = magnet->getHeadingIndex();
 	prevHeadIdx = -1;
@@ -46,15 +44,15 @@ Compass::Compass(float h, Adafruit_NeoPixel neoP){
  * return: nothing
  *
  */
-void Compass::placeNeedle(uint8_t headingIdx){
+void Compass::placeNeedle(uint8_t headingIdx,Adafruit_NeoPixel* ring){
 	
 	//Regular offset Assignment
-	needle->ring.setPixelColor(headingIdx,needle->needleColour);
-	needle->ring.setPixelColor(0,needle->northColour); 
+	ring->setPixelColor(headingIdx,needle->needleColour);
+	ring->setPixelColor(0,needle->northColour); 
 
 	//Check for overlap
 	if (headingIdx == 0)
-		needle->ring.setPixelColor(0,needle->getAverageCross(needle->needleColour,needle->northColour));
+		ring->setPixelColor(0,needle->getAverageCross(needle->needleColour,needle->northColour));
 		
 	//Remove Tail
 //	removeTail(headingIdx);
@@ -73,7 +71,7 @@ void Compass::placeNeedle(uint8_t headingIdx){
  * Synopsis: Goes to an index, if it isn't important, blank it.
  * return: nothing
 */
-void Compass::removeTail(float h){
+void Compass::removeTail(float h,Adafruit_NeoPixel* ring){
 
 	//Store old Heading	
 	prevHeadIdx = magnet->getHeadingIndex();
@@ -84,7 +82,7 @@ void Compass::removeTail(float h){
 
 	//If we have a new heading, remove the old one.
 	if(curHeadIdx != prevHeadIdx)
-		needle->ring.setPixelColor(prevHeadIdx,needle->blank);
+		ring->setPixelColor(prevHeadIdx,needle->blank);
 	
 	return;
 }
@@ -100,21 +98,19 @@ void Compass::removeTail(float h){
  *
  * return: nothing 		  
  */
-void Compass::trackHeading(float h){
+void Compass::trackHeading(float h,Adafruit_NeoPixel* ring){
 	
 	//Remvoe tail also handels update now.
-	removeTail(h);
+	removeTail(h,ring);
 	
 	//Assign colours to the appropriate indicies.	
-	placeNeedle(magnet->getHeadingIndex());
+	placeNeedle(magnet->getHeadingIndex(),ring);
 	
 	//magic 11
 	if(curHeadIdx != 11)
-		needle->ring.setPixelColor(11,needle->blank);
+		ring->setPixelColor(11,needle->blank);
 	//Display 
-	needle->ring.show();
-	
-	needle->clearStrip();
+	ring->show();
 	
 }
 
@@ -129,22 +125,16 @@ void Compass::trackHeading(float h){
  * 
  *	return: nothing
  */
-void Compass::setCompassHeading(float newHeading){
+void Compass::setCompassHeading(float newHeading, Adafruit_NeoPixel* ring){
 
 	//blank the strip
 	//face->clearStrip();
-	//face->ring.show();
+	//face->ring->show();
 	
 	//Set new time and pass it to Gears
-	//setTime(hr,min,0,15,4,2012);
 	magnet->updateHeading(newHeading);
 		
-	
-	//Track the time being set.
-	//TrackTime really just tracks hand placement. It is ideal for this!
-	//trackTime(localTime);
-	
 	//Remove tail
-	needle->clearStrip();
+	ring->clear();
 }
 

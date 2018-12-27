@@ -17,10 +17,7 @@
   
    return: a new Needle Object
  */
-Needle::Needle(Adafruit_NeoPixel leds){
-	
-	//Instantiate Attributes;
-	ring = leds;
+Needle::Needle(){
 	
 	//Define special Colours
 	northColour = ring.Color(255,100,0,5);

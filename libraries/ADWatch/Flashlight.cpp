@@ -22,12 +22,20 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
   
   	Synopsis: Initializes fancy colours
  */
-Flashlight::Flashlight(Adafruit_NeoPixel neoP){
-	ring = neoP;
-	lightColour = ring.Color(0,0,0,255);
+Flashlight::Flashlight(void){
 	blank = ring.Color(0,0,0,0);
-
+	lightColour = ring.Color(255,255,255,40);
 }
+
+void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
+  for(uint8_t i=0; i<12; i++) {
+    ring->setPixelColor(i, c);    
+    ring->show();
+    //delay(wait);
+  }
+}
+
+
 
 /* on()
    precond: strip has been instantiated
@@ -38,16 +46,26 @@ Flashlight::Flashlight(Adafruit_NeoPixel neoP){
    
 	return: Nothing
  */
-void Flashlight::on(void){
-	colorWipe(lightColour,0);
+void Flashlight::on(Adafruit_NeoPixel* ring){
+	colorWipe(lightColour,0,ring);
+
+/*	for(uint8_t i=0; i<12; i++) {
+		ring->setPixelColor(i, lightColour);    
+		ring->show();
+		//delay(0);
+  	}*/
+
 	return;
 }
+
+
+
 
 /* off()
 	- actually just a wrapper for the clear function
  */
-void Flashlight::off(void){
-	ring.clear();
+void Flashlight::off(Adafruit_NeoPixel* ring){
+	ring->clear();
 	return;
 }
 
@@ -63,19 +81,24 @@ void Flashlight::off(void){
 
 	return: nothing
 */	
-void Flashlight::strobe(uint8_t ceasePin){
+void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
+	ring->setPixelColor(6,ring->Color(0,255,0,0));
+	ring->show();
 	while(digitalRead(ceasePin)==LOW){
 		//Strobe Delay
 		delay(30);
-		
+
+
+		//ring->setPixelColor(6,ring->Color(0,0,255,0));	
 		//Start off
-		off();
-		ring.show();
+		//off(ring);
+		ring->clear();
+		ring->show();
 		
 		//Wait...?
 		delay(100);
 		
-		on();
+		on(ring);
 	}
 	return;
 }

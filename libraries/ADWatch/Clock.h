@@ -17,17 +17,16 @@
 class Clock{
 	public:
 		//Attributes
-		Adafruit_NeoPixel strip;
 		time_t trackMe;
 		Face* face;
 		Gears* gears;
 		
 		//Methods
-		Clock(time_t,Adafruit_NeoPixel);
-		void trackTime(time_t);
-		void placeHands(uint8_t,uint8_t,uint8_t);
-		void setWatchTime(uint8_t,uint8_t,time_t); //Considering that we may not need to set. method may be donezo
-		void removeTail(uint8_t,uint8_t,uint8_t,uint8_t);
+		Clock();
+		void trackTime(time_t,Adafruit_NeoPixel*);
+		void placeHands(uint8_t,uint8_t,uint8_t, Adafruit_NeoPixel*);
+		void setWatchTime(uint8_t,uint8_t,time_t,Adafruit_NeoPixel*); //Considering that we may not need to set. method may be donezo
+		void removeTail(uint8_t,uint8_t,uint8_t,uint8_t,Adafruit_NeoPixel*);
 };
 
 #endif

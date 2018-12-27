@@ -19,11 +19,11 @@ class Compass{
 		Magnet* magnet;
 		
 		//Methods
-		Compass(float,Adafruit_NeoPixel); //TODO maybe change from float but hey, maybe not.
-		void trackHeading(float);
-		void placeNeedle(uint8_t);
-		void setCompassHeading(float);
-		void removeTail(float);
+		Compass(); //TODO maybe change from float but hey, maybe not.
+		void trackHeading(float,Adafruit_NeoPixel*);
+		void placeNeedle(uint8_t,Adafruit_NeoPixel*);
+		void setCompassHeading(float,Adafruit_NeoPixel*);
+		void removeTail(float,Adafruit_NeoPixel*);
 
 		float curHeading;
 		uint8_t curHeadIdx;

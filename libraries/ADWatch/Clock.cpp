@@ -16,19 +16,17 @@ Synopsis:
 
 /* Clock()
   
-  	precond: timeT is a valid time and Neopixel is instantiated
+  	precond: timeT is a valid time and NeoPixel is instantiated
    	postcond: A new ADWatch object is created
   
   	Paramaters: trackMe - a time_t Time we will track with our Gears
-				neoP - the Adafruit_NeoPixel ring that will serve as our Face
+				neoP - the Adafruit_NeoPixel* ring that will serve as our Face
   
   	Synopsis: Uses the time to create the *Gears* for the watch and *neoP* to set a face for the watch
  */
-Clock::Clock(time_t t, Adafruit_NeoPixel neoP){
-	trackMe = t; // Do we really need these things?
-	strip = neoP;
-	face = new Face(neoP);
-	gears = new Gears(t);
+Clock::Clock(){
+	face = new Face();
+	gears = new Gears();
 }
 
 /* placeHands()
@@ -47,41 +45,40 @@ Clock::Clock(time_t t, Adafruit_NeoPixel neoP){
    return: nothing
   
  */
-void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
+void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx,Adafruit_NeoPixel* ring){
 	
 	//Grab our modified minute colour.
-	face->modMinColour(gears->getCurTime()); 
+	face->modMinColour(gears->getCurTime(),ring); 
 
 	//Assign colours accordingly
 	//Base case: No Overlap regualr 
-	face->ring.setPixelColor(hrIdx,face->hrColour);
-	face->ring.setPixelColor(minIdx,face->minColour);
-	face->ring.setPixelColor(secIdx,face->secColour);
+	ring->setPixelColor(hrIdx,face->hrColour);
+	ring->setPixelColor(minIdx,face->minColour);
+	ring->setPixelColor(secIdx,face->secColour);
 	
 
 
 	// Otherwise: If Hands Cross, Their indicies will be the same so I average their set colours.
 	//This particuairly nasty block is only so nasty because I take the average of an average. will work on shortening 
 	if (secIdx == minIdx && minIdx == hrIdx)
-		face->ring.setPixelColor(minIdx,face->getAverageCross((face->getAverageCross(face->secColour,face->minColour)),face->hrColour));
+		ring->setPixelColor(minIdx,face->getAverageCross((face->getAverageCross(face->secColour,face->minColour)),face->hrColour));
 	else if(secIdx == minIdx)
-		face->ring.setPixelColor(minIdx,face->getAverageCross(face->secColour,face->minColour));
+		ring->setPixelColor(minIdx,face->getAverageCross(face->secColour,face->minColour));
 	else if(secIdx == hrIdx)
-		face->ring.setPixelColor(hrIdx,face->getAverageCross(face->secColour,face->hrColour));
+		ring->setPixelColor(hrIdx,face->getAverageCross(face->secColour,face->hrColour));
 	else if(hrIdx == minIdx)
-		face->ring.setPixelColor(hrIdx, face->getAverageCross(face->hrColour,face->minColour));
+		ring->setPixelColor(hrIdx, face->getAverageCross(face->hrColour,face->minColour));
 	
 	//Remove Tail
-	removeTail(hrIdx-1,hrIdx,minIdx,secIdx);
-	removeTail(minIdx-1,hrIdx,minIdx,secIdx);
-	removeTail(secIdx-1,hrIdx,minIdx,secIdx);
+	removeTail(hrIdx-1,hrIdx,minIdx,secIdx,ring);
+	removeTail(minIdx-1,hrIdx,minIdx,secIdx,ring);
+	removeTail(secIdx-1,hrIdx,minIdx,secIdx,ring);
 	
 	
 	return;
 }
 
-/* removeTail()
-  
+/* removeTail()  
    precond:none
    postcond: Removed the residual illumination left by passing hands
   
@@ -93,7 +90,8 @@ void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx){
    Synopsis: Goes to an index, if it isn't important, blank it.
    return: nothing
 */
-void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t secIdx){
+void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t secIdx,
+						Adafruit_NeoPixel* ring){
 	
 	//At 12:00 v !@12.
 	//handIdx--; //become the tail!
@@ -104,7 +102,7 @@ void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t sec
 		return;
 
 	//Blank the tail
-	face->ring.setPixelColor(tailIdx,face->blank);
+	ring->setPixelColor(tailIdx,face->blank);
 	return;
 }
 
@@ -120,16 +118,18 @@ void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t sec
   
    return: nothing 		  
  */
-void Clock::trackTime(time_t t){
+void Clock::trackTime(time_t t,Adafruit_NeoPixel* ring){
 
 	//Grab New Time
 	gears->updateTime(t);
 
+	ring->setPixelColor(face->hrColour,6);
+	ring->show();
 	//Assign colours to the appropriate indicies.	
-	placeHands(gears->getHourIndex(),gears->getMinuteIndex(),gears->getSecondIndex());
+	placeHands(gears->getHourIndex(),gears->getMinuteIndex(),gears->getSecondIndex(),ring);
 	
 	//Display 
-	face->ring.show();
+	ring->show();
 }
 
 /* setWatchTime()
@@ -146,11 +146,11 @@ void Clock::trackTime(time_t t){
 
   	return: nothing
  */
-void Clock::setWatchTime(uint8_t hr, uint8_t min, time_t localTime){
+void Clock::setWatchTime(uint8_t hr, uint8_t min, time_t localTime, Adafruit_NeoPixel* ring){
 
 	//blank the strip
-	face->clearStrip();
-	face->ring.show();
+	ring->clear();
+	ring->show();
 	
 	//Set new time and pass it to Gears
 	setTime(hr,min,0,15,4,2012);
@@ -159,9 +159,9 @@ void Clock::setWatchTime(uint8_t hr, uint8_t min, time_t localTime){
 	
 	//Track the time being set.
 	//TrackTime really just tracks hand placement. It is ideal for this!
-	trackTime(localTime);
+	trackTime(localTime,ring);
 	
 	//Remove tail
-	face->clearStrip();
+	ring->clear();
 }
 

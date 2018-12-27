@@ -12,7 +12,7 @@
 class Gears{
 	public:	
 		//Methods
-		Gears(time_t*);
+		Gears();
 		uint8_t getHourIndex(void);
 		uint8_t getMinuteIndex(void);
 		uint8_t getSecondIndex(void);
