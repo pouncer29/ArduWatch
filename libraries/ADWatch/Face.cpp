@@ -19,10 +19,10 @@
 Face::Face(){
 	
 	//Define special Colours
-	hrColour = ring.Color(255,100,0,5);
-	minColour = ring.Color(0,255,95,0);
-	secColour = ring.Color(0,160,255,0);
-	blank = ring.Color(0,0,0,0);
+	hrColour = ring->Color(255,100,0,5);
+	minColour = ring->Color(0,255,95,0);
+	secColour = ring->Color(0,160,255,0);
+	blank = ring->Color(0,0,0,0);
 }
 
 /* minModColour()
@@ -43,7 +43,7 @@ Face::Face(){
     
     return: nothing 
  */
-void Face::modMinColour(time_t localTime,Adafruit_NeoPixel ring){
+void Face::modMinColour(time_t localTime,Adafruit_NeoPixel* ring){
 
   //minMod: Takes the remainder of the minute and 5 to cycle through values of 0-4
   uint16_t minMod = ((minute(localTime)%5)*64);
@@ -51,8 +51,9 @@ void Face::modMinColour(time_t localTime,Adafruit_NeoPixel ring){
     minMod--;   //So that subtact 1 from 256 to prevent wrapping and not from 0 to go out of bounds on the strip array.
 
   //Minute becomes more red and less green as it progresses.
-  minColour = ring.Color(0+minMod,255-minMod,95,0);
-  ring.setPixelColor(11,blank); //The original Magic 11 appearence.
+  minColour = ring->Color(0+minMod,255-minMod,95,0);
+  ring->setPixelColor(11,blank); //The original Magic 11 appearence.
+
   return;
 }
 

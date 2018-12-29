@@ -14,9 +14,9 @@ Synopsis:
 
 //ADWatch::ADWatch(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
-ADWatch::ADWatch(Adafruit_NeoPixel* face){
-	strip = face;
-	strip->setBrightness(20);
+ADWatch::ADWatch(Adafruit_NeoPixel* strip){
+	ring = strip;
+	ring->setBrightness(20);
 	
 	// init functions
 	clock = new Clock();
@@ -27,9 +27,10 @@ ADWatch::ADWatch(Adafruit_NeoPixel* face){
 	//grab colours for flourish/fn() switch
 	clock_colour =	clock->face->minColour;
 	speedo_colour = speedo->dial->regionBColour;
-	compass_colour = compass->needle->needleColour;
+	compass_colour = compass->needle->northColour;
 	light_colour = light->lightColour;
 	blank = light->blank;
+	error_colour = speedo->dial->errorColour;
 	
 	return;
 }
@@ -48,8 +49,10 @@ ADWatch::ADWatch(Adafruit_NeoPixel* face){
 
 	return: nothing
 */
-void ADWatch::showTime(time_t t,Adafruit_NeoPixel* ring){
+void ADWatch::showTime(time_t t){
+//	ring->setPixelColor(1,ring->Color(0,255,0,0));
 	clock->trackTime(t,ring); 
+//	ring->setPixelColor(4,ring->Color(0,255,0,0));
 }
 
 //TODO test
@@ -64,7 +67,7 @@ void ADWatch::showTime(time_t t,Adafruit_NeoPixel* ring){
 
 	return: nothing.
 */
-void ADWatch::showSpeed(float s,Adafruit_NeoPixel* ring){
+void ADWatch::showSpeed(float s){
 	speedo->setSpeed(s);
 	speedo->trackSpeed(s,ring);
 }
@@ -84,7 +87,7 @@ void ADWatch::showSpeed(float s,Adafruit_NeoPixel* ring){
 	return: nothing
 */
 void ADWatch::showHeading(float h){
-	compass->trackHeading(h,strip);
+	compass->trackHeading(h,ring);
 }
 
 //TODO test
@@ -101,8 +104,8 @@ void ADWatch::showHeading(float h){
 */
 void ADWatch::showLight(){
 	//light = new Flashlight(ring);
-	//strip->setBrightness(80);
-	light->on(strip);
+	//ring->setBrightness(80);
+	light->on(ring);
 }
 
 //TODO test
@@ -114,10 +117,9 @@ void ADWatch::showLight(){
 	
 	synopsis: gets the party started, strobes at a rate of <idk> /s in white (for now)
 */
-void ADWatch::showStrobe(uint8_t ceasePin,Adafruit_NeoPixel* ring){
-	bool stay = digitalRead(ceasePin);
+void ADWatch::showStrobe(uint8_t ceasePin){
 	delay(45);
-	light->strobe(stay,ring);
+	light->strobe(ceasePin,ring);
 }
 	
 
@@ -132,7 +134,7 @@ void ADWatch::showStrobe(uint8_t ceasePin,Adafruit_NeoPixel* ring){
 
 	return: nothing
 */
-void ADWatch::setPixels(uint32_t c,Adafruit_NeoPixel* ring){	
+void ADWatch::setPixels(uint32_t c){	
 	for(uint8_t i =0; i<12; i++)
 		ring->setPixelColor(i,c);		
 }
@@ -148,7 +150,7 @@ void ADWatch::setPixels(uint32_t c,Adafruit_NeoPixel* ring){
 
 	return: nothing
 */
-void ADWatch::flourish(uint32_t colour, uint32_t wait,Adafruit_NeoPixel* ring){
+void ADWatch::flourish(uint32_t colour, uint32_t wait){
 		for(uint8_t i=0; i <12;i++){
 			ring->setPixelColor(i,colour);
 			ring->show();
@@ -159,4 +161,8 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait,Adafruit_NeoPixel* ring){
 		ring->show();
 }
 
+void ADWatch::showError(uint32_t errColour){
+	setPixels(errColour);
+	ring->show();
+}
 

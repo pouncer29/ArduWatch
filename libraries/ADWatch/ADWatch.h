@@ -23,11 +23,12 @@ class ADWatch{
 		uint32_t speedo_colour;
 		uint32_t compass_colour;
 		uint32_t light_colour;
+		uint32_t error_colour;
 		uint32_t blank;
 		
 		//Implements
 		//Adafruit_GPS gps;	
-		Adafruit_NeoPixel* strip;
+		Adafruit_NeoPixel* ring;
 		
 		//Features
 		Clock* clock;
@@ -42,16 +43,17 @@ class ADWatch{
 		ADWatch(Adafruit_NeoPixel*);
 		
 		//Views (Features)
-		void showTime(time_t,Adafruit_NeoPixel*);//Can probably be void when GPS gets here!
-		void showSpeed(float,Adafruit_NeoPixel*);
+		void showTime(time_t);//Can probably be void when GPS gets here!
+		void showSpeed(float);
 		void showHeading(float);
 		void showLight();
-		void showStrobe(uint8_t,Adafruit_NeoPixel*);
+		void showStrobe(uint8_t);
+		void showError(uint32_t);
 
 		//Flow tools
-		void flourish(uint32_t,uint32_t,Adafruit_NeoPixel*);
+		void flourish(uint32_t,uint32_t);
 		void clearRing(void);
-		void setPixels(uint32_t,Adafruit_NeoPixel*);
+		void setPixels(uint32_t);
 	
 	/*
 		In the future, it may be a good refactor to make all of our features private and store

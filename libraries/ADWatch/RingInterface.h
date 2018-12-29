@@ -17,7 +17,7 @@ class RingInterface{
 	
 	public:
 		//Attributes
-		Adafruit_NeoPixel ring;
+		Adafruit_NeoPixel* ring;
 		uint32_t blank;
 		uint32_t errorColour;
 		
@@ -41,7 +41,7 @@ class RingInterface{
 		//Methods
 		RingInterface();
 		uint32_t getAverageCross(uint32_t,uint32_t);
-	    void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel);
+	    void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel*);
 		void showAvg(uint32_t,uint32_t);
 
 };

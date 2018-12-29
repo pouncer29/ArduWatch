@@ -23,8 +23,8 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
   	Synopsis: Initializes fancy colours
  */
 Flashlight::Flashlight(void){
-	blank = ring.Color(0,0,0,0);
-	lightColour = ring.Color(255,255,255,40);
+	blank = ring->Color(0,0,0,0);
+	lightColour = ring->Color(255,255,255,40);
 }
 
 void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
@@ -82,14 +82,11 @@ void Flashlight::off(Adafruit_NeoPixel* ring){
 	return: nothing
 */	
 void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
-	ring->setPixelColor(6,ring->Color(0,255,0,0));
-	ring->show();
-	while(digitalRead(ceasePin)==LOW){
+	while(digitalRead(8)==LOW){
 		//Strobe Delay
 		delay(30);
 
 
-		//ring->setPixelColor(6,ring->Color(0,0,255,0));	
 		//Start off
 		//off(ring);
 		ring->clear();

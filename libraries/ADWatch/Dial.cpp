@@ -21,11 +21,11 @@ Dial::Dial(){
 	//Instantiate Attributes;
 	
 	//Define special Colours
-	regionAColour = ring.Color(1,188,1,0); //green
-	regionBColour = ring.Color(155,247,35); //yellow
-	regionCColour = ring.Color(255,39,28); //red
-	blank = ring.Color(0,0,0,0);
-	errorColour = ring.Color(255,0,0,0);
+	regionAColour = ring->Color(1,188,1,0); //green
+	regionBColour = ring->Color(155,247,35); //yellow
+	regionCColour = ring->Color(255,39,28); //red
+	blank = ring->Color(0,0,0,0);
+	errorColour = ring->Color(255,0,0,0);
 }	
 
 

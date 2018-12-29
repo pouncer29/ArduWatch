@@ -36,7 +36,7 @@ class Face: public RingInterface{
 	public:
 	//Methods
 		Face();
-		void modMinColour(time_t,Adafruit_NeoPixel);
+		void modMinColour(time_t,Adafruit_NeoPixel*);
 		
 		
 
