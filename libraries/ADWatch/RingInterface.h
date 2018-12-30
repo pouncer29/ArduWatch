@@ -37,6 +37,13 @@ class RingInterface{
 
 		//Flashlight
 		uint32_t lightColour;
+		uint32_t violet;
+		uint32_t indigo;
+		uint32_t blue;
+		uint32_t green;
+		uint32_t yellow;
+		uint32_t orange;
+		uint32_t red;
 
 		//Methods
 		RingInterface();

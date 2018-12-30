@@ -25,6 +25,23 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
 Flashlight::Flashlight(void){
 	blank = ring->Color(0,0,0,0);
 	lightColour = ring->Color(255,255,255,40);
+	violet = ring->Color(148,0,211,0);
+	indigo = ring->Color(75,0,130,0);
+	blue = ring->Color(0,0,255,0); 
+	green = ring->Color(0,255,0,0);
+	yellow = ring->Color(255,255,0,0);
+	orange = ring->Color(255,127,0,0);
+	red = ring->Color(255,0,0,0);
+	
+	//store the colours.
+	colours[0] = lightColour;
+	colours[1] = violet;
+	colours[2] =indigo;
+	colours[3] = blue;
+	colours[4] = green;
+	colours[5] = yellow;
+	colours[6] = orange;
+	colours[7] = red;
 }
 
 void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
@@ -46,15 +63,9 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
    
 	return: Nothing
  */
-void Flashlight::on(Adafruit_NeoPixel* ring){
+void Flashlight::on(Adafruit_NeoPixel* ring){	
 	colorWipe(lightColour,0,ring);
-
-/*	for(uint8_t i=0; i<12; i++) {
-		ring->setPixelColor(i, lightColour);    
-		ring->show();
-		//delay(0);
-  	}*/
-
+		
 	return;
 }
 
@@ -69,6 +80,20 @@ void Flashlight::off(Adafruit_NeoPixel* ring){
 	return;
 }
 
+/*party()
+	-Jazzy colour version of on
+*/
+uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
+	static uint16_t count = 0;	
+	count++;
+	if(count > 8)
+		count = 0;
+
+	return colours[count%8];
+}
+	
+			
+
 
 /* strobe()
 	precond: ceasePin is attached to a button that will change state
@@ -82,10 +107,11 @@ void Flashlight::off(Adafruit_NeoPixel* ring){
 	return: nothing
 */	
 void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
+	uint8_t flip = 0;
+	uint32_t colour = lightColour;
 	while(digitalRead(8)==LOW){
 		//Strobe Delay
 		delay(30);
-
 
 		//Start off
 		//off(ring);
@@ -94,8 +120,15 @@ void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 		
 		//Wait...?
 		delay(100);
+		flip++;
 		
-		on(ring);
+		if(flip > 25){
+			flip =0;
+			//pick random color
+			colour = party(ring);
+		}	
+	
+		colorWipe(colour,0,ring);
 	}
 	return;
 }

@@ -29,8 +29,9 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	speedo_colour = speedo->dial->regionBColour;
 	compass_colour = compass->needle->northColour;
 	light_colour = light->lightColour;
+	party_colour = light->violet;
 	blank = light->blank;
-	error_colour = speedo->dial->errorColour;
+	error_colour = light->red; 
 	
 	return;
 }
@@ -159,6 +160,25 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait){
 		delay(wait*3);
 		ring->clear(); //Could maybe use fn() below! It's just an accessor fn().
 		ring->show();
+}
+
+void ADWatch::refresh(void){
+	uint32_t refreshMe_colours[3] = {clock_colour,compass_colour,speedo_colour};
+	//just for asthetic for now. Doesn't do anything
+	for(int i = 0; i < 3; i++){
+		//All this is is a reverse Flourish to signify refresh rather than show
+		for(uint8_t j = 11; j > 0; j--){
+			ring->setPixelColor(0,error_colour);
+			ring->setPixelColor(j,refreshMe_colours[i]);
+			ring->show();
+			delay(50);
+		}
+		delay(50*3);
+		ring->clear();
+		ring->show();
+	}
+	//call some refresh function while we run the clock.
+	
 }
 
 void ADWatch::showError(uint32_t errColour){

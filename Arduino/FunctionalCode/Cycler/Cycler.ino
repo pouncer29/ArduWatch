@@ -38,11 +38,12 @@ uint32_t compassColour;
 uint32_t speedoColour;
 uint32_t clockColour;
 uint32_t flashColour;
+uint32_t partyColour;
 uint32_t errorColour;
 uint32_t blank;
 
 //Cycler
-enum Feats {Clock=0,Compass,Speedometer,Flashlight,Strobe,Blank,FeatCount = 5}; // Remember to update count if features are added
+enum Feats {Clock=0,Compass,Speedometer,Flashlight,Strobe,Refresh,Blank,FeatCount = 6}; // Remember to update count if features are added
 uint32_t Colours[FeatCount]; 
 int curFeat;
 
@@ -89,6 +90,7 @@ void setup() {
     compassColour = watch.compass_colour;
     speedoColour = watch.speedo_colour;
     flashColour = watch.light_colour;
+    partyColour = watch.party_colour;
     errorColour = watch.error_colour;
     blank = watch.blank;
 
@@ -96,7 +98,8 @@ void setup() {
     Colours[Compass] = compassColour;
     Colours[Speedometer] = speedoColour;
     Colours[Flashlight] = flashColour;
-    Colours[Strobe] = flashColour;
+    Colours[Strobe] = partyColour;
+    Colours[Refresh] = errorColour;
     Colours[Blank] = blank;
     
     curFeat =0;
@@ -139,12 +142,12 @@ void loop() {
             break;
         case Compass:
             //setFlag(1);
-            myHeading = testHeading;
+            myHeading = randFloat(355);
             watch.showHeading(myHeading);
             break;
         case Speedometer:
             //setFlag(2);
-            mySpeed = testSpeed;
+            mySpeed = randFloat(160);
             watch.showSpeed(mySpeed);
             break;
         case Flashlight:
@@ -154,6 +157,9 @@ void loop() {
         case Strobe:
             //setFlag(4);
             watch.showStrobe(startWatchPin);
+            break;
+        case Refresh:
+           watch.refresh();
             break;
         default:
             watch.showError(errorColour);
@@ -195,7 +201,7 @@ void removeFlag(int n){
   ring->show();
 }
 
-float randFloat(){
-  float num = random(0,98);
+float randFloat(int bound){
+  float num = random(0,bound);
   return num;
 }
