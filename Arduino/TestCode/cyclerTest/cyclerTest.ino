@@ -122,6 +122,8 @@ void loop() {
   //Start watch button code.
   if(on == true){
       if(flourish){
+         mySpeed = randFloat(160);
+         myHeading = randFloat(355);
          watch.flourish(Colours[curFeat],100);
          delay(800);                
          flourish = false;          //5. remember not to florish every time we show the time
@@ -134,6 +136,7 @@ void loop() {
       **************************/
       //curFeat= 4;
       //watch.showTime(now());
+
       switch (curFeat) {
         case Clock:
             myTime = now(); //could maybe be a GPS pull in the future? same with all of the othes!
@@ -142,13 +145,13 @@ void loop() {
             break;
         case Compass:
             //setFlag(1);
-            myHeading = randFloat(355);
-            watch.showHeading(myHeading);
+            //myHeading = randFloat(355);
+            watch.showHeading(myHeading++);
             break;
         case Speedometer:
             //setFlag(2);
-            mySpeed = randFloat(160);
-            watch.showSpeed(mySpeed);
+           // mySpeed = randFloat(160);
+            watch.showSpeed(mySpeed++);
             break;
         case Flashlight:
             //setFlag(3);
