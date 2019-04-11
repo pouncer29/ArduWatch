@@ -8,11 +8,11 @@ Synopsis:
 #include "ADWatch.h"
 
 
-/* ADWatch
-	- the implementation for ADWatch.h
+/* src
+	- the implementation for src.h
 */
 
-//ADWatch::ADWatch(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
+//src::src(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
 ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	ring = strip;

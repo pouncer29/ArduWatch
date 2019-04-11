@@ -17,7 +17,7 @@ Synopsis:
 /* Clock()
   
   	precond: timeT is a valid time and NeoPixel is instantiated
-   	postcond: A new ADWatch object is created
+   	postcond: A new src object is created
   
   	Paramaters: trackMe - a time_t Time we will track with our Gears
 				neoP - the Adafruit_NeoPixel* ring that will serve as our Face

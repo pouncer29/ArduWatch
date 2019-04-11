@@ -10,7 +10,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
-/* ADWatch
+/* src
    -----------
 	-The union of all feature classes.
 	
@@ -40,7 +40,7 @@ class ADWatch{
 		//Methods
 
 		//Initializers
-		//ADWatch(Adafuit_GPS, Adafruit_NeoPixel); //For when GPS is incorperated
+		//src(Adafuit_GPS, Adafruit_NeoPixel); //For when GPS is incorperated
 		ADWatch(Adafruit_NeoPixel*);
 		
 		//Views (Features)
