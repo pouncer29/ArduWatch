@@ -7,7 +7,6 @@
 #define Flashlight_h
 
 #include <Arduino.h>
-//#include <Adafruit_NeoPixel.h>
 #include "RingInterface.h"
 
 /* Flashlight
@@ -21,7 +20,7 @@ class Flashlight: public RingInterface{
 		uint32_t colours[8]; //holds the party colours 
 
 		//Methods
-		Flashlight(void); //TODO maybe change from float but hey, maybe not.
+		Flashlight(void);
 		void on(Adafruit_NeoPixel*);
 		void off(Adafruit_NeoPixel*);
 		void strobe(uint8_t,Adafruit_NeoPixel*);

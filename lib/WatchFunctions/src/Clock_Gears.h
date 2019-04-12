@@ -1,3 +1,10 @@
+/*
+Author: Ben Lewis
+Date: February 6th, 2018?
+
+Synopsis: Clock_Gears for the watch
+
+*/
 #ifndef Clock_Gears_h
 #define Clock_Gears_h
 

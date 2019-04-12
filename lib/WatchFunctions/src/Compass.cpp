@@ -53,9 +53,6 @@ void Compass::placeNeedle(uint8_t headingIdx,Adafruit_NeoPixel* ring){
 	//Check for overlap
 	if (headingIdx == 0)
 		ring->setPixelColor(0,needle->getAverageCross(needle->needleColour,needle->northColour));
-		
-	//Remove Tail
-//	removeTail(headingIdx);
 
 	return;
 }
@@ -127,10 +124,6 @@ void Compass::trackHeading(float h,Adafruit_NeoPixel* ring){
  */
 void Compass::setCompassHeading(float newHeading, Adafruit_NeoPixel* ring){
 
-	//blank the strip
-	//face->clearStrip();
-	//face->ring->show();
-	
 	//Set new time and pass it to Gears
 	magnet->updateHeading(newHeading);
 		

@@ -47,30 +47,14 @@ Clock::Clock(){
  */
 void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx,Adafruit_NeoPixel* ring){
 
-//	ring->setPixelColor(3,ring->Color(0,0,255,0));
-//	ring->show();
-
-
 	//Grab our modified minute colour.
 	face->modMinColour(gears->getCurTime(),ring); 
 
-//	ring->setPixelColor(3,ring->Color(0,0,200,0));
-//	ring->show();
-
-
-
-	
 	//Assign colours accordingly
 	//Base case: No Overlap regualr 
 	ring->setPixelColor(hrIdx,face->hrColour);
 	ring->setPixelColor(minIdx,face->minColour);
 	ring->setPixelColor(secIdx,face->secColour);
-
-//	ring->setPixelColor(3,ring->Color(0,0,150,0));
-//	ring->show();
-
-
-	
 
 	// Otherwise: If Hands Cross, Their indicies will be the same so I average their set colours.
 	//This particuairly nasty block is only so nasty because I take the average of an average. will work on shortening 
@@ -134,22 +118,12 @@ void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t sec
  */
 void Clock::trackTime(time_t t,Adafruit_NeoPixel* ring){
 	
-//	ring->setPixelColor(2,ring->Color(0,0,255,0));
-//	ring->show();
-
-
 	//Grab New Time
 	gears->updateTime(t);
-
 
 	//Assign colours to the appropriate indicies.	
 	placeHands(gears->getHourIndex(),gears->getMinuteIndex(),gears->getSecondIndex(),ring);
 
-//	ring->setPixelColor(2,ring->Color(0,0,255,0));
-//	ring->show();
-
-
-	
 	//Display 
 	ring->show();
 }
@@ -177,7 +151,6 @@ void Clock::setWatchTime(uint8_t hr, uint8_t min, time_t localTime, Adafruit_Neo
 	//Set new time and pass it to Gears
 	setTime(hr,min,0,15,4,2012);
 	gears->updateTime(now());
-	
 	
 	//Track the time being set.
 	//TrackTime really just tracks hand placement. It is ideal for this!

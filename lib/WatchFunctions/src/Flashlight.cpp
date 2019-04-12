@@ -47,9 +47,9 @@ Flashlight::Flashlight(void){
 void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
   for(uint8_t i=0; i<12; i++) {
     ring->setPixelColor(i, c);    
-    ring->show();
-    //delay(wait);
   }
+
+	ring->show();
 }
 
 
@@ -114,7 +114,6 @@ void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 		delay(30);
 
 		//Start off
-		//off(ring);
 		ring->clear();
 		ring->show();
 		
@@ -122,7 +121,7 @@ void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 		delay(100);
 		flip++;
 		
-		if(flip > 25){
+		if(flip > 20){
 			flip =0;
 			//pick random color
 			colour = party(ring);

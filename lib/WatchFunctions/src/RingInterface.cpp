@@ -9,16 +9,15 @@
 
 /* RingInterface()
    precond: none
-   postcond: a new Face object is created
+   postcond:
    
-   Parameters: leds - the chain of Neopixels that will serve as our UI.
+   Parameters: None
   
    Synopsis: Defines interface specific display methods and allows universal colour definition.
   
-   return: a new Face Object
+   return: Nothing
  */
-RingInterface::RingInterface(void){	
-}
+RingInterface::RingInterface(void){}
 
 
 /* clearStrip()

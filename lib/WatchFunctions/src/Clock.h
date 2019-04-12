@@ -1,4 +1,11 @@
-#ifndef Clock_h	
+/*
+Author: Ben Lewis
+Date: May 10th, 2018
+
+Synopsis:
+
+*/
+#ifndef Clock_h
 #define Clock_h
 
 #include <Arduino.h>

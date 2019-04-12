@@ -1,4 +1,10 @@
-#ifndef Speedometer_h	
+/*
+Author: Ben Lewis
+Date: May 25th, 2018
+
+Synopsis: The implementation for Speedometer.h
+*/
+#ifndef Speedometer_h
 #define Speedometer_h
 
 #include <Arduino.h>

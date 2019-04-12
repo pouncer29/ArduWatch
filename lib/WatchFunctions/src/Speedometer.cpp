@@ -24,7 +24,6 @@ Synopsis: The implementation for Speedometer.h
   	Synopsis: Sets current speed and creates a new NeoPixel ring connection
  */
 Speedometer::Speedometer(){
-	//curSpeed = kmph; //convertSpeed(kn);
 	dial = new Speed_Dial();
 	gauge = new Speed_Gauge(0);
 }
@@ -155,6 +154,5 @@ void Speedometer::trackSpeed(float kmph,Adafruit_NeoPixel* ring){
  */
 void Speedometer::setSpeed(float kmph){
 	gauge->updateSpeed(kmph);
-	//dial->clearStrip(); // Don't want to add a NeoPixel Parameter.
 }
 

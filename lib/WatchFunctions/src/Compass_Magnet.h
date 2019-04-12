@@ -1,3 +1,10 @@
+/*
+Author: Ben Lewis
+Date: May 16th, 2018
+
+Synopsis: Compass_Magnet: The means of moving a compass needle.
+
+*/
 #ifndef Compass_Magnet_h
 #define Compass_Magnet_h
 
@@ -19,8 +26,8 @@ class Compass_Magnet{
 		void updateHeading(float);		
 			
 	private:
-	//Attributes
-	float curHeading;
+		//Attributes
+		float curHeading;
 };
 
 
