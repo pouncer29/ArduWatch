@@ -25,8 +25,8 @@ Synopsis: The implementation for Speedometer.h
  */
 Speedometer::Speedometer(){
 	//curSpeed = kmph; //convertSpeed(kn);
-	dial = new Dial();
-	gauge = new Gauge(0);
+	dial = new Speed_Dial();
+	gauge = new Speed_Gauge(0);
 }
 
 /* setRegionA()

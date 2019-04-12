@@ -10,16 +10,16 @@
 #include <Adafruit_NeoPixel.h>
 #include "RingInterface.h"
 
-/* Dial
+/* Speed_Dial
    --------------
-	The Dial class is the Speedometer Equivilent of Face.  
+	The Speed_Dial class is the Speedometer Equivalent of Face.
 
 */
-class Dial: public RingInterface{
+class Speed_Dial: public RingInterface{
 	
 	public:
 		//Methods
-		Dial();
+		Speed_Dial();
 };
 #endif
 		

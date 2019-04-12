@@ -25,8 +25,8 @@ Synopsis:
  *	Synopsis: 
  */
 Compass::Compass(){
-	needle = new Needle();
-	magnet = new Magnet(0);
+	needle = new Compass_Needle();
+	magnet = new Compass_Magnet(0);
 
 	curHeadIdx = magnet->getHeadingIndex();
 	prevHeadIdx = -1;

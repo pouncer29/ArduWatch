@@ -2,17 +2,17 @@
 Author: Ben Lewis
 Date: May 16th, 2018
 
-Synopsis: Magnet: The means of moving a compass needle.
+Synopsis: Compass_Magnet: The means of moving a compass needle.
 
 */
 
 #include "Compass_Magnet.h"
 
 //****************************************************************************************
-//Magnet//
+//Compass_Magnet//
 //****************************************************************************************
 
-/* Magnet()
+/* Compass_Magnet()
    precond: none
    postcond: a Gears object is created
    
@@ -20,13 +20,13 @@ Synopsis: Magnet: The means of moving a compass needle.
    
    
  */
-Magnet::Magnet(float h){
+Compass_Magnet::Compass_Magnet(float h){
 	curHeading = h;	
 }
 /* getCurHeading()
 	- A simple getter method for the private attribute 'curHeading'
  */
-float Magnet::getCurHeading(void){
+float Compass_Magnet::getCurHeading(void){
 	return curHeading;
 }
 
@@ -36,11 +36,11 @@ float Magnet::getCurHeading(void){
   
    Paramaters: newHeading - a float representing the direction we will update our heading to
   
-   Synopsis: Changes the Magnets heading  to a specified value
+   Synopsis: Changes the Compass_Magnets heading  to a specified value
   
    return: nothing
  */
-void Magnet::updateHeading(float newHeading){
+void Compass_Magnet::updateHeading(float newHeading){
 	curHeading = newHeading;
 }
 
@@ -53,7 +53,7 @@ void Magnet::updateHeading(float newHeading){
    
    return: nothing.
  */
-uint8_t Magnet::getHeadingIndex(void){
+uint8_t Compass_Magnet::getHeadingIndex(void){
 	if(curHeading >= 360)
 		return 0; //TODO throw an exception. the magic 11 bug will eat you!
 

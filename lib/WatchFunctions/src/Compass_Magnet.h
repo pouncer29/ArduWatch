@@ -6,14 +6,14 @@
 
 
 
-/* Magnet
+/* Compass_Magnet
    --------------
 	- Contains methods to map a degree heading [0,360] to an array offset [0,11]
 */
-class Magnet{
+class Compass_Magnet{
 	public:	
 		//Methods
-		Magnet(float);
+		Compass_Magnet(float);
 		float getCurHeading(void);	
 		uint8_t getHeadingIndex(void);
 		void updateHeading(float);		

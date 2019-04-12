@@ -2,22 +2,22 @@
 	Author: Ben Lewis
 	Date: May 10th, 2018
 	
-	Synopsis: Implementation for Dial.h
+	Synopsis: Implementation for Speed_Dial.h
 */
 
 #include "Speed_Dial.h"
 
-/* Dial()
+/* Speed_Dial()
    precond: Leds initialized
-   postcond: New Dial is created
+   postcond: New Speed_Dial is created
    
-   Parameters: leds - the chain of Neopixels that will serve as our Dial
+   Parameters: leds - the chain of Neopixels that will serve as our Speed_Dial
   
    Synopsis: assigns special colours and inits ring to the LEDs
   
-   return: a new Dial Object
+   return: a new Speed_Dial Object
  */
-Dial::Dial(){
+Speed_Dial::Speed_Dial(){
 	//Instantiate Attributes;
 	
 	//Define special Colours

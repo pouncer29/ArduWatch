@@ -2,12 +2,12 @@
 	Author: Ben Lewis
 	Date: May 10th, 2018
 	
-	Synopsis: Implementation for Needle.h
+	Synopsis: Implementation for Compass_Needle.h
 */
 
 #include "Compass_Needle.h"
 
-/* Needle()
+/* Compass_Needle()
    precond: none
    postcond: leds is initialized
    
@@ -15,9 +15,9 @@
   
    Synopsis: Assigns the special colours needed for the compass function. North Yellow, heading blue or someting.
   
-   return: a new Needle Object
+   return: a new Compass_Needle Object
  */
-Needle::Needle(){
+Compass_Needle::Compass_Needle(){
 	
 	//Define special Colours
 	northColour = ring->Color(255,100,0,5);

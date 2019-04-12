@@ -15,8 +15,8 @@ class Compass{
 	public:
 		//Attributes
 		Adafruit_NeoPixel strip;
-		Needle* needle;
-		Magnet* magnet;
+		Compass_Needle* needle;
+		Compass_Magnet* magnet;
 		
 		//Methods
 		Compass(); //TODO maybe change from float but hey, maybe not.

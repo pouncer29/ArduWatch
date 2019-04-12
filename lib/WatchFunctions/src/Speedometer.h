@@ -14,8 +14,8 @@
 class Speedometer{
 	public:
 		//Attributes
-		Dial* dial;
-		Gauge* gauge;
+		Speed_Dial* dial;
+		Speed_Gauge* gauge;
 		
 		//Methods
 		Speedometer(); //TODO maybe change from float but hey, maybe not.

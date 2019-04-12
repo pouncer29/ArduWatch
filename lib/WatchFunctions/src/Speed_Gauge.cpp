@@ -2,27 +2,27 @@
 Author: Ben Lewis
 Date: May 25th, 2018
 
-Synopsis: the implementation for Gauge.h
+Synopsis: the implementation for Speed_Gauge.h
 
 */
 
 #include "Speed_Gauge.h"
 
 //****************************************************************************************
-//Gauge//
+//Speed_Gauge//
 //****************************************************************************************
 
-/* Gauge()
+/* Speed_Gauge()
 	precond: speed given is in kmph and gt 0
-    postcond: a Gauge object is created
+    postcond: a Speed_Gauge object is created
    
     paramaters: km - a speed in kmph we will initialize to.
    
-	synopsis: initializes a Gauge object
+	synopsis: initializes a Speed_Gauge object
 
-	return: a new Gauge object
+	return: a new Speed_Gauge object
  */
-Gauge::Gauge(float km){
+Speed_Gauge::Speed_Gauge(float km){
 	curSpeed = km;	
 }
 
@@ -36,7 +36,7 @@ Gauge::Gauge(float km){
 
 	return: the current speed in kmph
 */
-float Gauge::getCurSpeed(void){
+float Speed_Gauge::getCurSpeed(void){
 	return curSpeed;
 }
 
@@ -51,7 +51,7 @@ float Gauge::getCurSpeed(void){
 
 	return: an array index
 */
-uint8_t Gauge::getSpeedIndex(void) {
+uint8_t Speed_Gauge::getSpeedIndex(void) {
 	
 	//encapsulate speed and init index
 	float speed = getCurSpeed();
@@ -75,7 +75,7 @@ uint8_t Gauge::getSpeedIndex(void) {
 
 	return: nothing
 */
-void Gauge::updateSpeed(float newSpeed){
+void Speed_Gauge::updateSpeed(float newSpeed){
 	curSpeed = newSpeed;
 }
 
