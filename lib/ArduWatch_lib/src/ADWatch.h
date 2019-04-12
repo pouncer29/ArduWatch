@@ -3,10 +3,10 @@
 
 #include <Arduino.h>
 #include <TimeLib.h>
-#include "Clock.h"
-#include "Compass.h"
-#include "Speedometer.h"
-#include "Flashlight.h"
+#include <Clock.h>
+#include <Compass.h>
+#include <Speedometer.h>
+#include <Flashlight.h>
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
