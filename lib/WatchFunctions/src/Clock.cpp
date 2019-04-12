@@ -25,8 +25,8 @@ Synopsis:
   	Synopsis: Uses the time to create the *Gears* for the watch and *neoP* to set a face for the watch
  */
 Clock::Clock(){
-	face = new Face();
-	gears = new Gears();
+	face = new Clock_Face();
+	gears = new Clock_Gears();
 }
 
 /* placeHands()

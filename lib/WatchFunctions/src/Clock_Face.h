@@ -6,8 +6,8 @@
 			  between time and the ring of leds.
 */
 
-#ifndef Face_h
-#define	Face_h
+#ifndef Clock_Face_h
+#define	Clock_Face_h
 
 #include <Adafruit_NeoPixel.h>
 #include <TimeLib.h>
@@ -31,11 +31,11 @@
 	trivial functions that all feature classes must use on the ring. Defines Hand colours and the 'modMinColour' function
 	that is so crutial to the clock function
 */
-class Face: public RingInterface{
+class Clock_Face: public RingInterface{
 	
 	public:
 	//Methods
-		Face();
+		Clock_Face();
 		void modMinColour(time_t,Adafruit_NeoPixel*);
 		
 		

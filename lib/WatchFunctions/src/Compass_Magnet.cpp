@@ -6,7 +6,7 @@ Synopsis: Magnet: The means of moving a compass needle.
 
 */
 
-#include "Magnet.h"
+#include "Compass_Magnet.h"
 
 //****************************************************************************************
 //Magnet//

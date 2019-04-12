@@ -4,8 +4,8 @@
 	Synopsis: The Ring interface for Speedometer Needle
 */
 
-#ifndef Dial_h
-#define	Dial_h
+#ifndef Speed_Dial_h
+#define	Speed_Dial_h
 
 #include <Adafruit_NeoPixel.h>
 #include "RingInterface.h"

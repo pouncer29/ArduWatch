@@ -5,8 +5,8 @@ Date: May 25th, 2018
 Synopsis: The GPS interface for the speedometer class
 */
 
-#ifndef Gauge_h
-#define Gauge_h
+#ifndef Speed_Gauge_h
+#define Speed_Gauge_h
 #include <Arduino.h>
 
 

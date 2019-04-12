@@ -5,7 +5,7 @@
 	Synopsis: Implementation for Dial.h
 */
 
-#include "Dial.h"
+#include "Speed_Dial.h"
 
 /* Dial()
    precond: Leds initialized

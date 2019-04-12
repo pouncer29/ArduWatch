@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 #include <TimeLib.h>
-#include "Face.h"
-#include "Gears.h"
+#include "Clock_Face.h"
+#include "Clock_Gears.h"
 #include <Adafruit_NeoPixel.h>
 
 
@@ -18,8 +18,8 @@ class Clock{
 	public:
 		//Attributes
 		time_t trackMe;
-		Face* face;
-		Gears* gears;
+		Clock_Face* face;
+		Clock_Gears* gears;
 		
 		//Methods
 		Clock();

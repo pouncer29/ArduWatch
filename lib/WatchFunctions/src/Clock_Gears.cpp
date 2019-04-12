@@ -2,25 +2,25 @@
 Author: Ben Lewis
 Date: February 6th
 
-Synopsis: Gears for the watch
+Synopsis: Clock_Gears for the watch
 
 */
 
-#include "Gears.h"
+#include "Clock_Gears.h"
 
 //****************************************************************************************
 //GEARS//
 //****************************************************************************************
 
-/* Gears()
+/* Clock_Gears()
    precond: none
-   postcond: a Gears object is created
+   postcond: a Clock_Gears object is created
    
    paramaters: time_t* t - a pointer to the time we need to track
    
  	return: a New gears object that tracks time t  
  */
-Gears::Gears(){
+Clock_Gears::Clock_Gears(){
 	curTime = now();
 }
 
@@ -33,7 +33,7 @@ Gears::Gears(){
   
    return: Array index for the Hour hand
  */
-uint8_t Gears::getHourIndex(void){
+uint8_t Clock_Gears::getHourIndex(void){
 	return hour(curTime) % 12;
 }
 
@@ -46,7 +46,7 @@ uint8_t Gears::getHourIndex(void){
   
    return: Array index for the Minute hand
  */
-uint8_t Gears::getMinuteIndex(void){
+uint8_t Clock_Gears::getMinuteIndex(void){
 	return minute(curTime)/5;
 }
 
@@ -59,7 +59,7 @@ uint8_t Gears::getMinuteIndex(void){
   
    return: Array index for the seconds hand 
  */
-uint8_t Gears::getSecondIndex(void){
+uint8_t Clock_Gears::getSecondIndex(void){
 	return second(curTime)/5;
 }
 
@@ -67,21 +67,21 @@ uint8_t Gears::getSecondIndex(void){
  getCurTime()
 	- A simple getter method for the private attribute 'curTime'
  */
-time_t Gears::getCurTime(void){
+time_t Clock_Gears::getCurTime(void){
 	return curTime;
 }
 
 /* updateTime()
    precond: none
-   postcond: Gears curTime attribute has been updated
+   postcond: Clock_Gears curTime attribute has been updated
   
    Paramaters: newTime - the time_t object we will update our gears to.
   
-   Synopsis: Changes the Gears time value to a specified value.
+   Synopsis: Changes the Clock_Gears time value to a specified value.
   
    return: nothing
  */
-void Gears::updateTime(time_t newTime){
+void Clock_Gears::updateTime(time_t newTime){
 	curTime = newTime;
 }
 

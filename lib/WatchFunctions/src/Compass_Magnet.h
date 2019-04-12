@@ -1,5 +1,5 @@
-#ifndef Magnet_h
-#define Magnet_h
+#ifndef Compass_Magnet_h
+#define Compass_Magnet_h
 
 #include <Arduino.h>
 

@@ -2,8 +2,8 @@
 #define Speedometer_h
 
 #include <Arduino.h>
-#include "Dial.h"
-#include "Gauge.h"
+#include "Speed_Dial.h"
+#include "Speed_Gauge.h"
 #include <Adafruit_NeoPixel.h>
 
 

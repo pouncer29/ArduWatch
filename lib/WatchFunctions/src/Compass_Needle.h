@@ -4,8 +4,8 @@
 	Synopsis: The Ring interface for Speedometer Needle
 */
 
-#ifndef Needle_h
-#define	Needle_h
+#ifndef Compass_Needle_h
+#define	Compass_Needle_h
 
 #include <Adafruit_NeoPixel.h>
 #include "RingInterface.h"

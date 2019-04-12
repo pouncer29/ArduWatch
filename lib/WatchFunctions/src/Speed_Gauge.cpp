@@ -6,7 +6,7 @@ Synopsis: the implementation for Gauge.h
 
 */
 
-#include "Gauge.h"
+#include "Speed_Gauge.h"
 
 //****************************************************************************************
 //Gauge//

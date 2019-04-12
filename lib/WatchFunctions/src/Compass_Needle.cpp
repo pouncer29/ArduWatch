@@ -5,7 +5,7 @@
 	Synopsis: Implementation for Needle.h
 */
 
-#include "Needle.h"
+#include "Compass_Needle.h"
 
 /* Needle()
    precond: none

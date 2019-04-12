@@ -2,8 +2,8 @@
 #define Compass_h
 
 #include <Arduino.h>
-#include "Needle.h"
-#include "Magnet.h"
+#include "Compass_Needle.h"
+#include "Compass_Magnet.h"
 #include <Adafruit_NeoPixel.h>
 
 

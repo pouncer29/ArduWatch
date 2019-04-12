@@ -5,18 +5,18 @@
 	Synopsis: Implementation for Clock Ring-Interface via 'face'
 */
 
-#include "Face.h"
-/* Face()
+#include "Clock_Face.h"
+/* Clock_Face()
    precond: none
-   postcond: a new Face object is created
+   postcond: a new Clock_Face object is created
   
    Parameters: leds - the chain of Neopixels that will serve as our face.
   
-   Synopsis: assigns the Faces ring to the ledRing and assigns special colours
+   Synopsis: assigns the Clock_Faces ring to the ledRing and assigns special colours
   
-   return: a new Face Object
+   return: a new Clock_Face Object
  */
-Face::Face(){
+Clock_Face::Clock_Face(){
 	
 	//Define special Colours
 	hrColour = ring->Color(255,100,0,5);
@@ -43,7 +43,7 @@ Face::Face(){
     
     return: nothing 
  */
-void Face::modMinColour(time_t localTime,Adafruit_NeoPixel* ring){
+void Clock_Face::modMinColour(time_t localTime,Adafruit_NeoPixel* ring){
 
   //minMod: Takes the remainder of the minute and 5 to cycle through values of 0-4
   uint16_t minMod = ((minute(localTime)%5)*64);
