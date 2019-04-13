@@ -14,9 +14,13 @@ Synopsis:
 
 //src::src(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
-ADWatch::ADWatch(Adafruit_NeoPixel* strip){
+ADWatch::ADWatch(Adafruit_NeoPixel* strip,Adafruit_GPS* myGPS){
+	// Ring
 	ring = strip;
 	ring->setBrightness(20);
+
+	//GPS
+	gps = myGPS;
 	
 	// init functions
 	clock = new Clock();

@@ -28,7 +28,7 @@ class ADWatch{
 		uint32_t blank;
 		
 		//Implements
-		//Adafruit_GPS gps;	
+		Adafruit_GPS* gps;
 		Adafruit_NeoPixel* ring;
 		
 		//Features
