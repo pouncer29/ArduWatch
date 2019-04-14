@@ -17,44 +17,54 @@
  */
 GPSTools::GPSTools(Adafruit_GPS* myGPS){
 	gps = myGPS;
-	prev_adjust = 0;
+	prev_adjust = -7; // My Local TZ
 }
 
 
 //Handles the UTC timezones with our given degrees
 int GPSTools::tzAdjust(float deg, char16_t EW){
 
-	uint8_t	adjustment;
-	float upperBound = deg + 7.5;
-	float lowerBound = deg -7.5;
+	int8_t	adjustment;
+	if(deg > 180)
+		return -50;
 
-	switch (adjustment){
-		case (upperBound <= UTC_0_H && UTC_0_L > 7.5) :
-			adjustment = UTC_0;
-			break;
+	// The offset is just integer division withthe blood thing
+	adjustment = deg / 15;
+	//If we are west of Greenwitch, we must subtract the adjustment, else add
+	if (EW == 'W')
+		return  adjustment * -1;
+	else if (EW == 'E')
+		return adjustment;
+	else
+		return -50;
+
 	}
-
-
-
-
 
 /* grabTime()
 	precond: gps is initialized
 	postcond: a time_t of the current time is produced
-	
+
 	Parameters: None
-	
+
 	Synopsis: Takes apart the GPS time and puts it into a fresh time_t object
 
 	return: the current time according to the GPS module as a time_t
 */
 time_t GPSTools::grabTime(void){
-	setTime(gps.hour,gps.minute,gps.seconds,gps.day,gps.month,gps.year)		
+	int8_t adjustment;
+	if(gps->fix) {
+		adjustment = tzAdjust(gps->longitudeDegrees, gps->lon);
+		prev_adjust = adjustment;
+	}
+	else
+		adjustment = prev_adjust;
+
+	setTime((gps->hour + adjustment),gps->minute,gps->seconds,gps->day,gps->month,gps->year);
 	return now();
 }
 
-/* grabTime()
-	precond: gps has been initialized
+/* grabSpeed()
+	precond: gps has been initialized and we have a fix
 	postcond: speed is produced as a float from GPS
 	
 	Parameters: none
@@ -63,8 +73,11 @@ time_t GPSTools::grabTime(void){
 
 	return: a float from the GPS module readings
 */
-float grabSpeedKMPH(void){
-	return gps.speed * 1.852;
+float GPSTools::grabSpeed(void){
+	if(gps->fix)
+		return gps->speed * 1.852;
+	else
+		return 0;
 }
 
 /* grabHeading()
@@ -77,11 +90,15 @@ float grabSpeedKMPH(void){
 
 	return: nothing
 */
-float grabHeading(void)
-	return gps.angle
+float GPSTools::grabHeading(void){
+	if(gps->fix)
+		return gps->angle;
+	else
+		return 0;
+
 }
 
-/* update()
+/* hasFix()
 	precond: GPS is initialized
 	postcond: the tracked variable is updated
 
@@ -91,7 +108,7 @@ float grabHeading(void)
 
 	return: nothing
 */
-void update(void){
-	return;
+bool GPSTools::hasFix(void){
+	return gps->fix;
 }
 

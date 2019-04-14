@@ -21,6 +21,7 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip,Adafruit_GPS* myGPS){
 
 	//GPS
 	gps = myGPS;
+	parser = new GPSTools(gps);
 	
 	// init functions
 	clock = new Clock();
@@ -54,9 +55,9 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip,Adafruit_GPS* myGPS){
 
 	return: nothing
 */
-void ADWatch::showTime(time_t t){
+void ADWatch::showTime(void){
 //	ring->setPixelColor(1,ring->Color(0,255,0,0));
-	clock->trackTime(t,ring); 
+	clock->trackTime(parser->grabTime(),ring);
 //	ring->setPixelColor(4,ring->Color(0,255,0,0));
 }
 
@@ -72,9 +73,8 @@ void ADWatch::showTime(time_t t){
 
 	return: nothing.
 */
-void ADWatch::showSpeed(float s){
-	speedo->setSpeed(s);
-	speedo->trackSpeed(s,ring);
+void ADWatch::showSpeed(void){
+	speedo->trackSpeed(parser->grabSpeed(),ring);
 }
 
 //TODO test
@@ -91,8 +91,8 @@ void ADWatch::showSpeed(float s){
 
 	return: nothing
 */
-void ADWatch::showHeading(float h){
-	compass->trackHeading(h,ring);
+void ADWatch::showHeading(void){
+	compass->trackHeading(parser->grabHeading(),ring);
 }
 
 //TODO test
@@ -168,19 +168,28 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait){
 
 void ADWatch::refresh(void){
 	uint32_t refreshMe_colours[3] = {clock_colour,compass_colour,speedo_colour};
-	//just for asthetic for now. Doesn't do anything
-	for(int i = 0; i < 3; i++){
-		//All this is is a reverse Flourish to signify refresh rather than show
-		for(uint8_t j = 11; j > 0; j--){
-			ring->setPixelColor(0,error_colour);
-			ring->setPixelColor(j,refreshMe_colours[i]);
+
+	//While we are not tracking a satelite
+	while(!parser->hasFix()) {
+		//just for asthetic for now. Doesn't do anything
+		for (int i = 0; i < 3; i++) {
+			//All this is is a reverse Flourish to signify refresh rather than show
+			for (uint8_t j = 11; j > 0; j--) {
+				ring->setPixelColor(0, error_colour);
+				ring->setPixelColor(j, refreshMe_colours[i]);
+				ring->show();
+				delay(50);
+			}
+			delay(50 * 3);
+			ring->clear();
 			ring->show();
-			delay(50);
 		}
-		delay(50*3);
-		ring->clear();
-		ring->show();
 	}
+
+	flourish(light->green,30);
+	delay(30);
+	ring->clear();
+	ring->show();
 	//call some refresh function while we run the clock.
 	
 }

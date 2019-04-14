@@ -7,7 +7,6 @@
 #ifndef GPSTools_h
 #define	GPSTools_h
 
-#include "TIMEZONES.h"
 #include <Adafruit_GPS.h>
 #include <TimeLib.h>
 
@@ -25,12 +24,17 @@ class GPSTools{
 		//Methods
 		GPSTools(Adafruit_GPS*);
 		time_t grabTime(void); 
-		float grabSpeedKMPH(void);
+		float grabSpeed(void);
 		float grabHeading(void);
 		void update(void);
+		bool hasFix(void);
 
 	private:
+		//Attributes
 		int prev_adjust;
+
+		//Methods
+		int tzAdjust(float, char16_t);
 };
 
 #endif

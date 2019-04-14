@@ -9,6 +9,8 @@
 #include <Flashlight.h>
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
+#include <GPSTools.h>
+
 
 /* src
    -----------
@@ -30,6 +32,7 @@ class ADWatch{
 		//Implements
 		Adafruit_GPS* gps;
 		Adafruit_NeoPixel* ring;
+		GPSTools* parser;
 		
 		//Features
 		Clock* clock;
@@ -41,12 +44,12 @@ class ADWatch{
 
 		//Initializers
 		//src(Adafuit_GPS, Adafruit_NeoPixel); //For when GPS is incorperated
-		ADWatch(Adafruit_NeoPixel*);
+		ADWatch(Adafruit_NeoPixel*,Adafruit_GPS*);
 		
 		//Views (Features)
-		void showTime(time_t);//Can probably be void when GPS gets here!
-		void showSpeed(float);
-		void showHeading(float);
+		void showTime(void);//Can probably be void when GPS gets here!
+		void showSpeed(void);
+		void showHeading(void);
 		void showLight();
 		void showStrobe(uint8_t);
 		void showError(uint32_t);
