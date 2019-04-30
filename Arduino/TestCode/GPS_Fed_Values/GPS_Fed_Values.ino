@@ -197,7 +197,7 @@ void useInterrupt(boolean v) {
   }
 }
 
-uint32_t timer = millis();
+//int32_t timer = millis();
 void loop()                     // run over and over again
 {
   // in case you are not using the interrupt above, you'll
@@ -222,42 +222,17 @@ void loop()                     // run over and over again
   }
 
   // if millis() or timer wraps around, we'll just reset it
-  if (timer > millis())  timer = millis();
+  //if (timer > millis())  timer = millis();
 
   // approximately every 2 seconds or so, print out the current stats
-  if (millis() - timer > 2000) { 
-    timer = millis(); // reset the timer
+  //if (millis() - timer > 2000) { 
+    //timer = millis(); // reset the timer
     
-    Serial.print("\nTime: ");
-    Serial.print(GPS.hour, DEC); Serial.print(':');
-    Serial.print(GPS.minute, DEC); Serial.print(':');
-    Serial.print(GPS.seconds, DEC); Serial.print('.');
-    Serial.println(GPS.milliseconds);
-    Serial.print("Date: ");
-    Serial.print(GPS.day, DEC); Serial.print('/');
-    Serial.print(GPS.month, DEC); Serial.print("/20");
-    Serial.println(GPS.year, DEC);
-    Serial.print("Fix: "); Serial.print((int)GPS.fix);
-    Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
     //MY SETTING OF TIME
-    setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
-    if (GPS.fix) {
-      Serial.print("Location: ");
-      Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
-      Serial.print(", "); 
-      Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
-      Serial.print("Location (in degrees, works with Google Maps): ");
-      Serial.print(GPS.latitudeDegrees, 4);
-      Serial.print(", "); 
-      Serial.println(GPS.longitudeDegrees, 4);
-      
-      Serial.print("Speed (knots): "); Serial.println(GPS.speed);
-      Serial.print("Angle: "); Serial.println(GPS.angle);
-      Serial.print("Altitude: "); Serial.println(GPS.altitude);
-      Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
       /** WATCH LOOP*/
        buttonState=digitalRead(startWatchPin);
         if(buttonState == HIGH){
+          setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
            if(on == true)
              on = false;
            else
@@ -282,11 +257,17 @@ void loop()                     // run over and over again
                 break;
             case Compass:
                 //setFlag(1);
-                watch.showHeading(GPS.angle);
+                if(GPS.fix)
+                  watch.showHeading(GPS.angle);
+                else
+                  watch.refresh();
                 break;
             case Speedometer:
                 //setFlag(2);
-                watch.showSpeed(GPS.speed);
+                if(GPS.fix)
+                  watch.showSpeed(GPS.speed);
+                 else
+                  watch.refresh();
                 break;
             case Flashlight:
                 //setFlag(3);
@@ -327,6 +308,4 @@ void loop()                     // run over and over again
 
          
       /*END WATCH LOOP*/
-    }
-  }
-}
+   }
