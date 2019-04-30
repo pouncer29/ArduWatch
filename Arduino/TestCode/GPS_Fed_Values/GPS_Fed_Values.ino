@@ -38,6 +38,28 @@ Adafruit_NeoPixel* ring = &strip;
 
 //Using a master watch Class
 ADWatch watch = ADWatch(ring);
+
+//For Flow
+//ShowTimeButton
+const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
+boolean on = false;         //current output state
+int buttonState = 0;       //the current flow through the button.
+bool flourish = true;     //whether or not to do the light show on button press
+
+//Flourish Colours
+uint32_t compassColour;
+uint32_t speedoColour;
+uint32_t clockColour;
+uint32_t flashColour;
+uint32_t partyColour;
+uint32_t errorColour;
+uint32_t blank;
+ uint32_t  err = ring->Color(255,0,0,0);
+
+enum Feats {Clock=0,Compass,Speedometer,Flashlight,Strobe,Refresh,Blank,FeatCount = 6}; // Remember to update count if features are added
+uint32_t Colours[FeatCount]; 
+int curFeat;
+
 /** END WATCH SETUP */
 
 
@@ -88,6 +110,31 @@ void setup()
   ring->begin();    
   ring->clear();
   ring->show(); //Supposedly initilizes all to off  
+
+  //For Buttons
+  pinMode(startWatchPin,INPUT);
+  
+  //Test values
+  setTime(1,24,30,12,28,2017);
+
+  //Init Flourish Colours & Cycler
+    clockColour = watch.clock_colour;
+    compassColour = watch.compass_colour;
+    speedoColour = watch.speedo_colour;
+    flashColour = watch.light_colour;
+    partyColour = watch.party_colour;
+    errorColour = watch.error_colour;
+    blank = watch.blank;
+
+    Colours[Clock] =clockColour;
+    Colours[Compass] = compassColour;
+    Colours[Speedometer] = speedoColour;
+    Colours[Flashlight] = flashColour;
+    Colours[Strobe] = partyColour;
+    Colours[Refresh] = errorColour;
+    Colours[Blank] = blank;
+    
+    curFeat =0;
 
    /**END WATCH SETUP*/
   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
@@ -192,13 +239,8 @@ void loop()                     // run over and over again
     Serial.println(GPS.year, DEC);
     Serial.print("Fix: "); Serial.print((int)GPS.fix);
     Serial.print(" quality: "); Serial.println((int)GPS.fixquality); 
-
-    setTime(GPS.hour,GPS.minute,GPS.seconds,1,1,2018);
-    watch.showTime(now());
-    delay(800);
-    ring->clear();
-    ring->show();
-    
+    //MY SETTING OF TIME
+    setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
     if (GPS.fix) {
       Serial.print("Location: ");
       Serial.print(GPS.latitude, 4); Serial.print(GPS.lat);
@@ -213,18 +255,78 @@ void loop()                     // run over and over again
       Serial.print("Angle: "); Serial.println(GPS.angle);
       Serial.print("Altitude: "); Serial.println(GPS.altitude);
       Serial.print("Satellites: "); Serial.println((int)GPS.satellites);
+      /** WATCH LOOP*/
+       buttonState=digitalRead(startWatchPin);
+        if(buttonState == HIGH){
+           if(on == true)
+             on = false;
+           else
+             on = true;
+         }
 
-      ring->clear();
-      ring->show();
-      delay(800);
-      watch.showHeading(GPS.angle);
-      delay(800);
-      ring->clear();
-      ring->show();
-      watch.showSpeed(GPS.speed);
-      delay(800);
-      ring->clear();
-      ring->show();      
+     //Start watch button code.
+      if(on == true){
+          if(flourish){
+             watch.flourish(Colours[curFeat],100);
+             delay(800);                
+             flourish = false;          //5. remember not to florish every time we show the time
+            }
+          delay(200);
+          watch.setPixels(blank);
+          ring->show();
+          switch (curFeat) {
+            case Clock:
+                //myTime = now(); //could maybe be a GPS pull in the future? same with all of the othes!
+                watch.showTime(now());
+                //setFlag(3);
+                break;
+            case Compass:
+                //setFlag(1);
+                watch.showHeading(GPS.angle);
+                break;
+            case Speedometer:
+                //setFlag(2);
+                watch.showSpeed(GPS.speed);
+                break;
+            case Flashlight:
+                //setFlag(3);
+                watch.showLight();
+                break;
+            case Strobe:
+                //setFlag(4);
+                watch.showStrobe(startWatchPin);
+                break;
+            case Refresh:
+               watch.refresh();
+                break;
+            default:
+                watch.showError(errorColour);
+                break;
+          }
+    
+          if(digitalRead(startWatchPin) == HIGH)
+            curFeat++;
+    
+          if(curFeat > FeatCount-1)
+            curFeat = 0;
+        
+    
+          ring->show();
+          /**********************************/
+          delay(500);
+          
+        }
+       else{
+        ring->clear();             //1. Button must be off, clear the strip
+        ring->show();
+        flourish = true;                //3. remember to flourish when we turn it back on.
+       }
+    
+        delay(200);                     //Apparently good for 'debounce' whatever that is
+
+
+         
+      /*END WATCH LOOP*/
     }
   }
 }
