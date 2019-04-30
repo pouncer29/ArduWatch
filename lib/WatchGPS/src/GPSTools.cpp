@@ -18,8 +18,34 @@
 GPSTools::GPSTools(Adafruit_GPS* myGPS){
 	gps = myGPS;
 	prev_adjust = -7; // My Local TZ
+
+	/*Setup from GPS example*/
+	gpsSetup();
+	delay(1000);
+	gpsSignalRead();
 }
 
+void GPSTools::gpsSetup() {
+	gps.begin(9600);
+	gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+	gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
+	useInterrupt(true);
+}
+
+void GPSTools::gpsSignalRead(){
+	SIGNAL(TIMER_COMPA_vect) {
+		this.gps.read();
+	}
+}
+
+//TODO: Put this before each GPS-data using function
+bool GPSTools::gpsParse() {
+	if(gps.newNMEAreceived()) {
+		if (!gps.parse(gps.lastNMEA()))
+			return true;
+	}
+	return false;
+}
 
 //Handles the UTC timezones with our given degrees
 int GPSTools::tzAdjust(float deg, char16_t EW){
@@ -112,3 +138,17 @@ bool GPSTools::hasFix(void){
 	return gps->fix;
 }
 
+void GPSTools::useInterrupt(bool isUsing) {
+		if (isUsing) {
+			// Timer0 is already used for millis() - we'll just interrupt somewhere
+			// in the middle and call the "Compare A" function above
+			OCR0A = 0xAF;
+			TIMSK0 |= _BV(OCIE0A);
+			usingInterrupt = true;
+		} else {
+			// do not call the interrupt function COMPA anymore
+			TIMSK0 &= ~_BV(OCIE0A);
+			usingInterrupt = false;
+		}
+	}
+}

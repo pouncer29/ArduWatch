@@ -9,6 +9,7 @@
 
 #include <Adafruit_GPS.h>
 #include <TimeLib.h>
+#include <Arduino.h>
 
 /* GPSTools
    --------------
@@ -35,6 +36,11 @@ class GPSTools{
 
 		//Methods
 		int tzAdjust(float, char16_t);
+		void gpsSetup(void);
+		void gpsSignalRead(void);
+		bool gpsParse(void);
+		void useInterrupt(bool);
+
 };
 
 #endif
