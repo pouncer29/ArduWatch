@@ -14,14 +14,16 @@ Synopsis:
 
 //src::src(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
 
-ADWatch::ADWatch(Adafruit_NeoPixel* strip,Adafruit_GPS* myGPS){
+ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	// Ring
 	ring = strip;
 	ring->setBrightness(20);
 
 	//GPS
-	gps = myGPS;
+	/*
+	//gps = myGPS;
 	parser = new GPSTools(gps);
+	 */
 	
 	// init functions
 	clock = new Clock();
@@ -55,10 +57,8 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip,Adafruit_GPS* myGPS){
 
 	return: nothing
 */
-void ADWatch::showTime(void){
-//	ring->setPixelColor(1,ring->Color(0,255,0,0));
-	clock->trackTime(parser->grabTime(),ring);
-//	ring->setPixelColor(4,ring->Color(0,255,0,0));
+void ADWatch::showTime(time_t t){
+	clock->trackTime(t,ring);
 }
 
 //TODO test
@@ -73,8 +73,8 @@ void ADWatch::showTime(void){
 
 	return: nothing.
 */
-void ADWatch::showSpeed(void){
-	speedo->trackSpeed(parser->grabSpeed(),ring);
+void ADWatch::showSpeed(float speed){
+	speedo->trackSpeed(speed,ring);
 }
 
 //TODO test
@@ -91,8 +91,8 @@ void ADWatch::showSpeed(void){
 
 	return: nothing
 */
-void ADWatch::showHeading(void){
-	compass->trackHeading(parser->grabHeading(),ring);
+void ADWatch::showHeading(float heading){
+	compass->trackHeading(heading,ring);
 }
 
 //TODO test

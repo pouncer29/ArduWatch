@@ -30,10 +30,11 @@ class ADWatch{
 		uint32_t blank;
 		
 		//Implements
-		Adafruit_GPS* gps;
 		Adafruit_NeoPixel* ring;
+		/*
 		GPSTools* parser;
-		
+		Adafruit_GPS* gps;
+		*/
 		//Features
 		Clock* clock;
 		Compass* compass;
@@ -44,12 +45,12 @@ class ADWatch{
 
 		//Initializers
 		//src(Adafuit_GPS, Adafruit_NeoPixel); //For when GPS is incorperated
-		ADWatch(Adafruit_NeoPixel*,Adafruit_GPS*);
+		ADWatch(Adafruit_NeoPixel*);
 		
 		//Views (Features)
-		void showTime(void);//Can probably be void when GPS gets here!
-		void showSpeed(void);
-		void showHeading(void);
+		void showTime(time_t);//Can probably be void when GPS gets here!
+		void showSpeed(float);
+		void showHeading(float);
 		void showLight();
 		void showStrobe(uint8_t);
 		void showError(uint32_t);
