@@ -3,7 +3,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <ADWatch.h>
 #include <TimeLib.h>
-
+#include <GPSTools.h>
 
 /** 
  *  WATCH SETUP BEGIN
@@ -28,7 +28,7 @@ ADWatch watch = ADWatch(ring);
 const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
 boolean on = false;         //current output state
 int buttonState = 0;       //the current flow through the button.
-bool flourish = true;     //whether or not to do the light show on button press
+bool isRunning = false;     //whether or not to do the light show on button press
 
 //Flourish Colours
 uint32_t compassColour;
@@ -73,10 +73,7 @@ SoftwareSerial mySerial(3, 2);
 
 
 Adafruit_GPS GPS(&mySerial);
-
-
-// Set GPSECHO to 'false' to turn off echoing the GPS data to the Serial console
-// Set to 'true' if you want to debug and listen to the raw GPS sentences. 
+ GPSTools* gTools; 
 #define GPSECHO  false
 
 // this keeps track of whether we're using the interrupt
@@ -84,8 +81,22 @@ Adafruit_GPS GPS(&mySerial);
 boolean usingInterrupt = false;
 void useInterrupt(boolean); // Func prototype keeps Arduino 0023 happy
 
+  /*Direct-GPS Setup*/
+time_t trackMe;
+
 void setup()  
 {
+
+  /** GPS SETUP*/
+  gTools->gpsSetup();
+  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
+  GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);   // 1 Hz update rate
+  useInterrupt(true);
+  gTools = new GPSTools(&GPS);
+  gTools->gps->begin(9600);
+  setSyncProvider(gTools->grabTime());
+  setSyncInterval(10);
+  //trackMe = now();
   /**
    * WATCH SETUP
    */
@@ -99,7 +110,7 @@ void setup()
   pinMode(startWatchPin,INPUT);
   
   //Test values
-  setTime(1,24,30,12,28,2017);
+  //setTime(1,24,30,12,28,2017);
 
   //Init Flourish Colours & Cycler
     clockColour = watch.clock_colour;
@@ -121,48 +132,19 @@ void setup()
     curFeat =0;
 
    /**END WATCH SETUP*/
-
-  // 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
-  GPS.begin(9600);
-  
-  // uncomment this line to turn on RMC (recommended minimum) and GGA (fix data) including altitude
-  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
-  // uncomment this line to turn on only the "minimum recommended" data
-  //GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
-  // For parsing data, we don't suggest using anything but either RMC only or RMC+GGA since
-  // the parser doesn't care about other sentences at this time
-  
-  // Set the update rate
-  GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);   // 1 Hz update rate
-  // For the parsing code to work nicely and have time to sort thru the data, and
-  // print it out we don't suggest using anything higher than 1 Hz
-
-
-
-  // the nice thing about this code is you can have a timer0 interrupt go off
-  // every 1 millisecond, and read data from the GPS for you. that makes the
-  // loop code a heck of a lot easier!
-  useInterrupt(true);
-
-  delay(1000);
-  // Ask for firmware version
-  //mySerial.println(PMTK_Q_RELEASE);
 }
 
-
 // Interrupt is called once a millisecond, looks for any new GPS data, and stores it
-/*SIGNAL(TIMER0_COMPA_vect) {
-  GPS.read();
+SIGNAL(TIMER0_COMPA_vect) {
+  char c = GPS.read();
   // if you want to debug, this is a good time to do it!
-}*/
-/*
 #ifdef UDR0
   if (GPSECHO)
     if (c) UDR0 = c;  
     // writing direct to UDR0 is much much faster than Serial.print 
     // but only one character can be written at a time. 
 #endif
-}*/
+}
 
 void useInterrupt(boolean v) {
   if (v) {
@@ -178,24 +160,22 @@ void useInterrupt(boolean v) {
   }
 }
 
-//int32_t timer = millis();
 void loop()                     // run over and over again
 {
-  GPS.read();
-  // if a sentence is received, we can check the checksum, parse it...
-  if (GPS.newNMEAreceived()) {
-    // a tricky thing here is if we print the NMEA sentence, or data
-    // we end up not listening and catching other sentences! 
-    // so be very wary if using OUTPUT_ALLDATA and trytng to print out data
-    //Serial.println(GPS.lastNMEA());   // this also sets the newNMEAreceived() flag to false
-  
-    if (!GPS.parse(GPS.lastNMEA()))   // this also sets the newNMEAreceived() flag to false
-      return;  // we can fail to parse a sentence in which case we should just wait for another
-  }
+  //trackMe = now();
+  if (! usingInterrupt) {
+    char c = GPS.read();
     
-    //MY SETTING OF TIME
+    if (GPSECHO)
+      if (c) Serial.print(c);
+  }
+  
+  if (GPS.newNMEAreceived()) {
+    if (!GPS.parse(GPS.lastNMEA()))
+      return;  
+  }
+  
       /** WATCH LOOP*/
-      setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
        buttonState=digitalRead(startWatchPin);
         if(buttonState == HIGH){
            if(on == true)
@@ -206,33 +186,51 @@ void loop()                     // run over and over again
 
      //Start watch button code.
       if(on == true){
-          if(flourish){
+          if(isRunning == false){
              watch.flourish(Colours[curFeat],100);
-             delay(800);                
-             flourish = false;          //5. remember not to florish every time we show the time
+             delay(800);
+
+             if(curFeat == Clock){
+                //time_t gpsTime = gTools->grabTime();
+                //setTime(gTools->gps->hour,gTools->gps->minute,gTools->gps->seconds,gTools->gps->day,
+                //gTools->gps->month,gTools->gps->year);
+                //setTime(1,30,45,12,28,2017);
+                //setTime(gpsTime);
+             }
+
+                             
+             isRunning = true;          //5. remember not to florish every time we show the time
             }
           delay(200);
           watch.setPixels(blank);
           ring->show();
           switch (curFeat) {
             case Clock:
-                //myTime = now(); //could maybe be a GPS pull in the future? same with all of the othes!
-                watch.showTime(now());
+                trackMe = now();
+                watch.showTime(trackMe);
+//                Serial.println("gTools");
+//                Serial.print(gTools->gps->hour, DEC); Serial.print(':');
+//                Serial.print(gTools->gps->minute, DEC); Serial.print(':');
+//                Serial.print(gTools->gps->seconds, DEC); Serial.print('.');
+//                Serial.println("GPS");
+//                Serial.print(GPS.hour, DEC); Serial.print(':');
+//                Serial.print(GPS.minute, DEC); Serial.print(':');
+//                Serial.print(GPS.seconds, DEC); Serial.print('.');
                 //setFlag(3);
                 break;
             case Compass:
                 //setFlag(1);
-                if(GPS.fix)
-                  watch.showHeading(GPS.angle);
+                if(gTools->hasFix())
+                  watch.showHeading(gTools->grabHeading());
                 else
-                  watch.refresh();
+                  watch.refresh(!gTools->hasFix());
                 break;
             case Speedometer:
                 //setFlag(2);
-                if(GPS.fix)
-                  watch.showSpeed(GPS.speed);
+                if(gTools->hasFix())
+                  watch.showSpeed(gTools->grabSpeed());
                  else
-                  watch.refresh();
+                  watch.refresh(!gTools->hasFix());
                 break;
             case Flashlight:
                 //setFlag(3);
@@ -243,7 +241,7 @@ void loop()                     // run over and over again
                 watch.showStrobe(startWatchPin);
                 break;
             case Refresh:
-               watch.refresh();
+               watch.refresh(!gTools->hasFix());
                 break;
             default:
                 watch.showError(errorColour);
@@ -265,12 +263,10 @@ void loop()                     // run over and over again
        else{
         ring->clear();             //1. Button must be off, clear the strip
         ring->show();
-        flourish = true;                //3. remember to flourish when we turn it back on.
-       }
-    
+        isRunning = false;                //3. remember to flourish when we turn it back on.
+        }
+        
+
         delay(200);                     //Apparently good for 'debounce' whatever that is
-
-
-         
       /*END WATCH LOOP*/
    }

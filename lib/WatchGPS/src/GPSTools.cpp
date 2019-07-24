@@ -4,7 +4,13 @@
 	Synopsis: Implementation for GPS interacting functions
 */
 
-#include "GPSTools.h"
+#include <GPSTools.h>
+#define HR 0
+#define MIN 1
+#define SEC 2
+#define DAY 3
+#define MON 4
+#define YEAR 5
 
 /* GPSTools()
    precond: none
@@ -20,28 +26,29 @@ GPSTools::GPSTools(Adafruit_GPS* myGPS){
 	prev_adjust = -7; // My Local TZ
 
 	/*Setup from GPS example*/
-	gpsSetup();
-	delay(1000);
-	gpsSignalRead();
 }
 
+
+
 void GPSTools::gpsSetup() {
-	gps.begin(9600);
-	gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
-	gps.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);
-	useInterrupt(true);
+
+	Serial.println("CALLED GPS SETUP");
+	Serial.begin(115200);
+
+	// 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
 }
 
 void GPSTools::gpsSignalRead(){
-	SIGNAL(TIMER_COMPA_vect) {
-		this.gps.read();
-	}
+    /*SIGNAL(TIMER_COMPA_vect) {
+		this.gps->read();
+	}*/
+    return;
 }
 
 //TODO: Put this before each GPS-data using function
 bool GPSTools::gpsParse() {
-	if(gps.newNMEAreceived()) {
-		if (!gps.parse(gps.lastNMEA()))
+	if(gps->newNMEAreceived()) {
+		if (!gps->parse(gps->lastNMEA()))
 			return true;
 	}
 	return false;
@@ -54,7 +61,7 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 	if(deg > 180)
 		return -50;
 
-	// The offset is just integer division withthe blood thing
+	// The offset is just integer division with the blood thing
 	adjustment = deg / 15;
 	//If we are west of Greenwitch, we must subtract the adjustment, else add
 	if (EW == 'W')
@@ -76,8 +83,10 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 
 	return: the current time according to the GPS module as a time_t
 */
-time_t GPSTools::grabTime(void){
+int8_t[] GPSTools::grabTime(void){
 	int8_t adjustment;
+	int8_t time[5];
+
 	if(gps->fix) {
 		adjustment = tzAdjust(gps->longitudeDegrees, gps->lon);
 		prev_adjust = adjustment;
@@ -85,8 +94,14 @@ time_t GPSTools::grabTime(void){
 	else
 		adjustment = prev_adjust;
 
-	setTime((gps->hour + adjustment),gps->minute,gps->seconds,gps->day,gps->month,gps->year);
-	return now();
+	//TODO: Adjust the .ino GPS_FED_VALUES to deal with the array returned
+	time[HR] = gps->hour;
+	time[MIN] = gps->min;
+	time[SEC] = gps->sec;
+	time[DAY] = gps->day;
+	time[MON] = gps->month;
+	time[YEAR] = gps->year;
+	return time;
 }
 
 /* grabSpeed()
@@ -144,11 +159,10 @@ void GPSTools::useInterrupt(bool isUsing) {
 			// in the middle and call the "Compare A" function above
 			OCR0A = 0xAF;
 			TIMSK0 |= _BV(OCIE0A);
-			usingInterrupt = true;
+			//usingInterrupt = true;
 		} else {
 			// do not call the interrupt function COMPA anymore
 			TIMSK0 &= ~_BV(OCIE0A);
-			usingInterrupt = false;
+			//usingInterrupt = false;
 		}
 	}
-}
