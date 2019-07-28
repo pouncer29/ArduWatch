@@ -20,10 +20,8 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	ring->setBrightness(20);
 
 	//GPS
-	/*
-	//gps = myGPS;
-	parser = new GPSTools(gps);
-	 */
+	//this.gps = 	Adafruit_GPS(gpsSerial);
+
 	
 	// init functions
 	clock = new Clock();
@@ -43,6 +41,23 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	return;
 }
 
+/**GPS SETUP*/
+//#define GPSECHO true
+void gpsInit(uint16_t readRate, uint16_t writeRate){
+	/*
+	Serial.begin(readRate)
+	Serial.println("GPS_PARSER TESTS")
+
+	this.gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
+	this.gps.sendCommand(PMKT_SET_NMEA_UPDATE_1HZ);
+	delay(1000);
+
+	/this.parser = new GPSTools(gps);*/
+}
+
+
+
+/**FUNCTIONS*/
 //Views
 //TODO test
 /* showTime()
@@ -166,11 +181,11 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait){
 		ring->show();
 }
 
-void ADWatch::refresh(void){
+void ADWatch::refresh(bool cond){
 	uint32_t refreshMe_colours[3] = {clock_colour,compass_colour,speedo_colour};
 
 	//While we are not tracking a satelite
-	while(!parser->hasFix()) {
+	while(cond) {
 		//just for asthetic for now. Doesn't do anything
 		for (int i = 0; i < 3; i++) {
 			//All this is is a reverse Flourish to signify refresh rather than show

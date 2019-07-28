@@ -8,9 +8,9 @@
 #include <Speedometer.h>
 #include <Flashlight.h>
 #include <Adafruit_NeoPixel.h>
+#include <SoftwareSerial.h>
 #include <Adafruit_GPS.h>
 #include <GPSTools.h>
-
 
 /* src
    -----------
@@ -28,13 +28,13 @@ class ADWatch{
 		uint32_t party_colour;
 		uint32_t error_colour;
 		uint32_t blank;
+		time_t trackMe;
 		
 		//Implements
 		Adafruit_NeoPixel* ring;
-		/*
 		GPSTools* parser;
 		Adafruit_GPS* gps;
-		*/
+
 		//Features
 		Clock* clock;
 		Compass* compass;
@@ -59,7 +59,7 @@ class ADWatch{
 		void flourish(uint32_t,uint32_t);
 		void clearRing(void);
 		void setPixels(uint32_t);
-		void refresh(void);
+		void refresh(bool);
 	
 	/*
 		In the future, it may be a good refactor to make all of our features private and store
