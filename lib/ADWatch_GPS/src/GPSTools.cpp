@@ -5,12 +5,6 @@
 */
 
 #include <GPSTools.h>
-#define HR 0
-#define MIN 1
-#define SEC 2
-#define DAY 3
-#define MON 4
-#define YEAR 5
 
 /* GPSTools()
    precond: none
@@ -22,8 +16,8 @@
    return: nothing
  */
 GPSTools::GPSTools(Adafruit_GPS* myGPS){
-	gps = myGPS;
-	prev_adjust = -7; // My Local TZ
+	this->gps = myGPS;
+	this->prev_adjust = -6; // My Local TZ
 
 	/*Setup from GPS example*/
 }
@@ -62,7 +56,7 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 		return -50;
 
 	// The offset is just integer division with the blood thing
-	adjustment = deg / 15;
+	adjustment = deg / 1500;
 	//If we are west of Greenwitch, we must subtract the adjustment, else add
 	if (EW == 'W')
 		return  adjustment * -1;
@@ -83,24 +77,41 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 
 	return: the current time according to the GPS module as a time_t
 */
-int8_t[] GPSTools::grabTime(void){
-	int8_t adjustment;
-	int8_t time[5];
+time_t GPSTools::grabTime(Adafruit_GPS adGps){
+//	int8_t adjustment;
+//	//int8_t time[5];
+//
+//	if(gps->fix) {
+//		adjustment = tzAdjust(gps->longitudeDegrees, gps->lon);
+//		prev_adjust = adjustment;
+//	}
+//	else
+//		adjustment = prev_adjust;
+#ifdef DEBUG
+	Serial.println("adjustment\n");
+	Serial.print(prev_adjust,BIN);
+	Serial.println("GPS HOUR");
+	Serial.println(adGps.hour,DEC);
+	int adjust = (12 - prev_adjust);
+    Serial.println("GPS sour\n");
+    Serial.println(adGps.hour,DEC);
+    Serial.println("adjustment\n");
+    Serial.println(adjust);
+#endif
 
-	if(gps->fix) {
-		adjustment = tzAdjust(gps->longitudeDegrees, gps->lon);
-		prev_adjust = adjustment;
+	//prev_adjust = -6;
+	int hour;
+	if(prev_adjust <0 && (adGps.hour > prev_adjust)){
+
+		//prev adjust is -
+
+		hour = ((12 - this->prev_adjust)  + adGps.hour);
+
 	}
-	else
-		adjustment = prev_adjust;
 
-	//TODO: Adjust the .ino GPS_FED_VALUES to deal with the array returned
-	time[HR] = gps->hour;
-	time[MIN] = gps->min;
-	time[SEC] = gps->sec;
-	time[DAY] = gps->day;
-	time[MON] = gps->month;
-	time[YEAR] = gps->year;
+	setTime(hour,adGps.minute,adGps.seconds,adGps.day,adGps.month,adGps.year);
+
+	time_t time = now();
 	return time;
 }
 

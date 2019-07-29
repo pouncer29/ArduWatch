@@ -4,24 +4,35 @@
 
 #include "ADbug.h"
 
-ADBugger::ADBugger(){
+ADBug::ADBug(){
 }
-ADBugger::ADBugger(Adafruit_GPS* gps){
+ADBug::ADBug(Adafruit_GPS* gps){
     this->gps = gps;
 }
-ADBugger::ADBugger(ADafruit_NeoPixel* ring){
+ADBug::ADBug(Adafruit_NeoPixel* ring){
     this->ring = ring;
-    this->Red = ring.Color(255,0,0,0);
+    this->Red = ring->Color(255,0,0,0);
 }
 
-ADBugger::ADBugger(Adafruti_GPS *, Adafruit_NeoPixel *) {
+ADBug::ADBug(Adafruit_GPS *, Adafruit_NeoPixel *) {
     this->ring = ring;
     this->gps = gps;
-    this->Red = ring.Color(255,0,0,0);
+    this->Red = ring->Color(255,0,0,0);
 }
 
-void ADBugger::setFlag(int index, Adafruit_NeoPixel* aRing ) {
-    this->Red = aRing.Color(255,0,0,0);
+void ADBug::setFlag(int index, Adafruit_NeoPixel* aRing ) {
+    this->Red = ring->Color(255,0,0,0);
     aRing->setPixelColor(index,Red);
     aRing->show();
+}
+
+
+void ADBug::setFlag(int index) {
+    if(nullptr != this->ring){
+        this->ring->setPixelColor(index,Red);
+        this->ring->show();
+    }
+
+    return;
+
 }

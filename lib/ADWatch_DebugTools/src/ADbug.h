@@ -8,7 +8,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
 
-public class ADBugger{
+class ADBug{
 
     //Attributes
     public:
@@ -18,11 +18,12 @@ public class ADBugger{
     int32_t Red;
 
     //Methods
-    ADBugger();
-    ADBugger(Adafruit_NeoPixel*);
-    ADBugger(Adafruit_GPS*);
-    ADBugger(Adafruti_GPS*,Adafruit_NeoPixel*);
+    ADBug();
+    ADBug(Adafruit_NeoPixel*);
+    ADBug(Adafruit_GPS*);
+    ADBug(Adafruit_GPS*,Adafruit_NeoPixel*);
 
     void setFlag(int,Adafruit_NeoPixel*);
+    void setFlag(int);
 };
 #endif //ARDUWATCH_ADBUG_H

@@ -4,6 +4,7 @@
 #include <ADWatch.h>
 #include <TimeLib.h>
 #include <GPSTools.h>
+#include <ADbug.h>
 
 /**
  *  WATCH SETUP BEGIN
@@ -17,6 +18,7 @@
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 Adafruit_NeoPixel* ring = &strip;
+ADBug debugger = ADBug(ring);
 
 
 
@@ -29,6 +31,7 @@ const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
 boolean on = false;         //current output state
 int buttonState = 0;       //the current flow through the button.
 bool isRunning = false;     //whether or not to do the light show on button press
+bool initialRun = true;
 
 //Flourish Colours
 uint32_t compassColour;
@@ -65,13 +68,6 @@ int curFeat;
 // (you can change the pin numbers to match your wiring):
 SoftwareSerial mySerial(3, 2);
 
-// If using hardware serial (e.g. Arduino Mega), comment out the
-// above SoftwareSerial line, and enable this line instead
-// (you can change the Serial number to match your wiring):
-
-//HardwareSerial mySerial = Serial1;
-
-
 Adafruit_GPS GPS(&mySerial);
 GPSTools* gTools;
 #define GPSECHO  false
@@ -86,7 +82,8 @@ time_t trackMe;
 
 void setup()
 {
-
+  // flow setup
+  initialRun = true;
     /** GPS SETUP*/
     gTools->gpsSetup();
     GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
@@ -94,24 +91,23 @@ void setup()
     useInterrupt(true);
     gTools = new GPSTools(&GPS);
     gTools->gps->begin(9600);
-    setSyncProvider(gTools->grabTime());
-    setSyncInterval(10);
-    //trackMe = now();
-    /**
-     * WATCH SETUP
-     */
-//INIT RING
+    Serial.begin(115200);
+
+  //INIT RING
     ring->setBrightness(BRIGHTNESS);
     ring->begin();
     ring->clear();
     ring->show(); //Supposedly initilizes all to off
+    
 
+
+    
     //For Buttons
     pinMode(startWatchPin,INPUT);
 
     //Test values
     //setTime(1,24,30,12,28,2017);
-
+    
     //Init Flourish Colours & Cycler
     clockColour = watch.clock_colour;
     compassColour = watch.compass_colour;
@@ -161,8 +157,7 @@ void useInterrupt(boolean v) {
 }
 
 void loop()                     // run over and over again
-{
-    //trackMe = now();
+{  
     if (! usingInterrupt) {
         char c = GPS.read();
 
@@ -186,19 +181,13 @@ void loop()                     // run over and over again
 
     //Start watch button code.
     if(on == true){
+      if(initialRun == true){
+        setTime(gTools->grabTime(GPS));
+        initialRun = false;
+      }
         if(isRunning == false){
             watch.flourish(Colours[curFeat],100);
             delay(800);
-
-            if(curFeat == Clock){
-                //time_t gpsTime = gTools->grabTime();
-                //setTime(gTools->gps->hour,gTools->gps->minute,gTools->gps->seconds,gTools->gps->day,
-                //gTools->gps->month,gTools->gps->year);
-                //setTime(1,30,45,12,28,2017);
-                //setTime(gpsTime);
-            }
-
-
             isRunning = true;          //5. remember not to florish every time we show the time
         }
         delay(200);
@@ -206,16 +195,14 @@ void loop()                     // run over and over again
         ring->show();
         switch (curFeat) {
             case Clock:
-                trackMe = now();
-                watch.showTime(trackMe);
+                watch.showTime(now());
 //                Serial.println("gTools");
-//                Serial.print(gTools->gps->hour, DEC); Serial.print(':');
-//                Serial.print(gTools->gps->minute, DEC); Serial.print(':');
-//                Serial.print(gTools->gps->seconds, DEC); Serial.print('.');
-//                Serial.println("GPS");
 //                Serial.print(GPS.hour, DEC); Serial.print(':');
 //                Serial.print(GPS.minute, DEC); Serial.print(':');
 //                Serial.print(GPS.seconds, DEC); Serial.print('.');
+////                
+//                Serial.println("Lon");
+//                Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
                 //setFlag(3);
                 break;
             case Compass:
