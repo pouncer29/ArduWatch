@@ -196,10 +196,16 @@ void loop()                     // run over and over again
         switch (curFeat) {
             case Clock:
                 watch.showTime(now());
+                Serial.println("gTools");
+                Serial.print(GPS.hour, DEC); Serial.print(':');
+                Serial.print(GPS.minute, DEC); Serial.print(':');
+                Serial.print(GPS.seconds, DEC); Serial.println('.');
+
+                time_t test = now();
 //                Serial.println("gTools");
-//                Serial.print(GPS.hour, DEC); Serial.print(':');
-//                Serial.print(GPS.minute, DEC); Serial.print(':');
-//                Serial.print(GPS.seconds, DEC); Serial.print('.');
+                  Serial.println(test,DEC);
+//                Serial.print(test.minute, DEC); Serial.print(':');
+//                Serial.print(test.second, DEC); Serial.print('.');
 ////                
 //                Serial.println("Lon");
 //                Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);

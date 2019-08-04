@@ -22,7 +22,7 @@ class GPSTools{
 	public:
 		//Attributes
 		Adafruit_GPS* gps;
-		int8_t prev_adjust;
+		int prev_adjust;
 		//Methods
 		GPSTools(Adafruit_GPS*);
 		time_t grabTime(Adafruit_GPS);

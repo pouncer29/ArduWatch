@@ -17,7 +17,7 @@
  */
 GPSTools::GPSTools(Adafruit_GPS* myGPS){
 	this->gps = myGPS;
-	this->prev_adjust = -6; // My Local TZ
+	this->prev_adjust = 10; // My Local TZ
 
 	/*Setup from GPS example*/
 }
@@ -99,15 +99,35 @@ time_t GPSTools::grabTime(Adafruit_GPS adGps){
     Serial.println(adjust);
 #endif
 
-	//prev_adjust = -6;
+
 	int hour;
-	if(prev_adjust <0 && (adGps.hour > prev_adjust)){
+	//Arduino is super weird. If you don't set it here, the instance will stay OMG it's a pointer issue.
+	this->prev_adjust = -6;
 
-		//prev adjust is -
-
-		hour = ((12 - this->prev_adjust)  + adGps.hour);
-
+	///If we are West of greenwitch, we do mathamagic to handle - adjustments.
+	if(this->prev_adjust < 0){
+		if(adGps.hour >= (prev_adjust * -1)) {
+			hour = adGps.hour - prev_adjust;
+		} else{
+			hour = adGps.hour + (prev_adjust * -1) + 12;
+		}
+	///Otherwise, we are East of grenwhich and must handle + adjustents
+	}else{
+		int adjustDiff = 12 - prev_adjust;
+		if(adGps.hour >= (12+adjustDiff)){
+			hour = adGps.hour - (12 + adjustDiff);
+		} else{
+			hour = adGps.hour + prev_adjust;
+		}
 	}
+
+	/**
+	 * Both scenarios may end up creating negative but correct values, negate them
+	 */
+	if(hour < 0){
+		hour *= -1;
+	}
+
 
 	setTime(hour,adGps.minute,adGps.seconds,adGps.day,adGps.month,adGps.year);
 
