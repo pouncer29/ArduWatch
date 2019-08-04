@@ -69,16 +69,13 @@ int curFeat;
 SoftwareSerial mySerial(3, 2);
 
 Adafruit_GPS GPS(&mySerial);
-GPSTools gTools(&GPS);
+GPSTools gTools(&GPS,10);
 #define GPSECHO  false
 
 // this keeps track of whether we're using the interrupt
 // off by default!
 boolean usingInterrupt = false;
 void useInterrupt(boolean); // Func prototype keeps Arduino 0023 happy
-
-/*Direct-GPS Setup*/
-time_t trackMe;
 
 void setup()
 {
@@ -88,7 +85,6 @@ void setup()
     GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
     GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);   // 1 Hz update rate
     useInterrupt(true);
-    //gTools = GPSTools(&GPS);
     gTools.gps->begin(9600);
     Serial.begin(115200);
 
@@ -151,21 +147,22 @@ void useInterrupt(boolean v) {
     }
 }
 
-void loop()                     // run over and over again
+void loop()                   
 {  
+  /* ADAFRUIT GPS STUFF*/
     if (! usingInterrupt) {
         char c = GPS.read();
-
         if (GPSECHO)
             if (c) Serial.print(c);
     }
-
     if (GPS.newNMEAreceived()) {
         if (!GPS.parse(GPS.lastNMEA()))
             return;
     }
+    /***********************/
 
     /** WATCH LOOP*/
+     Serial.print("GPS has fix: "); Serial.println(GPS.fix == true);
     buttonState=digitalRead(startWatchPin);
     if(buttonState == HIGH){
         if(on == true)
@@ -176,6 +173,7 @@ void loop()                     // run over and over again
 
     //Start watch button code.
     if(on == true){
+     
       if(initialRun == true){
         setTime(gTools.grabTime());
         initialRun = false;
@@ -195,16 +193,10 @@ void loop()                     // run over and over again
                 Serial.print(GPS.hour, DEC); Serial.print(':');
                 Serial.print(GPS.minute, DEC); Serial.print(':');
                 Serial.print(GPS.seconds, DEC); Serial.println('.');
-
                 time_t test = now();
-//                Serial.println("gTools");
-                  Serial.println(test,DEC);
-//                Serial.print(test.minute, DEC); Serial.print(':');
-//                Serial.print(test.second, DEC); Serial.print('.');
-////                
-//                Serial.println("Lon");
-//                Serial.print(GPS.longitude, 4); Serial.println(GPS.lon);
-                //setFlag(3);
+                Serial.println(test,DEC);
+                Serial.println(GPS.longitude, 4);
+                Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
                 break;
             case Compass:
                 //setFlag(1);

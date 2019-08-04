@@ -1,4 +1,4 @@
-/*
+/**
 	Author: Ben Lewis
 	Date: July 27th, 2018
 	Synopsis: Implementation for GPS interacting functions
@@ -6,7 +6,7 @@
 
 #include <GPSTools.h>
 
-/* GPSTools()
+/** GPSTools()
    precond: none
    postcond: none
    parametes: the reference to our GPS module
@@ -15,33 +15,29 @@
 
    return: nothing
  */
-GPSTools::GPSTools(Adafruit_GPS* myGPS){
+GPSTools::GPSTools(Adafruit_GPS* myGPS,int32_t adj){
 	gps = myGPS;
-	this->adjust = -6; // My Local TZ
-
-	/*Setup from GPS example*/
+	this->adjust = adj;
 }
 
 //Handles the UTC timezones with our given degrees
-int GPSTools::tzAdjust(float deg, char16_t EW){
+int32_t GPSTools::tzAdjust(float deg){
 
-	int8_t	adjustment;
-	if(deg > 180)
-		return -50;
+	int32_t	adjustment;
 
-	// The offset is just integer division with the blood thing
-	adjustment = deg / 1500;
-	//If we are west of Greenwitch, we must subtract the adjustment, else add
-	if (EW == 'W')
-		return  adjustment * -1;
-	else if (EW == 'E')
-		return adjustment;
-	else
-		return -50;
+	///The adjustment +/- 1 is because of my goofed timezone. It should maybe be removed.
+	if(deg < 0) {
+		adjustment = ((-1 * deg) / 15) * -1;
+		return adjustment + 1; //Saskatoon is -6, this fn gives -7... So I cheated
+	}
+	else {
+		adjustment = deg / 15;
+	}
+
 
 	}
 
-/* grabTime()
+/** grabTime()
 	precond: gps is initialized
 	postcond: a time_t of the current time is produced
 
@@ -52,41 +48,24 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 	return: the current time according to the GPS module as a time_t
 */
 time_t GPSTools::grabTime(){
+
 	int32_t hour;
-	//Arduino is super weird. If you don't set it here, the instance will stay OMG it's a pointer issue.
-
-	///If we are West of greenwitch, we do mathamagic to handle - adjustments.
-	if(this->adjust < 0){
-		if(gps->hour >= (adjust * -1)) {
-			hour = gps->hour + adjust;
-		} else{
-			hour = gps->hour + (adjust * -1) + 12;
-		}
-	///Otherwise, we are East of grenwhich and must handle + adjustents
-	}else{
-		int adjustDiff = 12 - adjust;
-		if(gps->hour >= (12+adjustDiff)){
-			hour = gps->hour - (12 + adjustDiff);
-		} else{
-			hour = gps->hour + adjust;
+	if(gps->fix){
+		int32_t adj = tzAdjust(gps->longitudeDegrees);
+		if(adj != this->adjust){
+			this->adjust = adj;
 		}
 	}
 
-	/**
-	 * Both scenarios may end up creating negative but correct values, negate them
-	 */
-	if(hour < 0){
-		hour *= -1;
-	}
-
-
+	///this is Jarrods magic 24hour converter. It works similar to how the 24 hour converter works in the clock app
+	hour = (((gps->hour + adjust)%24)+24) % 24;
 	setTime(hour,gps->minute,gps->seconds,gps->day,gps->month,gps->year);
 
 	time_t time = now();
 	return time;
 }
 
-/* grabSpeed()
+/** grabSpeed()
 	precond: gps has been initialized and we have a fix
 	postcond: speed is produced as a float from GPS
 	
@@ -103,7 +82,7 @@ float GPSTools::grabSpeed(void){
 		return 0;
 }
 
-/* grabHeading()
+/** grabHeading()
 	precond: GPS readings are initialized
 	postcond: None
 
@@ -121,7 +100,7 @@ float GPSTools::grabHeading(void){
 
 }
 
-/* hasFix()
+/** hasFix()
 	precond: GPS is initialized
 	postcond: the tracked variable is updated
 

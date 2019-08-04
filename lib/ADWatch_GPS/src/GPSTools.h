@@ -12,7 +12,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 
-/* GPSTools
+/** GPSTools
    --------------
 	- A toolkit class that should be imported into watch_function classes to provide necessary
 	  GPS data
@@ -24,17 +24,16 @@ class GPSTools{
 		Adafruit_GPS* gps;
 		int adjust;
 		//Methods
-		GPSTools(Adafruit_GPS*);
+		GPSTools(Adafruit_GPS*,int32_t);
 		time_t grabTime();
 		float grabSpeed(void);
 		float grabHeading(void);
 		void update(void);
 		bool hasFix(void);
-		void gpsSetup();
 
 	private:
 		//Methods
-		int tzAdjust(float, char16_t);
+		int32_t tzAdjust(float);
 
 };
 
