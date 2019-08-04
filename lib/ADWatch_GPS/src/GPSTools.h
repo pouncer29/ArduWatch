@@ -22,10 +22,10 @@ class GPSTools{
 	public:
 		//Attributes
 		Adafruit_GPS* gps;
-		int prev_adjust;
+		int adjust;
 		//Methods
 		GPSTools(Adafruit_GPS*);
-		time_t grabTime(Adafruit_GPS);
+		time_t grabTime();
 		float grabSpeed(void);
 		float grabHeading(void);
 		void update(void);

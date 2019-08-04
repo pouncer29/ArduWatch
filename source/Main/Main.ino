@@ -177,7 +177,7 @@ void loop()                     // run over and over again
     //Start watch button code.
     if(on == true){
       if(initialRun == true){
-        setTime(gTools.grabTime(GPS));
+        setTime(gTools.grabTime());
         initialRun = false;
       }
         if(isRunning == false){

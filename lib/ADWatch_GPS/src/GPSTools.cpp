@@ -16,8 +16,8 @@
    return: nothing
  */
 GPSTools::GPSTools(Adafruit_GPS* myGPS){
-	this->gps = myGPS;
-	this->prev_adjust = -6; // My Local TZ
+	gps = myGPS;
+	this->adjust = -6; // My Local TZ
 
 	/*Setup from GPS example*/
 }
@@ -51,24 +51,24 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 
 	return: the current time according to the GPS module as a time_t
 */
-time_t GPSTools::grabTime(Adafruit_GPS adGps){
-	int hour;
+time_t GPSTools::grabTime(){
+	int32_t hour;
 	//Arduino is super weird. If you don't set it here, the instance will stay OMG it's a pointer issue.
 
 	///If we are West of greenwitch, we do mathamagic to handle - adjustments.
-	if(this->prev_adjust < 0){
-		if(adGps.hour >= (prev_adjust * -1)) {
-			hour = adGps.hour - prev_adjust;
+	if(this->adjust < 0){
+		if(gps->hour >= (adjust * -1)) {
+			hour = gps->hour + adjust;
 		} else{
-			hour = adGps.hour + (prev_adjust * -1) + 12;
+			hour = gps->hour + (adjust * -1) + 12;
 		}
 	///Otherwise, we are East of grenwhich and must handle + adjustents
 	}else{
-		int adjustDiff = 12 - prev_adjust;
-		if(adGps.hour >= (12+adjustDiff)){
-			hour = adGps.hour - (12 + adjustDiff);
+		int adjustDiff = 12 - adjust;
+		if(gps->hour >= (12+adjustDiff)){
+			hour = gps->hour - (12 + adjustDiff);
 		} else{
-			hour = adGps.hour + prev_adjust;
+			hour = gps->hour + adjust;
 		}
 	}
 
@@ -80,7 +80,7 @@ time_t GPSTools::grabTime(Adafruit_GPS adGps){
 	}
 
 
-	setTime(hour,adGps.minute,adGps.seconds,adGps.day,adGps.month,adGps.year);
+	setTime(hour,gps->minute,gps->seconds,gps->day,gps->month,gps->year);
 
 	time_t time = now();
 	return time;
