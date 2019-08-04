@@ -17,35 +17,9 @@
  */
 GPSTools::GPSTools(Adafruit_GPS* myGPS){
 	this->gps = myGPS;
-	this->prev_adjust = 10; // My Local TZ
+	this->prev_adjust = -6; // My Local TZ
 
 	/*Setup from GPS example*/
-}
-
-
-
-void GPSTools::gpsSetup() {
-
-	Serial.println("CALLED GPS SETUP");
-	Serial.begin(115200);
-
-	// 9600 NMEA is the default baud rate for Adafruit MTK GPS's- some use 4800
-}
-
-void GPSTools::gpsSignalRead(){
-    /*SIGNAL(TIMER_COMPA_vect) {
-		this.gps->read();
-	}*/
-    return;
-}
-
-//TODO: Put this before each GPS-data using function
-bool GPSTools::gpsParse() {
-	if(gps->newNMEAreceived()) {
-		if (!gps->parse(gps->lastNMEA()))
-			return true;
-	}
-	return false;
 }
 
 //Handles the UTC timezones with our given degrees
@@ -78,31 +52,8 @@ int GPSTools::tzAdjust(float deg, char16_t EW){
 	return: the current time according to the GPS module as a time_t
 */
 time_t GPSTools::grabTime(Adafruit_GPS adGps){
-//	int8_t adjustment;
-//	//int8_t time[5];
-//
-//	if(gps->fix) {
-//		adjustment = tzAdjust(gps->longitudeDegrees, gps->lon);
-//		prev_adjust = adjustment;
-//	}
-//	else
-//		adjustment = prev_adjust;
-#ifdef DEBUG
-	Serial.println("adjustment\n");
-	Serial.print(prev_adjust,BIN);
-	Serial.println("GPS HOUR");
-	Serial.println(adGps.hour,DEC);
-	int adjust = (12 - prev_adjust);
-    Serial.println("GPS sour\n");
-    Serial.println(adGps.hour,DEC);
-    Serial.println("adjustment\n");
-    Serial.println(adjust);
-#endif
-
-
 	int hour;
 	//Arduino is super weird. If you don't set it here, the instance will stay OMG it's a pointer issue.
-	this->prev_adjust = -6;
 
 	///If we are West of greenwitch, we do mathamagic to handle - adjustments.
 	if(this->prev_adjust < 0){
@@ -184,16 +135,3 @@ bool GPSTools::hasFix(void){
 	return gps->fix;
 }
 
-void GPSTools::useInterrupt(bool isUsing) {
-		if (isUsing) {
-			// Timer0 is already used for millis() - we'll just interrupt somewhere
-			// in the middle and call the "Compare A" function above
-			OCR0A = 0xAF;
-			TIMSK0 |= _BV(OCIE0A);
-			//usingInterrupt = true;
-		} else {
-			// do not call the interrupt function COMPA anymore
-			TIMSK0 &= ~_BV(OCIE0A);
-			//usingInterrupt = false;
-		}
-	}

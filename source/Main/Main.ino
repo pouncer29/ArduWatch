@@ -12,7 +12,7 @@
 
 #define PIN 6
 #define NUM_LEDS 12
-#define BRIGHTNESS 30
+#define BRIGHTNESS 10
 
 
 //For Ring
@@ -69,7 +69,7 @@ int curFeat;
 SoftwareSerial mySerial(3, 2);
 
 Adafruit_GPS GPS(&mySerial);
-GPSTools* gTools;
+GPSTools gTools(&GPS);
 #define GPSECHO  false
 
 // this keeps track of whether we're using the interrupt
@@ -85,12 +85,11 @@ void setup()
   // flow setup
   initialRun = true;
     /** GPS SETUP*/
-    gTools->gpsSetup();
     GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
     GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);   // 1 Hz update rate
     useInterrupt(true);
-    gTools = new GPSTools(&GPS);
-    gTools->gps->begin(9600);
+    //gTools = GPSTools(&GPS);
+    gTools.gps->begin(9600);
     Serial.begin(115200);
 
   //INIT RING
@@ -104,10 +103,6 @@ void setup()
     
     //For Buttons
     pinMode(startWatchPin,INPUT);
-
-    //Test values
-    //setTime(1,24,30,12,28,2017);
-    
     //Init Flourish Colours & Cycler
     clockColour = watch.clock_colour;
     compassColour = watch.compass_colour;
@@ -182,7 +177,7 @@ void loop()                     // run over and over again
     //Start watch button code.
     if(on == true){
       if(initialRun == true){
-        setTime(gTools->grabTime(GPS));
+        setTime(gTools.grabTime(GPS));
         initialRun = false;
       }
         if(isRunning == false){
@@ -213,17 +208,17 @@ void loop()                     // run over and over again
                 break;
             case Compass:
                 //setFlag(1);
-                if(gTools->hasFix())
-                    watch.showHeading(gTools->grabHeading());
+                if(gTools.hasFix())
+                    watch.showHeading(gTools.grabHeading());
                 else
-                    watch.refresh(!gTools->hasFix());
+                    watch.refresh(!gTools.hasFix());
                 break;
             case Speedometer:
                 //setFlag(2);
-                if(gTools->hasFix())
-                    watch.showSpeed(gTools->grabSpeed());
+                if(gTools.hasFix())
+                    watch.showSpeed(gTools.grabSpeed());
                 else
-                    watch.refresh(!gTools->hasFix());
+                    watch.refresh(!gTools.hasFix());
                 break;
             case Flashlight:
                 //setFlag(3);
@@ -234,7 +229,7 @@ void loop()                     // run over and over again
                 watch.showStrobe(startWatchPin);
                 break;
             case Refresh:
-                watch.refresh(!gTools->hasFix());
+                watch.refresh(!gTools.hasFix());
                 break;
             default:
                 watch.showError(errorColour);

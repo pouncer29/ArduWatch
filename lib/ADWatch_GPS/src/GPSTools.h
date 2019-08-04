@@ -35,9 +35,6 @@ class GPSTools{
 	private:
 		//Methods
 		int tzAdjust(float, char16_t);
-		void gpsSignalRead(void);
-		bool gpsParse(void);
-		void useInterrupt(bool);
 
 };
 
