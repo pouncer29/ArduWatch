@@ -10,7 +10,7 @@
 /* RingInterface
 	------------
 	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 
-	Speedometer, Compass, Clock, Flashlight. They all need special colours, they for the most part all 
+	Speedometer, Compass, Watch_Clock, Flashlight. They all need special colours, they for the most part all
 	implement average, clear, or wipe. This class provides them that.
 */
 class RingInterface{
@@ -21,7 +21,7 @@ class RingInterface{
 		uint32_t blank;
 		uint32_t errorColour;
 		
-		//Clock Colors
+		//Watch_Clock Colors
 		uint32_t hrColour;
 		uint32_t minColour;
 		uint32_t secColour;

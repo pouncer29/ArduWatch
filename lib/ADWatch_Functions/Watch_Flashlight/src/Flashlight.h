@@ -7,7 +7,7 @@
 #define Flashlight_h
 
 #include <Arduino.h>
-#include "RingInterface.h"
+#include <RingInterface.h>
 
 /* Flashlight
    -----------

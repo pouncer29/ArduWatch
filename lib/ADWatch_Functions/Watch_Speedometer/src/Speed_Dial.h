@@ -8,7 +8,7 @@
 #define	Speed_Dial_h
 
 #include <Adafruit_NeoPixel.h>
-#include "RingInterface.h"
+#include <RingInterface.h>
 
 /* Speed_Dial
    --------------

@@ -8,7 +8,7 @@
 #define	Compass_Needle_h
 
 #include <Adafruit_NeoPixel.h>
-#include "RingInterface.h"
+#include <RingInterface.h>
 
 /* Compass_Needle
    --------------
