@@ -2,7 +2,7 @@
 	Author: Ben Lewis
 	Date: January 23rd, 2018
 	
-	Synopsis: Implementation for Clock Ring-Interface via 'face'
+	Synopsis: Implementation for Watch_Clock Ring-Interface via 'face'
 */
 
 #include "Clock_Face.h"

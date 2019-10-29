@@ -11,10 +11,10 @@ Synopsis:
 
 
 //****************************************************************************************
-//Clock//
+//Watch_Clock//
 //****************************************************************************************
 
-/* Clock()
+/* Watch_Clock()
   
   	precond: timeT is a valid time and NeoPixel is instantiated
    	postcond: A new src object is created

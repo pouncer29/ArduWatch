@@ -69,7 +69,7 @@ int curFeat;
 SoftwareSerial mySerial(3, 2);
 
 Adafruit_GPS GPS(&mySerial);
-GPSTools gTools(&GPS,10);
+GPSTools gTools(&GPS,7);
 #define GPSECHO  false
 
 // this keeps track of whether we're using the interrupt
@@ -186,51 +186,65 @@ void loop()
         delay(200);
         watch.setPixels(blank);
         ring->show();
-        switch (curFeat) {
-            case Clock:
-                watch.showTime(now());
-                Serial.println("gTools");
-                Serial.print(GPS.hour, DEC); Serial.print(':');
-                Serial.print(GPS.minute, DEC); Serial.print(':');
-                Serial.print(GPS.seconds, DEC); Serial.println('.');
-                time_t test = now();
-                Serial.println(test,DEC);
-                Serial.println(GPS.longitude, 4);
-                Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
-                break;
-            case Compass:
-                //setFlag(1);
-                if(gTools.hasFix())
-                    watch.showHeading(gTools.grabHeading());
-                else
-                    watch.refresh(!gTools.hasFix());
-                break;
-            case Speedometer:
-                //setFlag(2);
-                if(gTools.hasFix())
-                    watch.showSpeed(gTools.grabSpeed());
-                else
-                    watch.refresh(!gTools.hasFix());
-                break;
-            case Flashlight:
-                //setFlag(3);
-                watch.showLight();
-                break;
-            case Strobe:
-                //setFlag(4);
-                watch.showStrobe(startWatchPin);
-                break;
-            case Refresh:
-                watch.refresh(!gTools.hasFix());
-                break;
-            default:
-                watch.showError(errorColour);
-                break;
-        }
+        Serial.print("CurFeat: ");
+        Serial.println(curFeat);
+          if(curFeat == Clock){
+              watch.showTime(now());
+              Serial.println("gTools");
+              Serial.print(GPS.hour, DEC); Serial.print(':');
+              Serial.print(GPS.minute, DEC); Serial.print(':');
+              Serial.print(GPS.seconds, DEC); Serial.println('.');
+              time_t test = now();
+              Serial.println(test,DEC);
+              Serial.println(GPS.longitude, 4);
+              Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
+          }
+          else if (curFeat == Compass){
+              //setFlag(1);
+              Serial.println("Attempting for Heading");
+              if(GPS.fix){
+                  Serial.println("Calling for GPS Heading");
+                  watch.showHeading(gTools.grabHeading());
+              }
+              else{
+                  Serial.println("No fix. Could not get Heading");
+                  curFeat = Refresh;
+                  }
+          }
+          else if(curFeat == Speedometer){
+              Serial.println("Attemiting for Speed");
+              //setFlag(2);
+              if(GPS.fix){
+                  Serial.println("Calling for GPS SPEED");
+                  watch.showSpeed(gTools.grabSpeed());
+              }
+              else{
+                  Serial.println("No fix, could not get Speed");
+                  curFeat = Refresh;
+              }
+          }
+          else if (curFeat == Flashlight){
+              //setFlag(3);
+              Serial.println("Calling Flashlight");
+              watch.showLight();
+          }
+          else if (curFeat == Strobe){
+             Serial.println("Calling Strobe");
+              watch.showStrobe(startWatchPin);
+          }
+          else if (curFeat == Refresh){
+              Serial.println("Calling Refresh");
+              //watch.refresh(!gTools.hasFix());
+          }
+          else {
+              Serial.println("something went horribly wrong");
+              watch.showError(errorColour);
+          }
 
+        //Check for taask switch
         if(digitalRead(startWatchPin) == HIGH)
             curFeat++;
-
+        //Loop
         if(curFeat > FeatCount-1)
             curFeat = 0;
 

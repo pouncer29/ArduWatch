@@ -41,20 +41,6 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	return;
 }
 
-/**GPS SETUP*/
-//#define GPSECHO true
-void gpsInit(uint16_t readRate, uint16_t writeRate){
-	/*
-	Serial.begin(readRate)
-	Serial.println("GPS_PARSER TESTS")
-
-	this.gps.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
-	this.gps.sendCommand(PMKT_SET_NMEA_UPDATE_1HZ);
-	delay(1000);
-
-	/this.parser = new GPSTools(gps);*/
-}
-
 
 
 /**FUNCTIONS*/
@@ -67,7 +53,7 @@ void gpsInit(uint16_t readRate, uint16_t writeRate){
 	paramaters: t - the time_t object who's time we will display
 	
 	synopsis: Takes in a time_t object, passes it to the trackTime function within the
-			  Clock module where it is decomposed between Gears and Face modules to produce
+			  Watch_Clock module where it is decomposed between Gears and Face modules to produce
 			  A visual representation of the time!
 
 	return: nothing
