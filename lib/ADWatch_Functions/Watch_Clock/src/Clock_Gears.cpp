@@ -9,16 +9,15 @@ Synopsis: Clock_Gears for the watch
 #include "Clock_Gears.h"
 
 //****************************************************************************************
-//GEARS//
+//GEARS
 //****************************************************************************************
 
 /* Clock_Gears()
-   precond: none
-   postcond: a Clock_Gears object is created
-   
-   paramaters: time_t* t - a pointer to the time we need to track
-   
- 	return: a New gears object that tracks time t  
+   precond: a time has been set
+
+   Parameters:
+ 	return: a New gears object that tracks time t
+   Synopsis: The index decider for the clock.
  */
 Clock_Gears::Clock_Gears(){
 	curTime = now();
@@ -55,7 +54,7 @@ uint8_t Clock_Gears::getMinuteIndex(void){
    postcond: none
    
    Synopsis: Accesses the second of the time we are tracking and uses integer division to determine a 
-   			 valid hand position/array index.i
+   			 valid hand position/array index.
   
    return: Array index for the seconds hand 
  */
@@ -63,8 +62,7 @@ uint8_t Clock_Gears::getSecondIndex(void){
 	return second(curTime)/5;
 }
 
-/*
- getCurTime()
+/* getCurTime()
 	- A simple getter method for the private attribute 'curTime'
  */
 time_t Clock_Gears::getCurTime(void){
@@ -75,7 +73,7 @@ time_t Clock_Gears::getCurTime(void){
    precond: none
    postcond: Clock_Gears curTime attribute has been updated
   
-   Paramaters: newTime - the time_t object we will update our gears to.
+   Parameters: newTime - the time_t object we will update our gears to.
   
    Synopsis: Changes the Clock_Gears time value to a specified value.
   

@@ -2,7 +2,8 @@
 Author: Ben Lewis
 Date: May 10th, 2018
 
-Synopsis: 
+Synopsis: The Controller for the clock. passes read data to gears to generate an index to be shown on the
+  			ring via the Clock_Face.
 
 */
 
@@ -11,18 +12,12 @@ Synopsis:
 
 
 //****************************************************************************************
-//Watch_Clock//
+//Clock//
 //****************************************************************************************
 
-/* Watch_Clock()
-  
-  	precond: timeT is a valid time and NeoPixel is instantiated
-   	postcond: A new src object is created
-  
-  	Paramaters: trackMe - a time_t Time we will track with our Gears
-				neoP - the Adafruit_NeoPixel* ring that will serve as our Face
-  
-  	Synopsis: Uses the time to create the *Gears* for the watch and *neoP* to set a face for the watch
+/* Clock()
+  	Paramaters: None
+  	Synopsis: The Controller for the clock feature parses data in Gears, Displays in Face
  */
 Clock::Clock(){
 	face = new Clock_Face();
@@ -30,12 +25,13 @@ Clock::Clock(){
 }
 
 /* placeHands()
-   precond: none
+   precond:  None
    postcond: Color values are assigned to their designated indicies (times)
   
    Paramaters: uint_8's hrIdx - representing the position of the hour hand on our ring.
    					    minIdx - representing the position of the minute hand on our ring.
-  					    secIdx - representing the postion of the second hand on our ring.
+  					    secIdx - representing the position of the second hand on our ring.
+  					    ring - the NeoPixel ring to display the time on.
   
    Synopsis: Grabs the current time from gears and uses it to modify the minute colour. then
    		     assigns the appropriate colour of hand to each 'hand' or 'index' in the ring.
@@ -51,13 +47,13 @@ void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx,Adafruit_NeoP
 	face->modMinColour(gears->getCurTime(),ring); 
 
 	//Assign colours accordingly
-	//Base case: No Overlap regualr 
+	//Base case: No Overlap regular
 	ring->setPixelColor(hrIdx,face->hrColour);
 	ring->setPixelColor(minIdx,face->minColour);
 	ring->setPixelColor(secIdx,face->secColour);
 
 	// Otherwise: If Hands Cross, Their indicies will be the same so I average their set colours.
-	//This particuairly nasty block is only so nasty because I take the average of an average. will work on shortening 
+	//This particularly nasty block is only so nasty because I take the average of an average. will work on shortening
 	if (secIdx == minIdx && minIdx == hrIdx)
 		ring->setPixelColor(minIdx,face->getAverageCross((face->getAverageCross(face->secColour,face->minColour)),face->hrColour));
 	else if(secIdx == minIdx)
@@ -77,14 +73,15 @@ void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx,Adafruit_NeoP
 }
 
 /* removeTail()  
-   precond:none
+   precond: None
    postcond: Removed the residual illumination left by passing hands
   
-   paramaters: uint8_t's tailIdx - the index who's tail e will remove
+   Parameters: uint8_t's tailIdx - the index who's tail will remove
   			 		   hrIdx - the index occupied by hour hand
   					   minIdx - the index occupied by minute hand
-  					   secIdx - the inex occupied by the secons hand
-  
+  					   secIdx - the index occupied by the seconds hand
+                       ring - the NeoPixel ring to display the time on.
+
    Synopsis: Goes to an index, if it isn't important, blank it.
    return: nothing
 */
@@ -92,7 +89,6 @@ void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t sec
 						Adafruit_NeoPixel* ring){
 	
 	//At 12:00 v !@12.
-	//handIdx--; //become the tail!
 	tailIdx = tailIdx % 12;
 	
 	//Don't blank important indicies.
@@ -108,8 +104,9 @@ void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t sec
    precond: none
    postcond: ring is activated to show the current time.
   
-   Paramaters: time_t t - representing the time we will be tracking.
-  
+   Parameters: time_t t - representing the time we will be tracking.
+   			   ring - the NeoPixel ring to display the time on.
+
    Synopsis: over-writes whatever the previous time was using 'updateTime()' and then with
    		     the updated time, it places, and assigns colours to the hands before showing the
    		  	 time as a set of up to 3 coloured led's on the ring!
@@ -132,12 +129,13 @@ void Clock::trackTime(time_t t,Adafruit_NeoPixel* ring){
   	precond: hr & min are > 0, localTime is set
   	postcond: localTime tracks the hour and minute that are given.
   
-  	paramaters:
+  	Parameters:
   		uint8_t hr - that will be our hour value.
   		uint8_t min -  that will be our minute value.
 		TODO maybe add a year for when we get the gps. but I don't think that will change anything.
   		time_t localTime - that is we will track while setting.
-  
+  		ring - the NeoPixel ring to display the time on.
+
   	Synopsis: Updates the watch's tracking time to the given hour and minute.	
 
   	return: nothing

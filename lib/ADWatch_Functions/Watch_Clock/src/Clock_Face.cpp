@@ -7,14 +7,9 @@
 
 #include "Clock_Face.h"
 /* Clock_Face()
-   precond: none
-   postcond: a new Clock_Face object is created
-  
-   Parameters: leds - the chain of Neopixels that will serve as our face.
-  
+
+   Parameters: none
    Synopsis: assigns the Clock_Faces ring to the ledRing and assigns special colours
-  
-   return: a new Clock_Face Object
  */
 Clock_Face::Clock_Face(){
 	
@@ -29,9 +24,12 @@ Clock_Face::Clock_Face(){
     precond: time is set
     postcond: minuteColour global variable is updated.
     
-    Paramaters
-      localTime: a time_t that will give us the current minute.
-    
+    Paramaters:
+      localTime -  a time_t that will give us the current minute.
+      ring - the NeoPixel ring we will access colour from.
+
+
+    Synopsis:
     You trolls thought I forgot didn't you? you were all like "Ben, what the farts? What good is a watch that only
     tracks 5 minute intervals? Look, I was thinking the exact same thing, so I decided that minutes should start at
     their beautiful green and then, as the minute progresses, get slowly more red to finish with a beautiful purple
@@ -48,17 +46,11 @@ void Clock_Face::modMinColour(time_t localTime,Adafruit_NeoPixel* ring){
   //minMod: Takes the remainder of the minute and 5 to cycle through values of 0-4
   uint16_t minMod = ((minute(localTime)%5)*64);
   if(minMod > 0)
-    minMod--;   //So that subtact 1 from 256 to prevent wrapping and not from 0 to go out of bounds on the strip array.
+    minMod--;   //So that subtract 1 from 256 to prevent wrapping and not from 0 to go out of bounds on the strip array.
 
   //Minute becomes more red and less green as it progresses.
   minColour = ring->Color(0+minMod,255-minMod,95,0);
-  ring->setPixelColor(11,blank); //The original Magic 11 appearence.
-
+  ring->setPixelColor(11,blank); //The original Magic 11 appearance.
   return;
 }
-
-
-
-	
-	
 

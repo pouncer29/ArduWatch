@@ -8,22 +8,15 @@ Synopsis:
 #include "ADWatch.h"
 
 
-/* src
-	- the implementation for src.h
+/* ADWatch()
+ *
 */
-
-//src::src(Adafruit_GPS g, Adafruit_NeoPixel neoP){} //For when GPS is incorperated
-
 ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	// Ring
 	ring = strip;
 	ring->setBrightness(20);
 
-	//GPS
-	//this.gps = 	Adafruit_GPS(gpsSerial);
-
-	
-	// init functions
+	// init features
 	clock = new Clock();
 	speedo = new Speedometer();
 	compass = new Compass();

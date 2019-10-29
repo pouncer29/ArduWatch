@@ -2,7 +2,7 @@
 Author: Ben Lewis
 Date: May 10th, 2018
 
-Synopsis:
+Synopsis: outline for the Clock function.
 
 */
 #ifndef Clock_h

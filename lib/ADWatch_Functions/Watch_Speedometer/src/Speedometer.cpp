@@ -14,14 +14,10 @@ Synopsis: The implementation for Speedometer.h
 //****************************************************************************************
 
 /* Speedometer()
-  
-  	precond: speed > 0
-   	postcond: Speedometer is born
-  
-  	Paramaters: kn - the raw speed from the gps in knots
+  	paramaters: kn - the raw speed from the gps in knots
 				neoP - the neopixel ring/strip/face/iMadeBadDecisionsNaming
   
-  	Synopsis: Sets current speed and creates a new NeoPixel ring connection
+  	synopsis: Sets current speed and creates a new NeoPixel ring connection
  */
 Speedometer::Speedometer(){
 	dial = new Speed_Dial();
@@ -82,13 +78,14 @@ void Speedometer::setRegionC(uint8_t offsC,Adafruit_NeoPixel* ring){
 }
 
 /* placeNeedle()
-	precond: speed is set
-	postcond: speed is displayed
+	Precond: speed is set
+	Postcond: speed is displayed
   
-	Paramaters: speedIdx - the index at which our current speed is mapped to
+	Paramaters: speedIdx - the index at which our current speed is mapped to.
+ 						 - speed in kilometers per hour
   
-	Synopsis: Takes a speed in (kmph) and puts it through a series of if statemetns to determine
-			  which speed quadrents need to be illuminated.
+	Synopsis: Takes a speed in and puts it through a series of if statements to determine
+			  which speed quadrants need to be illuminated.
 			  Note- with each progressive region, the overlap is overwritten by the higher speed's colour.
   
 	return: nothing

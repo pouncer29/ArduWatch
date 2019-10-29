@@ -1,6 +1,6 @@
 /*
 Author: Ben Lewis
-Date: February 6th, 2018?
+Date: February 6th, 2018
 
 Synopsis: Clock_Gears for the watch
 
@@ -13,7 +13,7 @@ Synopsis: Clock_Gears for the watch
 
 /* Gears
    --------------
-	- Contains methods to get indecies for the Hour, Minute and Second hands which are used internally to their postition relative
+	- Contains methods to get indecies for the Hour, Minute and Second hands which are used internally to their position relative
       to the time it has been give to track!
 */
 class Clock_Gears{
@@ -27,8 +27,8 @@ class Clock_Gears{
 		void updateTime(time_t);		
 			
 	private:
-	//Attributes
-	time_t curTime;
+		//Attributes
+		time_t curTime;
 };
 
 #endif
