@@ -19,7 +19,6 @@
 class Compass_Needle: public RingInterface{
 	
 	public:
-		//Attributes
 		//Methods
 		Compass_Needle();
 };

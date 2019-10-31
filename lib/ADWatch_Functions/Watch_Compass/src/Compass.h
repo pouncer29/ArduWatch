@@ -9,6 +9,8 @@
 
 /* Compass
    -----------
+   - The controller for the Compass. Union of Needle which displays the data and Magnet
+     whih determines the the indicies.
 	
 */
 class Compass{
@@ -19,7 +21,7 @@ class Compass{
 		Compass_Magnet* magnet;
 		
 		//Methods
-		Compass(); //TODO maybe change from float but hey, maybe not.
+		Compass(); 
 		void trackHeading(float,Adafruit_NeoPixel*);
 		void placeNeedle(uint8_t,Adafruit_NeoPixel*);
 		void setCompassHeading(float,Adafruit_NeoPixel*);

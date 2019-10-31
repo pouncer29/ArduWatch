@@ -30,7 +30,5 @@ class Compass_Magnet{
 		float curHeading;
 };
 
-
-
 #endif
 
