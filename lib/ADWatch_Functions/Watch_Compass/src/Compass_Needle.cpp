@@ -8,14 +8,12 @@
 #include "Compass_Needle.h"
 
 /* Compass_Needle()
-   precond: none
-   postcond: leds is initialized
    
-   Parameters: leds - the chain of Adafruit_Neopixels that will represent our needle locations
-  
-   Synopsis: Assigns the special colours needed for the compass function. North Yellow, heading blue or someting.
-  
-   return: a new Compass_Needle Object
+	Parameters: none
+
+    Synopsis: Assigns the special colours needed for the compass function. 
+              North Yellow, heading blue or someting.
+
  */
 Compass_Needle::Compass_Needle(){
 	
