@@ -2,23 +2,19 @@
 Author: Ben Lewis
 Date: May 16th, 2018
 
-Synopsis: Compass_Magnet: The means of moving a compass needle.
+Synopsis: Compass_Magnet: The means of moving a compass needle, index determiner for the compass
 
 */
 
 #include "Compass_Magnet.h"
 
 //****************************************************************************************
-//Compass_Magnet//
+//Compass_Magnet
 //****************************************************************************************
 
 /* Compass_Magnet()
-   precond: none
-   postcond: a Gears object is created
-   
-   paramaters: time_t* t - a pointer to the time we need to track
-   
-   
+   Paramaters: float h - the heading in degrees from the clock
+   Synopsis: Creates an index decider with the current heading
  */
 Compass_Magnet::Compass_Magnet(float h){
 	curHeading = h;	
@@ -48,8 +44,8 @@ void Compass_Magnet::updateHeading(float newHeading){
    precond: Heading has a value
    postcond: none
    
-   Synopsis: Takes in a floating point heading in range [0,360] and produces the array offset [0,11] that it maps to.
-			 in intervals of 30 degrees
+   Synopsis: Takes in a floating point heading in range [0,360] and produces the 
+			 array offset [0,11] that it maps to. In intervals of 30 degrees
    
    return: nothing.
  */
