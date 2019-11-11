@@ -13,7 +13,7 @@
 #include <TimeLib.h>
 #include <RingInterface.h>
 
-/* Face
+/** Face
    -------------- 
    *******************************************************************************************
    Look, Nobody can get it right the first time. I just wanted a working watch. Now that I kind

@@ -6,10 +6,9 @@
 */
 
 #include "Clock_Face.h"
-/* Clock_Face()
 
-   Parameters: none
-   Synopsis: assigns the Clock_Faces ring to the ledRing and assigns special colours
+/** Clock_Face()
+   @Synopsis: assigns the Clock_Faces ring to the ledRing and assigns special colours
  */
 Clock_Face::Clock_Face(){
 	
@@ -20,16 +19,15 @@ Clock_Face::Clock_Face(){
 	blank = ring->Color(0,0,0,0);
 }
 
-/* minModColour()
-    precond: time is set
-    postcond: minuteColour global variable is updated.
+/** minModColour()
+    @precond: time is set
+    @postcond: minuteColour global variable is updated.
     
-    Paramaters:
-      localTime -  a time_t that will give us the current minute.
-      ring - the NeoPixel ring we will access colour from.
+    @param: localTime -  a time_t that will give us the current minute.
+    @param: ring - the NeoPixel ring we will access colour from.
 
 
-    Synopsis:
+   @Synopsis:
     You trolls thought I forgot didn't you? you were all like "Ben, what the farts? What good is a watch that only
     tracks 5 minute intervals? Look, I was thinking the exact same thing, so I decided that minutes should start at
     their beautiful green and then, as the minute progresses, get slowly more red to finish with a beautiful purple
@@ -39,7 +37,6 @@ Clock_Face::Clock_Face(){
       You take the remainder of whatever minute it is and 5, multiply it by 64 (to get a max val of 256 and min of 0)
       and use it to add to the minHands mined out Red and subtract from its maxed out Green.  
     
-    return: nothing 
  */
 void Clock_Face::modMinColour(time_t localTime,Adafruit_NeoPixel* ring){
 

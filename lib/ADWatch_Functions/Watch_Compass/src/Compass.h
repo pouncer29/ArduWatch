@@ -7,10 +7,10 @@
 #include <Adafruit_NeoPixel.h>
 
 
-/* Compass
+/** Compass
    -----------
    - The controller for the Compass. Union of Needle which displays the data and Magnet
-     whih determines the the indicies.
+     which determines the the indicies.
 	
 */
 class Compass{

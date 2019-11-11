@@ -13,7 +13,7 @@ Synopsis: Compass_Magnet: The means of moving a compass needle.
 
 
 
-/* Compass_Magnet
+/** Compass_Magnet
    --------------
 	- Contains methods to map a degree heading [0,360] to an array offset [0,11]
 */

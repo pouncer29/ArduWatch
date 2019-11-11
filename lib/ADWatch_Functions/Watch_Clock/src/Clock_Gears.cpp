@@ -12,72 +12,72 @@ Synopsis: Clock_Gears for the watch
 //GEARS
 //****************************************************************************************
 
-/* Clock_Gears()
-   precond: a time has been set
+/** Clock_Gears()
+   	@precond: a time has been set
 
-   Parameters:
- 	return: a New gears object that tracks time t
-   Synopsis: The index decider for the clock.
+   	@Synopsis: The index decider for the clock.
+
+	 @return: a New gears object that tracks time t
  */
 Clock_Gears::Clock_Gears(){
 	curTime = now();
 }
 
-/* getHourIndex()
-   precond: curTime is set
-   postcond: none
+/** getHourIndex()
+   @precond: curTime is set
+   @postcond: none
    
-   Synopsis: Accesses the hour of the time object we are tracking and use % 12 to get
+   @Synopsis: Accesses the hour of the time object we are tracking and use % 12 to get
    			 the appropriate index for the hour hand.
   
-   return: Array index for the Hour hand
+   @return: Array index for the Hour hand
  */
 uint8_t Clock_Gears::getHourIndex(void){
 	return hour(curTime) % 12;
 }
 
-/* getMinuteIndex()
-   pecond: curtime is set
-   postcond: none
+/** getMinuteIndex()
+   @pecond: curtime is set
+   @postcond: none
    
-   Synopsis: Accesses the minute of the time we are tracking and rely on integer division to give us a 
+   @Synopsis: Accesses the minute of the time we are tracking and rely on integer division to give us a
    			 valid hand position/array index.
   
-   return: Array index for the Minute hand
+   @return: Array index for the Minute hand
  */
 uint8_t Clock_Gears::getMinuteIndex(void){
 	return minute(curTime)/5;
 }
 
-/* getSecondIndex()
-   precond: curtime is set
-   postcond: none
+/** getSecondIndex()
+   @precond: curtime is set
+   @postcond: none
    
-   Synopsis: Accesses the second of the time we are tracking and uses integer division to determine a 
+   @Synopsis: Accesses the second of the time we are tracking and uses integer division to determine a
    			 valid hand position/array index.
   
-   return: Array index for the seconds hand 
+   @return: Array index for the seconds hand
  */
 uint8_t Clock_Gears::getSecondIndex(void){
 	return second(curTime)/5;
 }
 
-/* getCurTime()
+/** getCurTime()
 	- A simple getter method for the private attribute 'curTime'
  */
 time_t Clock_Gears::getCurTime(void){
 	return curTime;
 }
 
-/* updateTime()
-   precond: none
-   postcond: Clock_Gears curTime attribute has been updated
+/** updateTime()
+  @precond: none
+  @postcond: Clock_Gears curTime attribute has been updated
   
-   Parameters: newTime - the time_t object we will update our gears to.
+   @param: newTime - the time_t object we will update our gears to.
   
-   Synopsis: Changes the Clock_Gears time value to a specified value.
+   @Synopsis: Changes the Clock_Gears time value to a specified value.
   
-   return: nothing
+   @return: nothing
  */
 void Clock_Gears::updateTime(time_t newTime){
 	curTime = newTime;

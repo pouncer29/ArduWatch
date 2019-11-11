@@ -11,7 +11,7 @@ Synopsis: Clock_Gears for the watch
 #include <Arduino.h>
 #include <TimeLib.h>
 
-/* Gears
+/** Gears
    --------------
 	- Contains methods to get indecies for the Hour, Minute and Second hands which are used internally to their position relative
       to the time it has been give to track!
