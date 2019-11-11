@@ -2,7 +2,7 @@
 Author: Ben Lewis
 Date: May 10th, 2018
 
-Synopsis:
+Synopsis: outline for the Clock function.
 
 */
 #ifndef Clock_h
@@ -10,12 +10,12 @@ Synopsis:
 
 #include <Arduino.h>
 #include <TimeLib.h>
-#include "Clock_Face.h"
-#include "Clock_Gears.h"
+#include <Clock_Face.h>
+#include <Clock_Gears.h>
 #include <Adafruit_NeoPixel.h>
 
 
-/* Watch_Clock
+/** Watch_Clock
    -----------
 	The union of Gears and Face that collects a time_t on creation and assigns array offsets to each of the hands which
 	are colour coded (dynamically in some cases) by the Face (subset of Ringinterface) to show the current time.

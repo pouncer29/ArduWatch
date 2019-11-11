@@ -1,4 +1,5 @@
-/* Author: Ben Lewis
+/*
+   Author: Ben Lewis
    Date: June 27th, 2018
    Synopsis: The flashlight.
  */
@@ -9,10 +10,9 @@
 #include <Arduino.h>
 #include <RingInterface.h>
 
-/* Flashlight
+/** Flashlight
    -----------
 	- A simple class to handle the setting of all lights on the ring to on (and sometimes off and on really fast)
-	
 */
 class Flashlight: public RingInterface{
 	public:

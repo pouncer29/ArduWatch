@@ -5,13 +5,11 @@
 	Synopsis: Implementation for Compass_Needle.h
 */
 
-#include "Compass_Needle.h"
+#include <Compass_Needle.h>
 
-/* Compass_Needle()
-   
-	Parameters: none
+/** Compass_Needle()
 
-    Synopsis: Assigns the special colours needed for the compass function. 
+    @Synopsis: Assigns the special colours needed for the compass function.
               North Yellow, heading blue or someting.
 
  */

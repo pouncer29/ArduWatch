@@ -6,15 +6,14 @@ Synopsis: Implementation for the compass. Controller for Needle and Magnet
 
 */
 
-#include "Compass.h"
+#include <Compass.h>
 
 //****************************************************************************************
 //Compass
 //****************************************************************************************
 
-/* Compass()
-  	Paramaters: None
-  	Synopsis: Creates a needle and magnet for our Compass and initializes indicies
+/** Compass()
+  	@Synopsis: Creates a needle and magnet for our Compass and initializes indicies
  */
 Compass::Compass(){
 	needle = new Compass_Needle();
@@ -24,19 +23,18 @@ Compass::Compass(){
 	prevHeadIdx = -1;
 }
 
-/*
-  placeNeedle()
-  precond: ring is intitalized, heading is in range [0,11]
-  postcond: pixel color is set for the proper indicies.
- 
-  Paramaters: uint8_t headingIdx - the index of the angle we are measuring.
-			  NeoPixel* ring - the ring we will set our index colours on.
- 
-  Synopsis: Determines whici indicies need to be set for colours and which 
+/** placeNeedle()
+  @precond: ring is intitalized, heading is in range [0,11]
+  @postcond: pixel color is set for the proper indicies.
+
+  @param: uint8_t headingIdx - the index of the angle we are measuring.
+  @param: NeoPixel* ring - the ring we will set our index colours on.
+
+  Synopsis: Determines whici indicies need to be set for colours and which
             colours need be set.
-  
+
   return: nothing
- 
+
  */
 void Compass::placeNeedle(uint8_t headingIdx, Adafruit_NeoPixel* ring){
 	
@@ -51,17 +49,15 @@ void Compass::placeNeedle(uint8_t headingIdx, Adafruit_NeoPixel* ring){
 	return;
 }
 
-/* removeTail()
+/** removeTail()
  
-  precond:none
-  postcond: Removed the residual illumination left by passing hands
+  @precond:none
+  @postcond: Removed the residual illumination left by passing hands
  
-  paramaters: uint8_t tailIdx - the index who's tail e will remove
-			  NeoPixel* ring - the ring to set colours on
+  @param: uint8_t tailIdx - the index who's tail e will remove
+  @param: NeoPixel* ring - the ring to set colours on
  
-  Synopsis: Goes to an index, if it isn't important, blank it.
-
-  return: nothing
+  @Synopsis: Goes to an index, if it isn't important, blank it.
 */
 void Compass::removeTail(float h,Adafruit_NeoPixel* ring){
 
@@ -81,17 +77,16 @@ void Compass::removeTail(float h,Adafruit_NeoPixel* ring){
 	return;
 }
 
-/* trackHeading()
-  precond: none
-  postcond: ring is activated to show the current heading.
+/** trackHeading()
+  @precond: none
+  @postcond: ring is activated to show the current heading.
  
-  Paramaters: float h - the heading we will be tracking
-              NeoPixel* - the ring we will set the colours on 
+  @param: float h - the heading we will be tracking
+  @param: NeoPixel* - the ring we will set the colours on
  
-  Synopsis: Given a value in degrees, determine an the proper indicies to
+  @Synopsis: Given a value in degrees, determine an the proper indicies to
             display and their colours to display compass heading to the watch
  
-  return: nothing 		  
  */
 void Compass::trackHeading(float h,Adafruit_NeoPixel* ring){
 	
@@ -109,16 +104,15 @@ void Compass::trackHeading(float h,Adafruit_NeoPixel* ring){
 	
 }
 
-/* setCompassHeading()
- 	precond: ring is initialized 
- 	postcond: the heading for the watch has been updated
+/** setCompassHeading()
+ 	@precond: ring is initialized
+ 	@postcond: the heading for the watch has been updated
  
- 	paramaters: float newHeading - heading read from the watch  
-                NeoPixel* ring - the ring we will clear once the heading has been set.
+ 	@param: float newHeading - heading read from the watch
+    @param: NeoPixel* ring - the ring we will clear once the heading has been set.
  
- 	Synopsis: Updates the watch's tracking time to the given hour and minute.	
+ 	@Synopsis: Updates the watch's tracking time to the given hour and minute.
   
- 	return: nothing
  */
 void Compass::setCompassHeading(float newHeading, Adafruit_NeoPixel* ring){
 
