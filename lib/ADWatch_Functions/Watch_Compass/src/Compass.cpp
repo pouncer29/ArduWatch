@@ -6,7 +6,7 @@ Synopsis: Implementation for the compass. Controller for Needle and Magnet
 
 */
 
-#include "Compass.h"
+#include <Compass.h>
 
 //****************************************************************************************
 //Compass

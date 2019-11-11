@@ -12,7 +12,7 @@ Synopsis: The GPS interface for the speedometer class
 
 
 
-/* Speed_Gauge
+/** Speed_Gauge
 	- The liason between gps and speedometer, takes in a speed IN KMPH and gives back meaningful
 	  array offsets for the read speeds.
 */

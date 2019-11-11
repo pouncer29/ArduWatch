@@ -5,7 +5,7 @@
 	Synopsis: Implementation for time-tracking methods.
 */
 
-#include "RingInterface.h"
+#include <RingInterface.h>
 
 /** RingInterface()
    @Synopsis: Defines interface specific display methods and allows universal colour definition.

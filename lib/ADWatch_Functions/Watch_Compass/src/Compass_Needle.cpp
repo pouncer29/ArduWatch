@@ -5,7 +5,7 @@
 	Synopsis: Implementation for Compass_Needle.h
 */
 
-#include "Compass_Needle.h"
+#include <Compass_Needle.h>
 
 /** Compass_Needle()
 

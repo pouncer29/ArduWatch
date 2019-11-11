@@ -5,7 +5,7 @@
 	Synopsis: Implementation for Watch_Clock Ring-Interface via 'face'
 */
 
-#include "Clock_Face.h"
+#include <Clock_Face.h>
 
 /** Clock_Face()
    @Synopsis: assigns the Clock_Faces ring to the ledRing and assigns special colours

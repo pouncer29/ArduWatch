@@ -6,7 +6,7 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
 
 */
 
-#include "Flashlight.h"
+#include <Flashlight.h>
 
 
 
@@ -14,7 +14,7 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
 //Flashlight
 //****************************************************************************************
 
-/**Flashflight()
+/** Flashflight()
   	@Synopsis: Initializes fancy colours
  */
 Flashlight::Flashlight(void){

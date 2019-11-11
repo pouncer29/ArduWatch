@@ -10,8 +10,8 @@ Synopsis: outline for the Clock function.
 
 #include <Arduino.h>
 #include <TimeLib.h>
-#include "Clock_Face.h"
-#include "Clock_Gears.h"
+#include <Clock_Face.h>
+#include <Clock_Gears.h>
 #include <Adafruit_NeoPixel.h>
 
 

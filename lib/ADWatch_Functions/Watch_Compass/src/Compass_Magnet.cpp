@@ -6,7 +6,7 @@ Synopsis: Compass_Magnet: The means of moving a compass needle, index determiner
 
 */
 
-#include "Compass_Magnet.h"
+#include <Compass_Magnet.h>
 
 //****************************************************************************************
 //Compass_Magnet
