@@ -28,7 +28,7 @@ int32_t GPSTools::tzAdjust(float deg){
 	///The adjustment +/- 1 is because of my goofed timezone. It should maybe be removed.
 	if(deg < 0) {
 		adjustment = ((-1 * deg) / 15) * -1;
-		return adjustment + 1; //Saskatoon is -6, this fn gives -7... So I cheated
+		return adjustment+1; //Saskatoon is -6, this fn gives -7... So I cheated
 	}
 	else {
 		adjustment = deg / 15;
