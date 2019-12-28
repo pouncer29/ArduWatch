@@ -14,6 +14,7 @@
 #define NUM_LEDS 12
 #define BRIGHTNESS 10
 
+enum Feats {Clock=1,Compass,Speedometer,Flashlight,Strobe,Refresh,Blank,FeatCount = 6}; // Remember to update count if features are added
 
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
@@ -43,8 +44,7 @@ uint32_t errorColour;
 uint32_t blank;
 uint32_t  err = ring->Color(255,0,0,0);
 
-enum Feats {Clock=0,Compass,Speedometer,Flashlight,Strobe,Refresh,Blank,FeatCount = 6}; // Remember to update count if features are added
-uint32_t Colours[FeatCount];
+uint32_t Colours[FeatCount +1];
 int curFeat;
 
 /** END WATCH SETUP */
@@ -115,9 +115,7 @@ void setup()
     Colours[Strobe] = partyColour;
     Colours[Refresh] = errorColour;
     Colours[Blank] = blank;
-
-    curFeat =0;
-
+    curFeat = getFeat();
     /**END WATCH SETUP*/
 }
 
@@ -150,30 +148,25 @@ void useInterrupt(boolean v) {
 void loop()                   
 {  
   /* ADAFRUIT GPS STUFF*/
-    if (! usingInterrupt) {
-        char c = GPS.read();
-        if (GPSECHO)
-            if (c) Serial.print(c);
-    }
-    if (GPS.newNMEAreceived()) {
-        if (!GPS.parse(GPS.lastNMEA()))
-            return;
-    }
+//    if (! usingInterrupt) {
+//        char c = GPS.read();
+//        if (GPSECHO)
+//            if (c) Serial.print(c);
+//    }
+//    if (GPS.newNMEAreceived()) {
+//        if (!GPS.parse(GPS.lastNMEA()))
+//            return;
+//    }
     /***********************/
-
+  curFeat = getFeat();
     /** WATCH LOOP*/
      Serial.print("GPS has fix: "); Serial.println(GPS.fix == true);
-    buttonState=digitalRead(startWatchPin);
-    if(buttonState == HIGH){
-        if(on == true)
-            on = false;
-        else
-            on = true;
-    }
+     Serial.print("Reading is: "); Serial.print(analogRead(A0)); Serial.print(" Feat is: "); Serial.println(curFeat);
+     on = curFeat >0;
 
     //Start watch button code.
     if(on == true){
-     
+      
       if(initialRun == true){
         setTime(gTools.grabTime());
         initialRun = false;
@@ -188,66 +181,61 @@ void loop()
         ring->show();
         Serial.print("CurFeat: ");
         Serial.println(curFeat);
-          if(curFeat == Clock){
-              watch.showTime(now());
-              Serial.println("gTools");
-              Serial.print(GPS.hour, DEC); Serial.print(':');
-              Serial.print(GPS.minute, DEC); Serial.print(':');
-              Serial.print(GPS.seconds, DEC); Serial.println('.');
-              time_t test = now();
-              Serial.println(test,DEC);
-              Serial.println(GPS.longitude, 4);
-              Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
-          }
-          else if (curFeat == Compass){
-              //setFlag(1);
-              Serial.println("Attempting for Heading");
-              if(GPS.fix){
-                  Serial.println("Calling for GPS Heading");
-                  watch.showHeading(gTools.grabHeading());
-              }
-              else{
-                  Serial.println("No fix. Could not get Heading");
-                  curFeat = Refresh;
-                  }
-          }
-          else if(curFeat == Speedometer){
-              Serial.println("Attemiting for Speed");
-              //setFlag(2);
-              if(GPS.fix){
-                  Serial.println("Calling for GPS SPEED");
-                  watch.showSpeed(gTools.grabSpeed());
-              }
-              else{
-                  Serial.println("No fix, could not get Speed");
-                  curFeat = Refresh;
-              }
-          }
-          else if (curFeat == Flashlight){
-              //setFlag(3);
-              Serial.println("Calling Flashlight");
-              watch.showLight();
-          }
-          else if (curFeat == Strobe){
-             Serial.println("Calling Strobe");
-              watch.showStrobe(startWatchPin);
-          }
-          else if (curFeat == Refresh){
-              Serial.println("Calling Refresh");
-              //watch.refresh(!gTools.hasFix());
-          }
-          else {
-              Serial.println("something went horribly wrong");
-              watch.showError(errorColour);
-          }
 
-        //Check for taask switch
-        if(digitalRead(startWatchPin) == HIGH)
-            curFeat++;
-        //Loop
-        if(curFeat > FeatCount-1)
-            curFeat = 0;
+        //Clock
+        while(curFeat == Clock){
+          watch.showTime(now());
+          Serial.println("gTools");
+          Serial.print(GPS.hour, DEC); Serial.print(':');
+          Serial.print(GPS.minute, DEC); Serial.print(':');
+          Serial.print(GPS.seconds, DEC); Serial.println('.');
+          time_t test = now();
+          Serial.println(test,DEC);
+          Serial.println(GPS.longitude, 4);
+          Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
+          curFeat = getFeat();
+        }
 
+        //Compass
+        while(curFeat == Compass){
+          Serial.print("Has Fix: "); Serial.println(GPS.fix);
+          if(gTools.hasFix())
+              watch.showHeading(gTools.grabHeading());
+          else{
+              GPSRead();
+              watch.refresh(!GPS.fix);
+          }
+              
+          curFeat = getFeat();
+        }
+
+        //Speed
+        while(curFeat == Speedometer){
+          if(gTools.hasFix())
+              watch.showSpeed(gTools.grabSpeed());
+          else
+              watch.refresh(!gTools.hasFix());
+          
+          curFeat = getFeat();
+        }
+
+        //Flash
+        while(curFeat == Flashlight){
+          watch.showLight();
+          curFeat = getFeat();
+        }
+
+        //Party
+        while(curFeat == Strobe){
+          watch.showStrobe(startWatchPin);
+          curFeat = getFeat();
+        }
+
+        //Refresh
+        while(curFeat == Refresh){
+          watch.refresh(!gTools.hasFix());
+          curFeat = getFeat();
+        }
 
         ring->show();
         /**********************************/
@@ -263,4 +251,27 @@ void loop()
 
     delay(200);                     //Apparently good for 'debounce' whatever that is
     /*END WATCH LOOP*/
+}
+
+/** Gets the Current Feat based on dial position*/
+Feats getFeat(){
+  int reading = analogRead(A0);
+  int featId = watch.getWatchFunction(reading);
+  Serial.print("FeatId: ");Serial.println(featId);
+  Feats feat = (Feats) featId;
+  Serial.print("Feat is: "); Serial.println(feat);
+  return feat;
+}
+
+
+void GPSRead(){
+      if (! usingInterrupt) {
+        char c = GPS.read();
+        if (GPSECHO)
+            if (c) Serial.print(c);
+    }
+    if (GPS.newNMEAreceived()) {
+        if (!GPS.parse(GPS.lastNMEA()))
+            return;
+    }
 }

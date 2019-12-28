@@ -29,6 +29,7 @@ class ADWatch{
 		uint32_t error_colour;
 		uint32_t blank;
 		time_t trackMe;
+		uint8_t functionCount;
 		
 		//Implements
 		Adafruit_NeoPixel* ring;
@@ -60,7 +61,8 @@ class ADWatch{
 		void clearRing(void);
 		void setPixels(uint32_t);
 		void refresh(bool);
-	
+		uint8_t getWatchFunction(int reading);
+
 	/*
 		In the future, it may be a good refactor to make all of our features private and store
 		the colours we need to pull from them in an internal array or something. If we need 	
