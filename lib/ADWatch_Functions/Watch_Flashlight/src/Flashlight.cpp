@@ -63,7 +63,7 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
  */
 void Flashlight::on(Adafruit_NeoPixel* ring){	
 	colorWipe(lightColour,0,ring);
-		
+
 	return;
 }
 
@@ -128,7 +128,7 @@ void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 		}
 
 		//Show colours
-		colorWipe(colour,0,ring);
+		colorWipe(colour,50,ring);
 	}
 	return;
 }

@@ -173,26 +173,27 @@ void loop()
         delay(800);
     }else{
         Serial.print("CurFeat: ");
-        Serial.println(curFeat);
         switch (curFeat){
             case Off:
                 ring->clear();
                 ring->show();
                 break;
             case Clock :
-                Serial.print("Has Fix: "); Serial.println(GPS.fix);
-                Serial.print("Has Fix (gTools: "); Serial.println(gTools.hasFix);
+                Serial.println(curFeat);
+                //Serial.print("Has Fix: "); Serial.println(GPS.fix);
+                //Serial.print("Has Fix (gTools: "); Serial.println(gTools.hasFix());
                 watch.showTime(now());
-                Serial.println("gTools");
-                Serial.print(GPS.hour, DEC); Serial.print(':');
-                Serial.print(GPS.minute, DEC); Serial.print(':');
-                Serial.print(GPS.seconds, DEC); Serial.println('.');
-                time_t test = now();
-                Serial.println(test,DEC);
-                Serial.println(GPS.longitude, 4);
-                Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
+                //Serial.println("gTools");
+//                //Serial.print(GPS.hour, DEC); Serial.print(':');
+//                Serial.print(GPS.minute, DEC); Serial.print(':');
+//                Serial.print(GPS.seconds, DEC); Serial.println('.');
+//                time_t test = now();
+//                Serial.println(test,DEC);
+//                Serial.println(GPS.longitude, 4);
+//                Serial.print(GPS.longitudeDegrees, 4);Serial.println(GPS.lon);
                 break;
             case Compass:
+                Serial.println(curFeat);
                 Serial.print("Has Fix: "); Serial.println(GPS.fix);
                 if(gTools.hasFix()){
                     watch.showHeading(gTools.grabHeading());
@@ -202,22 +203,27 @@ void loop()
                 break;
 
             case Speedometer:
+                Serial.println(curFeat);
                 if(gTools.hasFix())
                     watch.showSpeed(gTools.grabSpeed());
                 else
                     watch.showError(errorColour);
                 break;
             case Flashlight:
+                Serial.println(curFeat);
                 watch.showLight();
                 ring->show();
                 break;
             case Strobe:
+                Serial.println(curFeat);
                 watch.showStrobe(startWatchPin);
                 break;
             case Refresh:
+                Serial.println(curFeat);
                 //watch.refresh(!gTools.hasFix());
                 break;
             default:
+                Serial.println(curFeat);
                 watch.showError(partyColour);
                 break;
         }

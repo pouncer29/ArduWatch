@@ -97,8 +97,8 @@ void ADWatch::showHeading(float heading){
 
 */
 void ADWatch::showLight(){
-	//light = new Flashlight(ring);
 	//ring->setBrightness(80);
+	ring->setPixelColor(6,light_colour);
 	light->on(ring);
 }
 
