@@ -106,10 +106,10 @@ uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
 	@Synopsis: While the button/switch has not been activeated, rapidly turn the lights from
 			  full white to full off. strobe.
 */
-void Flashlight::strobe(bool (*proceed)(void), Adafruit_NeoPixel* ring){
+void Flashlight::strobe(bool keep, Adafruit_NeoPixel* ring){
 	uint8_t flip = 0;
 	uint32_t colour = lightColour;
-	while(true){
+	if(keep){
 
 		//Strobe Delay
 		delay(30);

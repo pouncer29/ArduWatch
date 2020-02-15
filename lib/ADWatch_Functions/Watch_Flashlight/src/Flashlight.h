@@ -23,7 +23,7 @@ class Flashlight: public RingInterface{
 		Flashlight(void);
 		void on(Adafruit_NeoPixel*);
 		void off(Adafruit_NeoPixel*);
-		void strobe(Adafruit_NeoPixel*);
+		void strobe(bool,Adafruit_NeoPixel*);
 		void colorWipe(uint32_t,uint8_t,Adafruit_NeoPixel*);
 		uint32_t party(Adafruit_NeoPixel*);
 };
