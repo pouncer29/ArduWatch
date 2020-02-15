@@ -20,7 +20,7 @@ Synopsis: Compass_Magnet: The means of moving a compass needle.
 class Compass_Magnet{
 	public:	
 		//Methods
-		Compass_Magnet(float);
+		Compass_Magnet(void);
 		float getCurHeading(void);	
 		uint8_t getHeadingIndex(void);
 		void updateHeading(float);		

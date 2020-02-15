@@ -16,14 +16,8 @@ Synopsis: Compass_Magnet: The means of moving a compass needle, index determiner
    Paramaters: float h - the heading in degrees from the clock
    Synopsis: Creates an index decider with the current heading
  */
-Compass_Magnet::Compass_Magnet(float h){
-	curHeading = h;	
-}
-/* getCurHeading()
-	- A simple getter method for the private attribute 'curHeading'
- */
-float Compass_Magnet::getCurHeading(void){
-	return curHeading;
+Compass_Magnet::Compass_Magnet(){
+	curHeading = 0.0;	
 }
 
 /* updateHeading()
