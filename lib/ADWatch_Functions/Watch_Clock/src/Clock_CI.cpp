@@ -7,19 +7,19 @@ build, I've created this class. Perhaps I will add some tests in here too.. even
 */
 
 #include "Clock_CI.h"
+#include <iostream>
 
+using namespace std;
 
 
 //****************************************************************************************
 //Clock_CI
 //****************************************************************************************
 
-int Clock_CI::main(void){
-	return 0;
-}
-
-
 int main(){
+	cout<<"Welcome to the build..."<<endl;
 	return 0;
 }
+
+
 

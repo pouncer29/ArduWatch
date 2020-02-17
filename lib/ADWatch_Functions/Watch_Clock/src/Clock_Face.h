@@ -35,14 +35,14 @@
 class Clock_Face: public RingInterface{
 	
 	public:
-	//Methods
-		Clock_Face();
+		//Methods
+		Clock_Face(void);
 		void modMinColour(time_t,Adafruit_NeoPixel*);
 
 		//Inherited
-		uint32_t getAverageCross(uint32_t,uint32_t);
-	    void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel*);
-		void showAvg(uint32_t,uint32_t);
+		//uint32_t getAverageCross(uint32_t,uint32_t);
+	    //void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel*);
+		//void showAvg(uint32_t,uint32_t);
 		uint32_t hrColour;
 		uint32_t minColour;
 		uint32_t secColour;

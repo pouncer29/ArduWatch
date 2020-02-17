@@ -10,7 +10,7 @@
 /** Clock_Face()
    @Synopsis: assigns the Clock_Faces ring to the ledRing and assigns special colours
  */
-Clock_Face::Clock_Face(){
+Clock_Face::Clock_Face(void){
 	
 	//Define special Colours
 	hrColour = ring->Color(255,100,0,5);

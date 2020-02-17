@@ -38,9 +38,11 @@ misc.o: misc.cpp misc.h
 	misc.cpp
 
 
-
-clean: 
+cleano:
 	rm *.o
+cleana:
 	rm *.a
+
+clean: cleano cleana
 
 

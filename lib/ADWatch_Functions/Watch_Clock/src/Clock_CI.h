@@ -19,10 +19,7 @@ Synopsis: outline for CI for Clock
 	Made for the CI of the clock class
 	
 */
-class Clock_CI{
-	public:
-		int main(void);
-};
+class Clock_CI{};
 
 int main();
 
