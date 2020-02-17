@@ -8,7 +8,6 @@ Synopsis: outline for the Clock function.
 #ifndef Clock_h
 #define Clock_h
 
-#include <Arduino.h>
 #include <TimeLib.h>
 #include <Clock_Face.h>
 #include <Clock_Gears.h>
