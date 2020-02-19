@@ -7,9 +7,11 @@ USER = $(shell whoami)
 # BaseWatch = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/ADWatch_Functions/Base_WatchFunction/src
 ARDUBIN = /Applications/Arduino.app/Contents/Java/hardware/arduino/avr/cores/arduino
 
+#targets
+.PHONEY: clean cleano cleana
 
-#libmock
-all: libmock.a
+all: libmock.a cleano
+
 
 libmock.a: Mock_TimeLib.o Mock_NeoPixel.o Mock_RI.o #misc.o
 	ar -rv libmock.a Mock_TimeLib.o Mock_NeoPixel.o Mock_RI.o #misc.o
