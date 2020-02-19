@@ -7,8 +7,12 @@ Synopsis: The GPS interface for the speedometer class
 
 #ifndef Speed_Gauge_h
 #define Speed_Gauge_h
-#include <Arduino.h>
 
+#ifndef CI
+	#include <Arduino.h>
+#else
+	#include <cinttypes>
+#endif
 
 
 
