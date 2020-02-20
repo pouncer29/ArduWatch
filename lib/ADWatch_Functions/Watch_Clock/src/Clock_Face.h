@@ -9,9 +9,16 @@
 #ifndef Clock_Face_h
 #define	Clock_Face_h
 
-#include <Adafruit_NeoPixel.h>
-#include <TimeLib.h>
-#include <RingInterface.h>
+#ifndef CI
+	#include <Adafruit_NeoPixel.h>
+	#include <TimeLib.h>
+	#include <RingInterface.h>
+#else
+	#include <Adafruit_NeoPixel_MOCK.h>
+	#include <TimeLib_MOCK.h>
+	#include <RingInterface_MOCK.h>
+#endif
+
 
 /** Face
    -------------- 

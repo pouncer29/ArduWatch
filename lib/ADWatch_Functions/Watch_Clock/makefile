@@ -3,7 +3,7 @@
 #   Date: February 15, 2020
 
 CC = gcc #$(ARDUBIN)/tools/avr/bin/avrdude #-std=gnu++17
-CPPFLAGS= -Wall #-n -V
+CPPFLAGS= -Wall -D CI #-n -V
 
 # Get what OS they are on
 PLATFORM := $(shell uname)
@@ -25,7 +25,7 @@ FUNCROOT = ADWATCH_Functions/
 .PHONEY: clean
 
 all: watch_clock clean
-	@echo "Building Clock..."
+	@echo "************************ CLOCK TESTS BUILT ******************************"
 
 clean:
 	rm *.o
@@ -36,7 +36,7 @@ SRCLIB = ./src
 FUNC = Clock
 
 
-watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  mock_RI.o
+watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS) -o watch_clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
@@ -67,8 +67,8 @@ $(FUNC)_Gears.o: $(SRCLIB)/$(FUNC)_Gears.cpp $(SRCLIB)/$(FUNC)_Gears.h
 	$(SRCLIB)/$(FUNC)_Gears.cpp 
 	@echo "Got Gears!"
 
-mock_RI.o: $(MOCKLIBS)/RingInterface.cpp $(MOCKLIBS)/RingInterface.h
-	$(CC) $(CPPFLAGS) -c -o mock_RI.o \
-	-I $(MOCKLIBS) \
-	$(MOCKLIBS)/RingInterface.cpp
+#mock_RI.o: $(MOCKLIBS)/RingInterface_MOCK.cpp $(MOCKLIBS)/RingInterface_MOCK.h
+#	$(CC) $(CPPFLAGS) -c -o mock_RI.o \
+#	-I $(MOCKLIBS) \
+#	$(MOCKLIBS)/RingInterface.cpp
 

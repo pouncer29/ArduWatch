@@ -33,8 +33,8 @@ SRCLIB = ./src
 FUNC = Flashlight
 
 
-watch_flashlight: $(FUNC).o $(FUNC)_CI.o mock_RI.o
-	$(CC) $(CPPFLAGS) -o watch_flashlight_CI $(FUNC)_CI.o $(FUNC).o mock_RI.o \
+watch_flashlight: $(FUNC).o $(FUNC)_CI.o 
+	$(CC) $(CPPFLAGS) -o watch_flashlight_CI $(FUNC)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
 #CI for the funcometer
@@ -49,9 +49,4 @@ $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h
 	-I $(SRCLIB) -I $(MOCKLIBS) -I $(ARDULIBS)/Base_WatchFunction/src \
 	$(SRCLIB)/$(FUNC).cpp 
 	@echo "Created $(FUNC)."
-
-mock_RI.o: $(MOCKLIBS)/RingInterface.cpp $(MOCKLIBS)/RingInterface.h
-	$(CC) $(CPPFLAGS) -c -o mock_RI.o \
-	-I $(MOCKLIBS) \
-	$(MOCKLIBS)/RingInterface.cpp
 

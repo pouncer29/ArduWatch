@@ -11,8 +11,8 @@ Synopsis: outline for CI for Clock
 #include "Clock.h"
 #include "Clock_Gears.h"
 #include "Clock_Face.h"
-#include <TimeLib.h>
-#include <Adafruit_NeoPixel.h>
+#include <TimeLib_MOCK.h>
+#include <Adafruit_NeoPixel_MOCK.h>
 
 /** Clock_CI
    -----------

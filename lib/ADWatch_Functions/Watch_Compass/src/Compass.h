@@ -3,7 +3,11 @@
 
 #include <Compass_Needle.h>
 #include <Compass_Magnet.h>
-#include <Adafruit_NeoPixel.h>
+#ifndef CI
+	#include <Adafruit_NeoPixel.h>
+#else
+	#include <Adafruit_NeoPixel_MOCK.h>
+#endif
 
 
 /** Compass

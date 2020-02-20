@@ -34,7 +34,7 @@ SRCLIB = ./src
 FUNC = Compass
 
 
-watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  mock_RI.o
+watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS)  -o watch_compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
@@ -63,9 +63,4 @@ $(FUNC)_Magnet.o: $(SRCLIB)/$(FUNC)_Magnet.cpp $(SRCLIB)/$(FUNC)_Magnet.h
 	-I $(SRCLIB) -I $(MOCKLIBS) \
 	$(SRCLIB)/$(FUNC)_Magnet.cpp 
 	@echo "Got Magnet"
-
-mock_RI.o: $(MOCKLIBS)/RingInterface.cpp $(MOCKLIBS)/RingInterface.h
-	$(CC) $(CPPFLAGS) -c -o mock_RI.o \
-	-I $(MOCKLIBS) \
-	$(MOCKLIBS)/RingInterface.cpp
 
