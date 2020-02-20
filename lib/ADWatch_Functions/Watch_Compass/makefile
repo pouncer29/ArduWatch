@@ -12,9 +12,9 @@ ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
 # PathHelpers
-ARDUBIN = /Applications/Arduino.app/Contents/Java/hardware
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-CSTDLIB = /Applications/
+PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 
 #NameHelpers
 FUNC = NOTHING
@@ -35,7 +35,7 @@ FUNC = Compass
 
 
 watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
-	$(CC) $(CPPFLAGS)  -o watch_compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
+	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
 #CI

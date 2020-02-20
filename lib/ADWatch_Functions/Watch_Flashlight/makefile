@@ -13,7 +13,8 @@ USER=$(shell whoami)
 
 # PathHelpers
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-CSTDLIB = /Applications/
+PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 
 #NameHelpers
 FUNC = NOTHING
@@ -34,7 +35,7 @@ FUNC = Flashlight
 
 
 watch_flashlight: $(FUNC).o $(FUNC)_CI.o 
-	$(CC) $(CPPFLAGS) -o watch_flashlight_CI $(FUNC)_CI.o $(FUNC).o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI $(FUNC)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
 #CI for the funcometer

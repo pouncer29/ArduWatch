@@ -13,7 +13,8 @@ USER=$(shell whoami)
 
 # PathHelpers
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-CSTDLIB = /Applications/
+PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 
 #NameHelpers
 FUNC = NOTHING
@@ -35,7 +36,7 @@ CI = Base_WatchFunction
 
 
 base_watchFunction:  $(FUNC).o $(CI)_CI.o
-	$(CC) $(CPPFLAGS) -o base_watchFunction_CI $(CI)_CI.o $(FUNC).o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Base_WatchFunction_CI $(CI)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
 #CI for the base watch function

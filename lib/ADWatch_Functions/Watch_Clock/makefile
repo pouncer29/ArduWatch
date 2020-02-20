@@ -14,7 +14,8 @@ USER=$(shell whoami)
 # PathHelpers
 ARDUBIN = /Applications/Arduino.app/Contents/Java/hardware
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-CSTDLIB = /Applications/
+PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 
 #NameHelpers
 FUNCPREFIX = Watch_
@@ -37,7 +38,7 @@ FUNC = Clock
 
 
 watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  
-	$(CC) $(CPPFLAGS) -o watch_clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
 #CI
