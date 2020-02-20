@@ -4,9 +4,9 @@
 	Synopsis: The Superclass for all ring interfaces
 */
 
-#ifndef RingInterface_h
-#define	RingInterface_h
-#include <Adafruit_NeoPixel.h>
+#ifndef RingInterface_M_h
+#define	RingInterface_M_h
+#include "Adafruit_NeoPixel_MOCK.h"
 /** RingInterface
 	------------
 	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 

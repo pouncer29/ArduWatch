@@ -1,9 +1,9 @@
 /* Implementation of Timelib Mock*/
-#include "TimeLib.h"
+#include "TimeLib_MOCK.h"
 
 
 time_t now(){
-	time_t t;
+	time_t t = 0;
 	return t;
 }
 

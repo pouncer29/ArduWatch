@@ -1,5 +1,5 @@
-#ifndef ADAFRUIT_NEOPIXEL_H
-#define ADAFRUIT_NEOPIXEL_H
+#ifndef ADAFRUIT_NEOPIXEL_M_H
+#define ADAFRUIT_NEOPIXEL_M_H
 
 #include <cinttypes>
 

@@ -1,4 +1,4 @@
-#include "Adafruit_NeoPixel.h"
+#include "Adafruit_NeoPixel_MOCK.h"
 
 Adafruit_NeoPixel::Adafruit_NeoPixel(){}
 Adafruit_NeoPixel::~Adafruit_NeoPixel(){}
