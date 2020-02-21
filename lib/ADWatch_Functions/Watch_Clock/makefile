@@ -14,13 +14,16 @@ USER=$(shell whoami)
 WATCHENV = $(shell pwd)
 
 ifeq ($(USER),runner)
-MOCKLIBS = /Users/runner/runners/2.165.2/work/ArduWatch/ArduWatch/lib/Mock_Libs
+PROJDIR = /Users/runner/runners/2.165.2/work/ArduWatch/ArduWatch
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
+MOCKLIBS = $(PROJDIR)/lib/Mock_Libs
 else
+PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 endif
 
 # PathHelpers
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 
 #NameHelpers
 FUNC = NOTHING
