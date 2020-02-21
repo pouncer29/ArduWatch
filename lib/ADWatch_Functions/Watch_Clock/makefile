@@ -14,7 +14,7 @@ USER=$(shell whoami)
 WATCHENV = $(shell pwd)
 
 ifeq ($(USER),runner)
-MOCKLIBS = ../../Mock_Libs
+MOCKLIBS = /Users/runner/runners/2.165.2/work/ArduWatch/ArduWatch/lib/Mock_Libs
 else
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
 endif
