@@ -13,13 +13,17 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-#@echo "user is $(USER), OS is $(OS)"
 
 # PathHelpers
 PROJDIR = ./lib/ADWatch_Functions
 
-all: watchFunctions
+
+all: start watchFunctions
 	@echo "********************* CI MAKE COMPLETE ************************"
+
+start:
+	@echo "*********************** BEGINNING WATCH BUILD *****************"
+	@echo "User: $(USER) OS: $(OS) PLATFORM: $(PLATFORM) ARCH: $(ARCH)
 
 watchFunctions: 
 	$(MAKE) -C $(PROJDIR)
