@@ -13,29 +13,25 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-
-# PathHelpers
-TESTDIR = $(PROJDIR)/ADWatch_CI_Tests
-
-all: watch_Functions # base_watch run_tests
+all: watch_Functions  base_watch run_tests
 	@echo "********************* FUNCTION MAKE COMPLETE ************************"
 
 watch_Functions: 
 	+$(MAKE) -C Watch_Clock
-#	+$(MAKE) -C Watch_Compass
-#	+$(MAKE) -C Watch_Speedometer
-#	+$(MAKE) -C Watch_Flashlight
+	+$(MAKE) -C Watch_Compass
+	+$(MAKE) -C Watch_Speedometer
+	+$(MAKE) -C Watch_Flashlight
 
 base_watch:
 	+$(MAKE) -C Base_WatchFunction
 
 run_tests:
 	@echo "************************Testing Watch****************************"
-#		$(TESTDIR)/Base_WatchFunction_CI
+		$(TESTDIR)/Base_WatchFunction_CI
 		$(TESTDIR)/Watch_Clock_CI
-#		$(TESTDIR)/Watch_Compass_CI
-#		$(TESTDIR)/Watch_Speedometer_CI
-#		$(TESTDIR)/Watch_Flashlight_CI
+		$(TESTDIR)/Watch_Compass_CI
+		$(TESTDIR)/Watch_Speedometer_CI
+		$(TESTDIR)/Watch_Flashlight_CI
 	
 	
 

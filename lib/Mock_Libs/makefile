@@ -5,7 +5,6 @@ USER = $(shell whoami)
 
 #paths
 # BaseWatch = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/ADWatch_Functions/Base_WatchFunction/src
-ARDUBIN = /Applications/Arduino.app/Contents/Java/hardware/arduino/avr/cores/arduino
 MOK = _MOCK
 #targets
 .PHONEY: clean cleano cleana

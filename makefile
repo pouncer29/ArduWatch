@@ -15,14 +15,22 @@ USER=$(shell whoami)
 
 
 # PathHelpers
-MOCKDIR = ./lib/Mock_Libs
-PROJDIR = ./lib/ADWatch_Functions
+PROJDIR = $(shell pwd)
+FUNCDIR = $(PROJDIR)/lib/ADWatch_Functions
+MOCKLIBS = $(PROJDIR)/lib/Mock_libs
+TESTDIR = $(PROJDIR)/lib/ADWatch_CI_TESTS
 
+
+export 
 
 all: start mocklib watchFunctions
 	@echo "********************* CI MAKE COMPLETE ************************"
 
 start:
+	export PROJDIR
+	export MOCKDIR 
+	export TESTDIR
+	export FUNCDIR
 	@echo "*********************** BEGINNING WATCH BUILD *****************"
 	@echo "User: $(USER) OS: $(OS) PLATFORM: $(PLATFORM) ARCH: $(ARCH)"
 	@echo "pwd is $(shell pwd) home is: $(shell ls $HOME) or $(shell ls ~)"
@@ -31,10 +39,10 @@ start:
 
 mocklib:
 	@echo "************************ MAKING MOCKLIB **************************"
-	$(MAKE) -C $(MOCKDIR)
+	$(MAKE) -C $(MOCKLIBS)
 
 watchFunctions: 
-	$(MAKE) -C $(PROJDIR)
+	$(MAKE) -C $(FUNCDIR)
 	
 
 

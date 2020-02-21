@@ -11,11 +11,6 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-# PathHelpers
-MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
-
 #NameHelpers
 FUNC = NOTHING
 
@@ -47,7 +42,7 @@ $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h
 	$(CC) $(CPPFLAGS) -c \
-	-I $(SRCLIB) -I $(MOCKLIBS) -I $(ARDULIBS)/Base_WatchFunction/src \
+	-I $(SRCLIB) -I $(MOCKLIBS) -I $(FUNCDIR)/Base_WatchFunction/src \
 	$(SRCLIB)/$(FUNC).cpp 
 	@echo "Created $(FUNC)."
 

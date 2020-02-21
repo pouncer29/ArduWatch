@@ -11,11 +11,6 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-# PathHelpers
-MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
-
 #NameHelpers
 FUNC = NOTHING
 
@@ -29,7 +24,6 @@ clean:
 	rm *.o
 
 # SPEEDO
-ARDULIBS = /Users/$(USER)/Documents/Arduino/libraries
 SRCLIB = ./src
 FUNC = Speed
 
@@ -42,7 +36,7 @@ watch_speedometer: $(FUNC)_Gauge.o $(FUNC)_Dial.o $(FUNC)ometer.o $(FUNC)ometer_
 #CI for the funcometer
 $(FUNC)ometer_CI.o: $(SRCLIB)/$(FUNC)ometer_CI.cpp $(SRCLIB)/$(FUNC)ometer_CI.h
 	$(CC) $(CPPFLAGS) -c \
-	-I $(SRCLIB) -I $(MOCKLIBS) -I $(ARDULIBS)/Base_WatchFunction/src \
+	-I $(SRCLIB) -I $(MOCKLIBS) \
 	$(SRCLIB)/$(FUNC)ometer_CI.cpp 
 	@echo "Created CI component for $(FUNC)ometer (groovy)."
 

@@ -12,17 +12,6 @@ ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
 WATCHENV = $(shell pwd)
-
-ifeq ($(USER),runner)
-PROJDIR = /Users/runner/runners/2.165.2/work/ArduWatch/ArduWatch
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
-MOCKLIBS = $(PROJDIR)/lib/Mock_Libs
-else
-PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch
-MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
-endif
-
 # PathHelpers
 
 #NameHelpers
@@ -39,10 +28,10 @@ clean:
 
 showenv: 
 	@echo "*********** CLOCK **** PWD is: $(WATCHENV) projdir is $(PROJDIR) Mockdir is $(MOCKLIBS)"
+	@echo "************FUNCDIR is $(FUNCDIR) TestDir is $(TESTDIR)"
 	
 
 # CLOCK
-ARDULIBS = /Users/$(USER)/Documents/Arduino/libraries
 SRCLIB = ./src
 FUNC = Clock
 
@@ -54,7 +43,7 @@ watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o
 #CI
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 	$(CC) $(CPPFLAGS) -c \
-	-I $(SRCLIB) -I $(MOCKLIBS) -I $(ARDULIBS)/Base_WatchFunction/src \
+	-I $(SRCLIB) -I $(MOCKLIBS) -I $(PROJDIR)/lib/Base_WatchFunction/src \
 	$(SRCLIB)/$(FUNC)_CI.cpp 
 	@echo "Created CI component"
 

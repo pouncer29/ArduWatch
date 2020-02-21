@@ -11,11 +11,6 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-# PathHelpers
-MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
-
 #NameHelpers
 FUNC = NOTHING
 
