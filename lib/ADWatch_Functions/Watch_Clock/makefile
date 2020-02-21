@@ -11,9 +11,13 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-# PathHelpers
-ARDUBIN = /Applications/Arduino.app/Contents/Java/hardware
+ifeq ($(USER),runner)
+MOCKLIBS = ~/lib/Mock_Libs
+else
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
+endif
+
+# PathHelpers
 PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/
 TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 

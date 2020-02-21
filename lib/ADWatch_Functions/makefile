@@ -15,10 +15,7 @@ USER=$(shell whoami)
 
 
 # PathHelpers
-MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
-PROJDIR = /Users/$(USER)/fGrams/Projects/ArduWatch/lib
 TESTDIR = $(PROJDIR)/ADWatch_CI_Tests
-FUNC_DIRS = $(shell ls Watch_*)
 
 all: watch_Functions base_watch run_tests
 	@echo "********************* FUNCTION MAKE COMPLETE ************************"

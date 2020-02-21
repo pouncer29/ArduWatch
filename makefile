@@ -24,6 +24,7 @@ all: start watchFunctions
 start:
 	@echo "*********************** BEGINNING WATCH BUILD *****************"
 	@echo "User: $(USER) OS: $(OS) PLATFORM: $(PLATFORM) ARCH: $(ARCH)"
+	@echo "pwd is $(shell pwd) home is: $(shell ls $HOME) or $(shell ls ~)"
 
 watchFunctions: 
 	$(MAKE) -C $(PROJDIR)
