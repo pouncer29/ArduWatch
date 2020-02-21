@@ -23,9 +23,7 @@ endif
 TESTDIR = $(PROJDIR)/lib/ADWatch_CI_Tests
 
 #NameHelpers
-FUNCPREFIX = Watch_
 FUNC = NOTHING
-FUNCROOT = ADWATCH_Functions/
 
 #targets 
 .PHONEY: clean
@@ -37,7 +35,8 @@ clean:
 	rm *.o
 
 showenv: 
-	@echo "PWD is: $(WATCHENV) projdir is $(PROJDIR)"
+	@echo "*********** CLOCK **** PWD is: $(WATCHENV) projdir is $(PROJDIR) Mockdir is $(MOCKLIBS)"
+	
 
 # CLOCK
 ARDULIBS = /Users/$(USER)/Documents/Arduino/libraries
