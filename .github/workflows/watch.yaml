@@ -1,4 +1,4 @@
-name: p29 ArduWatch CI Build
+name: ArduWatch-Mac-Build
 
 on:
   push:
