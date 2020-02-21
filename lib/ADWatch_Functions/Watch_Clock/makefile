@@ -11,8 +11,10 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
+WATCHENV = $(shell pwd)
+
 ifeq ($(USER),runner)
-MOCKLIBS = ~/lib/Mock_Libs
+MOCKLIBS = $(PROJDIR)/lib/Mock_Libs
 else
 MOCKLIBS = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/Mock_Libs
 endif
@@ -29,11 +31,14 @@ FUNCROOT = ADWATCH_Functions/
 #targets 
 .PHONEY: clean
 
-all: watch_clock clean
+all: showenv watch_clock clean
 	@echo "************************ CLOCK TESTS BUILT ******************************"
 
 clean:
 	rm *.o
+
+showenv: 
+	@echo "PWD is: $(WATCHENV) projdir is $(PROJDIR)"
 
 # CLOCK
 ARDULIBS = /Users/$(USER)/Documents/Arduino/libraries
