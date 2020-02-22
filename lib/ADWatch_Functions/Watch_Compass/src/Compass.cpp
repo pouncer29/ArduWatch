@@ -17,7 +17,7 @@ Synopsis: Implementation for the compass. Controller for Needle and Magnet
  */
 Compass::Compass(){
 	needle = new Compass_Needle();
-	magnet = new Compass_Magnet(0);
+	magnet = new Compass_Magnet();
 
 	curHeadIdx = magnet->getHeadingIndex();
 	prevHeadIdx = -1;
