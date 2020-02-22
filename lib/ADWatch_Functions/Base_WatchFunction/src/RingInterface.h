@@ -7,7 +7,7 @@
 #ifndef RingInterface_h
 #define	RingInterface_h
 #include <Adafruit_NeoPixel.h>
-/* RingInterface
+/** RingInterface
 	------------
 	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 
 	Speedometer, Compass, Watch_Clock, Flashlight. They all need special colours, they for the most part all

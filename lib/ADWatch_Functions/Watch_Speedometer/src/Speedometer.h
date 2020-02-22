@@ -8,12 +8,12 @@ Synopsis: The implementation for Speedometer.h
 #define Speedometer_h
 
 #include <Arduino.h>
-#include "Speed_Dial.h"
-#include "Speed_Gauge.h"
+#include <Speed_Dial.h>
+#include <Speed_Gauge.h>
 #include <Adafruit_NeoPixel.h>
 
 
-/* Speedometer
+/** Speedometer
    - The union of Gauge and Dial. Takes a speed in knots from the gps, converts it to kmph,
 	 and then displays it in 20kmph starting from index 6 (0kmph) to 4 ( > 180kmph).	
 */

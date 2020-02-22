@@ -6,23 +6,20 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
 
 */
 
-#include "Flashlight.h"
+#include <Flashlight.h>
 
 
 
 //****************************************************************************************
-//Flashlight//
+//Flashlight
 //****************************************************************************************
 
-/* Flashflight()
-  	precond: none 
-   	postcond: none
-  
-  	Paramaters: neoP - a neopixel ring that will become our flashlight.
-  
-  	Synopsis: Initializes fancy colours
+/** Flashflight()
+  	@Synopsis: Initializes fancy colours
  */
 Flashlight::Flashlight(void){
+
+	//Colour definitions.
 	blank = ring->Color(0,0,0,0);
 	lightColour = ring->Color(255,255,255,40);
 	violet = ring->Color(148,0,211,0);
@@ -44,24 +41,25 @@ Flashlight::Flashlight(void){
 	colours[7] = red;
 }
 
+/** Flashlight
+ * @Synopsis: An override for the inherited colour wipe, one that uses no delay.
+ * @param c - the colour to switch to.
+ * @param wait - The delay between switches
+ * @param ring - The NeoPixel Ring to display colours on
+ */
 void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
   for(uint8_t i=0; i<12; i++) {
     ring->setPixelColor(i, c);    
   }
-
 	ring->show();
 }
 
 
 
-/* on()
-   precond: strip has been instantiated
-   postcond: all of the lights are turned on to the defined light colour
-  
-   paramaters: none
-   Synopsis: Just turns the lights on guys.
-   
-	return: Nothing
+/** on()
+   @precond: strip has been instantiated
+   @postcond: all of the lights are turned on to the defined light colour
+   @Synopsis: Just turns the lights on guys.
  */
 void Flashlight::on(Adafruit_NeoPixel* ring){	
 	colorWipe(lightColour,0,ring);
@@ -72,21 +70,23 @@ void Flashlight::on(Adafruit_NeoPixel* ring){
 
 
 
-/* off()
-	- actually just a wrapper for the clear function
+/** off()
+  @Synopsis: actually just a wrapper for the clear function
  */
 void Flashlight::off(Adafruit_NeoPixel* ring){
 	ring->clear();
 	return;
 }
 
-/*party()
-	-Jazzy colour version of on
+/** party()
+ 	@param: ring - the neopixel ring that we will party on.
+	@Synopsis: Jazzy colour version of on. Cycles through the count of colours. Uses a static counter to maintain
+ 				where it was left.
 */
 uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
 	static uint16_t count = 0;	
 	count++;
-	if(count > 8)
+	if(count > 29)
 		count = 0;
 
 	return colours[count%8];
@@ -95,21 +95,20 @@ uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
 			
 
 
-/* strobe()
-	precond: ceasePin is attached to a button that will change state
-	postcond: light strobes
+/** strobe()
+	@precond: ceasePin is attached to a button that will change state
+	@postcond: light strobes
 	
-	parameters: ceasePin- the ID number of the pin that we will watch for a cease in strobe.
+	@param: ceasePin - the number of the pin that we will watch for a cease in strobe.
+ 	@param: ring - the ring we are displaying the strobe on.
 	
-	Synopsis: While the button/switch has not been activeated, rapidly turn the lights from
+	@Synopsis: While the button/switch has not been activeated, rapidly turn the lights from
 			  full white to full off. strobe.
-
-	return: nothing
-*/	
+*/
 void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 	uint8_t flip = 0;
 	uint32_t colour = lightColour;
-	while(digitalRead(8)==LOW){
+	while(digitalRead(ceasePin)==LOW){
 		//Strobe Delay
 		delay(30);
 
@@ -117,16 +116,18 @@ void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 		ring->clear();
 		ring->show();
 		
-		//Wait...?
+		//Wait and flip colour
 		delay(100);
 		flip++;
-		
+
+		//swap colours
 		if(flip > 20){
 			flip =0;
 			//pick random color
 			colour = party(ring);
-		}	
-	
+		}
+
+		//Show colours
 		colorWipe(colour,0,ring);
 	}
 	return;

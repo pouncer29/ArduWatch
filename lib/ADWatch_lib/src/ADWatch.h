@@ -12,7 +12,7 @@
 #include <Adafruit_GPS.h>
 #include <GPSTools.h>
 
-/* src
+/** ADWatch
    -----------
 	-The union of all feature classes.
 	

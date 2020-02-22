@@ -6,27 +6,26 @@ Synopsis: the implementation for Speed_Gauge.h
 
 */
 
-#include "Speed_Gauge.h"
+#include <Speed_Gauge.h>
 
 //****************************************************************************************
-//Speed_Gauge//
+//Speed_Gauge
 //****************************************************************************************
 
-/* Speed_Gauge()
-	precond: speed given is in kmph and gt 0
-    postcond: a Speed_Gauge object is created
-   
-    paramaters: km - a speed in kmph we will initialize to.
-   
-	synopsis: initializes a Speed_Gauge object
+/** Speed_Gauge()
+	@precond: speed given is in kmph and gt 0
+    @postcond: a Speed_Gauge object is created
 
-	return: a new Speed_Gauge object
+    @param: km - a speed in kmph we will initialize to.
+
+	@synopsis: initializes a Speed_Gauge object
+
  */
 Speed_Gauge::Speed_Gauge(float km){
 	curSpeed = km;	
 }
 
-/* getCurSpeed()
+/** getCurSpeed()
 	precond: speed is not null
 	postcond: none
 
@@ -40,16 +39,14 @@ float Speed_Gauge::getCurSpeed(void){
 	return curSpeed;
 }
 
-/* getSpeedIndex(void)
-	precond: speed is set
-	postcond: none
+/** getSpeedIndex(void)
+	@precond: speed is set
+	@postcond: none
 	
-	parameters: none
-
-	synopsis: returns the speed index deemed appropriate by our hash function to represent
+	@synopsis: returns the speed index deemed appropriate by our hash function to represent
 			  our current speed on the watch (6 is 0)
 
-	return: an array index
+	@return: an array index for the  current speed.
 */
 uint8_t Speed_Gauge::getSpeedIndex(void) {
 	
@@ -65,15 +62,13 @@ uint8_t Speed_Gauge::getSpeedIndex(void) {
 	return idx;
 }
 
-/* updateSpeed()
-	precond: given speed is -gt 0
-	postcond: internal speed is updated
+/** updateSpeed()
+	@precond: given speed is -gte 0
+	@postcond: internal speed is updated
 	
-	parameters: newSpeed - the speed that will become our tracked speed
+	@parameters: newSpeed - the speed that will become our tracked speed
 
-	synopsis: resets our tracked speed to newSped
-
-	return: nothing
+	@synopsis: resets our tracked speed to newSped
 */
 void Speed_Gauge::updateSpeed(float newSpeed){
 	curSpeed = newSpeed;
