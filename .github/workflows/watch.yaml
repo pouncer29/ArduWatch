@@ -2,8 +2,7 @@ name: ArduWatch-Mac-Build
 
 on:
   push:
-    branches:
-    	- Sauske
+    branches: Sauske
 
 jobs:
   build:
