@@ -110,7 +110,6 @@ void Flashlight::strobe(bool keep, Adafruit_NeoPixel* ring){
 	uint8_t flip = 0;
 	uint32_t colour = lightColour;
 	if(keep){
-
 		//Strobe Delay
 		delay(30);
 
