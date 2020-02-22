@@ -8,8 +8,11 @@ Synopsis: Clock_Gears for the watch
 #ifndef Clock_Gears_h
 #define Clock_Gears_h
 
-#include <Arduino.h>
-#include <TimeLib.h>
+#ifndef CI
+	#include <TimeLib.h>
+#else
+	#include <TimeLib_MOCK.h>
+#endif
 
 /** Gears
    --------------

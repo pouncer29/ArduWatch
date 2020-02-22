@@ -31,11 +31,9 @@ int32_t GPSTools::tzAdjust(float deg){
 		return adjustment+1; //Saskatoon is -6, this fn gives -7... So I cheated
 	}
 	else {
-		adjustment = deg / 15;
+		return adjustment = deg / 15;
 	}
-
-
-	}
+}
 
 /** grabTime()
 	precond: gps is initialized

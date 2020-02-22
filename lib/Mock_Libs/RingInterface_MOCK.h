@@ -4,18 +4,10 @@
 	Synopsis: The Superclass for all ring interfaces
 */
 
-#ifndef RingInterface_h
-#define	RingInterface_h
-
-//If we are CI, we need to get the mock lib version
-#ifdef CI
-	#include <Arduino_MOCK.h>
-	#include <Adafruit_NeoPixel_MOCK.h>
-#else
-	#include <Adafruit_NeoPixel.h>
-#endif
-
-
+#ifndef RingInterface_M_h
+#define	RingInterface_M_h
+#include "Adafruit_NeoPixel_MOCK.h"
+#include "Arduino_MOCK.h"
 /** RingInterface
 	------------
 	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 
@@ -58,8 +50,6 @@ class RingInterface{
 		RingInterface();
 		uint32_t getAverageCross(uint32_t,uint32_t);
 	    void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel*);
-		void showAvg(uint32_t,uint32_t);
-
 };
 
 #endif

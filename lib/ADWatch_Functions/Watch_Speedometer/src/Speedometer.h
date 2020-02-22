@@ -7,10 +7,15 @@ Synopsis: The implementation for Speedometer.h
 #ifndef Speedometer_h
 #define Speedometer_h
 
-#include <Arduino.h>
-#include <Speed_Dial.h>
-#include <Speed_Gauge.h>
-#include <Adafruit_NeoPixel.h>
+#ifndef CI
+	#include <Arduino.h>
+	#include <Adafruit_NeoPixel.h>
+#else
+	#include <Arduino_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
+#endif
+#include "Speed_Dial.h"
+#include "Speed_Gauge.h"
 
 
 /** Speedometer

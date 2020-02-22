@@ -1,0 +1,21 @@
+name: ArduWatch-Mac-Build
+
+on:
+  push:
+    branches: sauske-4-CI*
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v2 
+    #- name: configured
+      #run: ./configure
+    - name: make
+      run: make
+    #- name: make check
+    #  run: make check
+    #- name: make distcheck
+    #  run: make distcheck
