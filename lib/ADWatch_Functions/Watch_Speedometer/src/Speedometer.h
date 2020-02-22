@@ -14,8 +14,8 @@ Synopsis: The implementation for Speedometer.h
 	#include <Arduino_MOCK.h>
 	#include <Adafruit_NeoPixel_MOCK.h>
 #endif
-#include <Speed_Dial.h>
-#include <Speed_Gauge.h>
+#include "Speed_Dial.h"
+#include "Speed_Gauge.h"
 
 
 /** Speedometer

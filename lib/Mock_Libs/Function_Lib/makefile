@@ -1,4 +1,5 @@
 
+.PHONEY: clean
 
 all: libadwfunc.a 
 	@echo "************************ MADE LIBADWFUNC ***************************"
@@ -9,3 +10,5 @@ libadwfunc.a:
 	libtool -static -o libadwfunc.a *.a
 	@echo "************** libadwfunc made"
 
+clean: 
+	rm *.a

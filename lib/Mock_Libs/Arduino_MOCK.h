@@ -8,6 +8,8 @@
 #define HIGH 0x1 
 int digitalRead(uint8_t);
 int delay(unsigned long);
+int delay(int);
+int delay(uint32_t);
 
 #endif
 

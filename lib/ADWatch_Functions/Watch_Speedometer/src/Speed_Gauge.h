@@ -12,6 +12,7 @@ Synopsis: The GPS interface for the speedometer class
 	#include <Arduino.h>
 #else
 	#include <cinttypes>
+	#include <Arduino_MOCK.h>
 #endif
 
 

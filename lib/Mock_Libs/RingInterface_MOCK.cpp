@@ -40,6 +40,4 @@ void RingInterface::colorWipe(uint32_t c, uint16_t wait,Adafruit_NeoPixel* ring)
 
 }
 
-void delay(int i){}
-
 	

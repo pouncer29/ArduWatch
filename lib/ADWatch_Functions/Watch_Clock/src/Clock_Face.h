@@ -17,6 +17,7 @@
 	#include <Adafruit_NeoPixel_MOCK.h>
 	#include <TimeLib_MOCK.h>
 	#include <RingInterface_MOCK.h>
+	#include <Arduino_MOCK.h>
 #endif
 
 

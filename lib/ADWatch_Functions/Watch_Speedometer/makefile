@@ -34,9 +34,10 @@ watch_speedometer: $(FUNC)_Gauge.o $(FUNC)_Dial.o $(FUNC)ometer.o $(FUNC)ometer_
 	-L $(MOCKLIBS) -lmock -lc++
 
 #libSpeedometer
-lib$(FUNC): $(FUNC)ometer.o 
+lib$(FUNC): $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o
 	@echo "************** Making libAD$(FUNC)ometer"
-	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC)ometer.a $(FUNC)ometer.o
+	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC)ometer.a $(FUNC)ometer.o \
+	$(FUNC)_Dial.o $(FUNC)_Gauge.o
 	@echo "************** libADC$(FUNC)ometer made"
 
 

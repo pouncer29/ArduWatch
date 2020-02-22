@@ -36,9 +36,9 @@ watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o
 	-L $(MOCKLIBS) -lmock -lc++
 
 #libClock 
-lib$(FUNC): $(FUNC).o 
+lib$(FUNC): $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
 	@echo "************** Making libAD$(FUNC)"
-	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o
+	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
 	@echo "************** libADC$(FUNC) made"
 
 #CI
@@ -59,7 +59,7 @@ $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h
 
 $(FUNC)_Face.o: $(SRCLIB)/$(FUNC)_Face.cpp $(SRCLIB)/$(FUNC)_Face.h
 	$(CC) $(CPPFLAGS) -c \
-	-I $(SRCLIB) -I $(MOCKLIBS) \
+	-I $(SRCLIB) -I $(MOCKLIBS) -I $(PROJDIR)/lib/Base_WatchFunction/src \
 	$(SRCLIB)/$(FUNC)_Face.cpp 
 	@echo "Got Face!"
 

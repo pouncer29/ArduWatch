@@ -7,6 +7,7 @@
 #ifndef RingInterface_M_h
 #define	RingInterface_M_h
 #include "Adafruit_NeoPixel_MOCK.h"
+#include "Arduino_MOCK.h"
 /** RingInterface
 	------------
 	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 
@@ -50,8 +51,6 @@ class RingInterface{
 		uint32_t getAverageCross(uint32_t,uint32_t);
 	    void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel*);
 };
-
-void delay(int i);
 
 #endif
 		

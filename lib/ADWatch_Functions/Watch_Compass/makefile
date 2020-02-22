@@ -34,9 +34,9 @@ watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o
 
 
 #libCompass
-lib$(FUNC): $(FUNC).o 
+lib$(FUNC): $(FUNC).o $(FUNC)_Magnet.o $(FUNC)_Needle.o
 	@echo "************** Making libAD$(FUNC)"
-	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o
+	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o $(FUNC)_Magnet.o $(FUNC)_Needle.o
 	@echo "************** libADC$(FUNC) made"
 
 #CI
