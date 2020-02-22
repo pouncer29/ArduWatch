@@ -14,7 +14,7 @@ USER=$(shell whoami)
 .PHONEY: clean
 
 all: watch_ADWatch clean
-	@echo "********************* ADWatch TESTS BUILT ************************"
+	@echo "********************* ADWatch & TESTS BUILT ************************"
 
 clean:
 	rm *.o
@@ -24,12 +24,10 @@ FUNC = ADWatch
 # ADWATCH
 SRCLIB = ./src
 
+#ADWatch CI exe
 watch_ADWatch: $(FUNC).o $(FUNC)_CI.o
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(FUNC)_CI_TEST $(FUNC).o $(FUNC)_CI.o \
 	-L$(MOCKLIBS) -lmock -L$(FUNCLIB) -ladwfunc -lc++
-	#-L$(MOCKLIBS) -L$(FUNCLIB) -lmock -lc++ -lADClock -lADCompass -lADFlashlight \
-	#-lADSPeedometer -lGPSTools -lbaseWF
-#-ladwfunc
 
 #CI for the base watch function
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
@@ -48,7 +46,7 @@ $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h
 	-I $(FUNCDIR)/Watch_Compass/src -I $(FUNCDIR)/Watch_Speedometer/src \
 	-I $(FUNCDIR)/Watch_Flashlight/src -I $(PROJDIR)/lib/ADWatch_GPS/src \
 	$(SRCLIB)/$(FUNC).cpp 
-	@echo "****____***** Created $(FUNC)."
+	@echo "***************** Created $(FUNC)."
 
 
 

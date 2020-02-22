@@ -18,7 +18,7 @@ FUNC = NOTHING
 .PHONEY: clean
 
 all: watch_compass libCompass clean
-	@echo "*************************** COMPASS TESTS BUILT *********************************"
+	@echo "*************************** COMPASS & TESTS BUILT *********************************"
 
 clean:
 	rm *.o
@@ -27,7 +27,7 @@ clean:
 SRCLIB = ./src
 FUNC = Compass
 
-
+#Compass CI exe
 watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++

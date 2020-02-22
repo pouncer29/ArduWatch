@@ -13,10 +13,11 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-all: watch_Functions  base_watch run_tests
+all: watch_Functions base_watch run_tests
 	@echo "********************* FUNCTION MAKE COMPLETE ************************"
 
 watch_Functions: 
+	@echo "********************* MAKING WATCH FUNCTIONS ************************"
 	+$(MAKE) -C Watch_Clock
 	+$(MAKE) -C Watch_Compass
 	+$(MAKE) -C Watch_Speedometer

@@ -18,7 +18,7 @@ TOOL = NOTHING
 .PHONEY: clean
 
 all: GPSTools libGPSTools clean
-	@echo "********************* BASE_WAATCHFUNCTION TESTS BUILT ************************"
+	@echo "********************* ADWATCH GPS TESTS BUILT ************************"
 
 clean:
 	rm *.o
@@ -27,24 +27,25 @@ clean:
 SRCLIB = ./src
 TOOL = GPSTools
 
-
+#CI
 $(TOOL):  $(TOOL).o $(TOOL)_CI.o
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(TOOL)_CI $(TOOL)_CI.o $(TOOL).o \
 	-L $(MOCKLIBS) -lmock -lc++
 
-#lib baseWF
+#lib GPSTools
 lib$(TOOL): $(TOOL).o 
 	@echo "************** Making lib$(TOOL)"
 	ar -rv $(MOCKLIBS)/Function_Lib/lib$(TOOL).a $(TOOL).o
 	@echo "************** lib $(TOOL) made"
 
-#CI for the base watch function
+#CI for the gpsToools 
 $(TOOL)_CI.o: $(SRCLIB)/$(TOOL)_CI.cpp 
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
 	$(SRCLIB)/$(TOOL)_CI.cpp 
 	@echo "Created CI component for $(TOOL)."
 
+# GPSTools object
 $(TOOL).o: $(SRCLIB)/$(TOOL).cpp $(SRCLIB)/$(TOOL).h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \

@@ -30,7 +30,7 @@ clean:
 SRCLIB = ./src
 FUNC = Clock
 
-
+#Crreate CI exe
 watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
@@ -47,7 +47,6 @@ $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 	-I $(SRCLIB) -I $(MOCKLIBS) -I $(PROJDIR)/lib/Base_WatchFunction/src \
 	$(SRCLIB)/$(FUNC)_CI.cpp 
 	@echo "Created CI component"
-
 
 #Clock Components
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h 

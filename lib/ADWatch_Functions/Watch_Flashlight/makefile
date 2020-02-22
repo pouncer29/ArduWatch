@@ -18,7 +18,7 @@ FUNC = NOTHING
 .PHONEY: clean
 
 all: watch_flashlight libFlashlight clean
-	@echo "************************ FLASHLIGHT TESTS BUILT ******************************"
+	@echo "************************ FLASHLIGHT & TESTS BUILT ******************************"
 
 clean:
 	rm *.o
@@ -28,7 +28,7 @@ ARDULIBS = /Users/$(USER)/Documents/Arduino/libraries
 SRCLIB = ./src
 FUNC = Flashlight
 
-
+#Created Tests for Flashlight 
 watch_flashlight: $(FUNC).o $(FUNC)_CI.o 
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI $(FUNC)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++

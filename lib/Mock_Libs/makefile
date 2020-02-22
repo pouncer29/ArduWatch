@@ -4,8 +4,8 @@ CPPFLAGS = -Wall
 USER = $(shell whoami)
 
 #paths
-# BaseWatch = /Users/$(USER)/fGrams/Projects/ArduWatch/lib/ADWatch_Functions/Base_WatchFunction/src
 MOK = _MOCK
+
 #targets
 .PHONEY: clean cleano cleana
 
