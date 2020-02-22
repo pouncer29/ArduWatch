@@ -24,7 +24,7 @@ FUNCLIB = $(MOCKLIBS)/Function_Lib
 
 export 
 
-all: start mocklib watchFunctions funclib
+all: start mocklib tools watchFunctions funclib
 	@echo "********************* CI MAKE COMPLETE ************************"
 
 start:
@@ -46,10 +46,16 @@ mocklib:
 watchFunctions: 
 	$(MAKE) -C $(FUNCDIR)
 
+tools:
+	@echo "************************ MAKING ADWFUNCLIB **************************"
+	$(MAKE) -C $(PROJDIR)/lib/ADWatch_GPS
+
 funclib:
 	@echo "************************ MAKING ADWFUNCLIB **************************"
 	$(MAKE) -C $(FUNCLIB)
+
+
 	
-.PHONEY: start mocklib funclib watchFunctions all
+.PHONEY: start mocklib funclib tools watchFunctions all
 
 

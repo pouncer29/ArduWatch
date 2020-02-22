@@ -17,7 +17,7 @@ using namespace std;
 //****************************************************************************************
 
 int main(){
-	cout<<"Welcome to the build..."<<endl;
+	cout<<"Welcome to the Clock build..."<<endl;
 	return 0;
 }
 
