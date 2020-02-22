@@ -13,9 +13,9 @@ all: libmock.a cleano
 	@echo "************************ MADE LIBMOCK ***************************"
 
 
-libmock.a: Mock_TimeLib.o Mock_NeoPixel.o Mock_Arduino.o Mock_RI.o #misc.o
+libmock.a: Mock_TimeLib.o Mock_NeoPixel.o Mock_Arduino.o Mock_RI.o Mock_GPS.o
 	@echo "************** Making libmock"
-	ar -rv libmock.a Mock_TimeLib.o Mock_NeoPixel.o Mock_Arduino.o Mock_RI.o #misc.o
+	ar -rv libmock.a Mock_TimeLib.o Mock_NeoPixel.o Mock_Arduino.o Mock_RI.o Mock_GPS.o
 	@echo "************** libmock made"
 
 #Mocked libs
@@ -30,6 +30,12 @@ Mock_NeoPixel.o: Adafruit_NeoPixel$(MOK).cpp Adafruit_NeoPixel$(MOK).h
 	-I. \
 	Adafruit_NeoPixel$(MOK).cpp
 	@echo "Made Mock NeoPixel..."
+
+Mock_GPS.o: Adafruit_GPS$(MOK).cpp Adafruit_GPS$(MOK).h
+	$(CC) $(CPPFLAGS) -c -o Mock_GPS.o \
+	-I. \
+	Adafruit_GPS$(MOK).cpp
+	@echo "Made Mock GPS..."
 
 Mock_Arduino.o: Arduino$(MOK).cpp Arduino$(MOK).h
 	$(CC) $(CPPFLAGS) -c -o Mock_Arduino.o \
