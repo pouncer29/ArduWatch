@@ -9,9 +9,17 @@
 #ifndef Clock_Face_h
 #define	Clock_Face_h
 
-#include <Adafruit_NeoPixel.h>
-#include <TimeLib.h>
-#include <RingInterface.h>
+#ifndef CI
+	#include <Adafruit_NeoPixel.h>
+	#include <TimeLib.h>
+	#include <RingInterface.h>
+#else
+	#include <Adafruit_NeoPixel_MOCK.h>
+	#include <TimeLib_MOCK.h>
+	#include <RingInterface_MOCK.h>
+	#include <Arduino_MOCK.h>
+#endif
+
 
 /** Face
    -------------- 
@@ -35,9 +43,18 @@
 class Clock_Face: public RingInterface{
 	
 	public:
-	//Methods
-		Clock_Face();
+		//Methods
+		Clock_Face(void);
 		void modMinColour(time_t,Adafruit_NeoPixel*);
+
+		//Inherited
+		//uint32_t getAverageCross(uint32_t,uint32_t);
+	    //void colorWipe(uint32_t, uint16_t,Adafruit_NeoPixel*);
+		//void showAvg(uint32_t,uint32_t);
+		uint32_t hrColour;
+		uint32_t minColour;
+		uint32_t secColour;
+		uint32_t blank;
 };
 
 #endif

@@ -1,16 +1,25 @@
 #ifndef ADWatch_h
 #define ADWatch_h
 
-#include <Arduino.h>
-#include <TimeLib.h>
 #include <Clock.h>
 #include <Compass.h>
 #include <Speedometer.h>
 #include <Flashlight.h>
-#include <Adafruit_NeoPixel.h>
-#include <SoftwareSerial.h>
-#include <Adafruit_GPS.h>
 #include <GPSTools.h>
+
+#ifndef CI
+	#include <SoftwareSerial.h>
+	#include <Adafruit_GPS.h>
+	#include <Adafruit_NeoPixel.h>
+	#include <Arduino.h>
+	#include <TimeLib.h>
+#else
+	#include <Adafruit_GPS_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
+	#include <Arduino_MOCK.h>
+	#include <TimeLib_MOCK.h>
+#endif 
+
 
 /** ADWatch
    -----------

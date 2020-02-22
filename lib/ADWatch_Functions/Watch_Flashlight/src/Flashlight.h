@@ -7,8 +7,14 @@
 #ifndef Flashlight_h
 #define Flashlight_h
 
-#include <Arduino.h>
-#include <RingInterface.h>
+#ifndef CI
+	#include <Arduino.h>
+	#include <RingInterface.h>
+#else
+	#include <Arduino_MOCK.h>
+	#include <RingInterface_MOCK.h>
+#endif
+	
 
 /** Flashlight
    -----------

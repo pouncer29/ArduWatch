@@ -108,7 +108,7 @@ uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
 void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 	uint8_t flip = 0;
 	uint32_t colour = lightColour;
-	while(digitalRead(ceasePin)==LOW){
+	while(digitalRead(ceasePin) == LOW){
 		//Strobe Delay
 		delay(30);
 
