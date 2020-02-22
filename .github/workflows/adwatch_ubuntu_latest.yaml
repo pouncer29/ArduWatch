@@ -1,4 +1,4 @@
-name: ArduWatch-Mac-Build
+name: ArduWatch-Ubuntu-Build
 
 on:
   push:
