@@ -1,0 +1,17 @@
+name: ArduWatch-Mac-Build
+
+on:
+  push:
+    branches:
+      - master
+      - Dev/*
+      - Sauske
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2 
+    - name: make
+      run: make
