@@ -14,14 +14,14 @@ ADBug::ADBug(Adafruit_NeoPixel* ring){
     this->Red = ring->Color(255,0,0,0);
 }
 
-ADBug::ADBug(Adafruit_GPS *, Adafruit_NeoPixel *) {
+ADBug::ADBug(Adafruit_GPS* gps, Adafruit_NeoPixel* ring) {
     this->ring = ring;
     this->gps = gps;
     this->Red = ring->Color(255,0,0,0);
 }
 
 void ADBug::setFlag(int index, Adafruit_NeoPixel* aRing ) {
-    this->Red = ring->Color(255,0,0,0);
+    this->Red = ring->Color(255,0,0,10);
     aRing->setPixelColor(index,Red);
     aRing->show();
 }

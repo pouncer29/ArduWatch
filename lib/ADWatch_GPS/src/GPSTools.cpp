@@ -22,9 +22,6 @@ GPSTools::GPSTools(Adafruit_GPS* myGPS,int32_t adj){
 
 //Handles the UTC timezones with our given degrees
 int32_t GPSTools::tzAdjust(float deg){
-
-	int32_t	adjustment;
-
 	///The adjustment +/- 1 is because of my goofed timezone. It should maybe be removed.
 	if(deg < 0) {
 		adjustment = ((-1 * deg) / 15) * -1;
