@@ -17,13 +17,14 @@ USER=$(shell whoami)
 # PathHelpers
 PROJDIR = $(shell pwd)
 FUNCDIR = $(PROJDIR)/lib/ADWatch_Functions
-MOCKLIBS = $(PROJDIR)/lib/Mock_libs
+MOCKLIBS = $(PROJDIR)/lib/Mock_Libs
 TESTDIR = $(PROJDIR)/lib/ADWatch_CI_TESTS
+FUNCLIB = $(MOCKLIBS)/Function_Lib
 
 
 export 
 
-all: start mocklib watchFunctions
+all: start mocklib watchFunctions funclib
 	@echo "********************* CI MAKE COMPLETE ************************"
 
 start:
@@ -31,9 +32,10 @@ start:
 	export MOCKDIR 
 	export TESTDIR
 	export FUNCDIR
+	export FUNCLIB
 	@echo "*********************** BEGINNING WATCH BUILD *****************"
 	@echo "User: $(USER) OS: $(OS) PLATFORM: $(PLATFORM) ARCH: $(ARCH)"
-	@echo "pwd is $(shell pwd) home is: $(shell ls $HOME) or $(shell ls ~)"
+	@echo "current dir is $(shell pwd)"
 	@echo PROJDIR is $(PROJDIR)
 
 
@@ -43,7 +45,11 @@ mocklib:
 
 watchFunctions: 
 	$(MAKE) -C $(FUNCDIR)
-	
 
+funclib:
+	@echo "************************ MAKING ADWFUNCLIB **************************"
+	$(MAKE) -C $(FUNCLIB)
+	
+.PHONEY: start mocklib funclib watchFunctions all
 
 

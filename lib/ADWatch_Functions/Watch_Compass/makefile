@@ -17,7 +17,7 @@ FUNC = NOTHING
 #targets 
 .PHONEY: clean
 
-all: watch_compass clean
+all: watch_compass libCompass clean
 	@echo "*************************** COMPASS TESTS BUILT *********************************"
 
 clean:
@@ -31,6 +31,13 @@ FUNC = Compass
 watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
+
+
+#libCompass
+lib$(FUNC): $(FUNC).o 
+	@echo "************** Making libAD$(FUNC)"
+	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o
+	@echo "************** libADC$(FUNC) made"
 
 #CI
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h

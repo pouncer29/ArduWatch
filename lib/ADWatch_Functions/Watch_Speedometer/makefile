@@ -17,7 +17,7 @@ FUNC = NOTHING
 #targets 
 .PHONEY: clean
 
-all: watch_speedometer clean
+all: watch_speedometer libSpeed clean
 	@echo "************************ SPEEDOMETER TESTS BUILT ******************************"
 
 clean:
@@ -32,6 +32,13 @@ watch_speedometer: $(FUNC)_Gauge.o $(FUNC)_Dial.o $(FUNC)ometer.o $(FUNC)ometer_
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Speedometer_CI $(FUNC)ometer_CI.o \
 	$(FUNC)ometer.o $(FUNC)_Gauge.o $(FUNC)_Dial.o \
 	-L $(MOCKLIBS) -lmock -lc++
+
+#libSpeedometer
+lib$(FUNC): $(FUNC)ometer.o 
+	@echo "************** Making libAD$(FUNC)ometer"
+	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC)ometer.a $(FUNC)ometer.o
+	@echo "************** libADC$(FUNC)ometer made"
+
 
 #CI for the funcometer
 $(FUNC)ometer_CI.o: $(SRCLIB)/$(FUNC)ometer_CI.cpp $(SRCLIB)/$(FUNC)ometer_CI.h

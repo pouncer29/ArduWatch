@@ -20,16 +20,11 @@ FUNC = NOTHING
 #targets 
 .PHONEY: clean
 
-all: showenv watch_clock clean
-	@echo "************************ CLOCK TESTS BUILT ******************************"
+all: watch_clock libClock clean
+	@echo "************************ CLOCK & TESTS BUILT ******************************"
 
 clean:
 	rm *.o
-
-showenv: 
-	@echo "*********** CLOCK **** PWD is: $(WATCHENV) projdir is $(PROJDIR) Mockdir is $(MOCKLIBS)"
-	@echo "************FUNCDIR is $(FUNCDIR) TestDir is $(TESTDIR)"
-	
 
 # CLOCK
 SRCLIB = ./src
@@ -39,6 +34,12 @@ FUNC = Clock
 watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
+
+#libClock 
+lib$(FUNC): $(FUNC).o 
+	@echo "************** Making libAD$(FUNC)"
+	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o
+	@echo "************** libADC$(FUNC) made"
 
 #CI
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
@@ -50,10 +51,11 @@ $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 
 #Clock Components
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h 
+	@echo "Gathering Clock..."
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
 	$(SRCLIB)/$(FUNC).cpp 
-	@echo "Gathering Clock..."
+	@echo "Clock Built......."
 
 $(FUNC)_Face.o: $(SRCLIB)/$(FUNC)_Face.cpp $(SRCLIB)/$(FUNC)_Face.h
 	$(CC) $(CPPFLAGS) -c \
@@ -62,13 +64,10 @@ $(FUNC)_Face.o: $(SRCLIB)/$(FUNC)_Face.cpp $(SRCLIB)/$(FUNC)_Face.h
 	@echo "Got Face!"
 
 $(FUNC)_Gears.o: $(SRCLIB)/$(FUNC)_Gears.cpp $(SRCLIB)/$(FUNC)_Gears.h
+	@echo "MOCKLIBS IS $(MOCKLIBS)"
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
 	$(SRCLIB)/$(FUNC)_Gears.cpp 
 	@echo "Got Gears!"
 
-#mock_RI.o: $(MOCKLIBS)/RingInterface_MOCK.cpp $(MOCKLIBS)/RingInterface_MOCK.h
-#	$(CC) $(CPPFLAGS) -c -o mock_RI.o \
-#	-I $(MOCKLIBS) \
-#	$(MOCKLIBS)/RingInterface.cpp
 

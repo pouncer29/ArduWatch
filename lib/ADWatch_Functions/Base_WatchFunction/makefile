@@ -17,7 +17,7 @@ FUNC = NOTHING
 #targets 
 .PHONEY: clean
 
-all: base_watchFunction clean
+all: base_watchFunction libbaseWF clean
 	@echo "********************* BASE_WAATCHFUNCTION TESTS BUILT ************************"
 
 clean:
@@ -33,6 +33,12 @@ CI = Base_WatchFunction
 base_watchFunction:  $(FUNC).o $(CI)_CI.o
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Base_WatchFunction_CI $(CI)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) -lmock -lc++
+
+#lib baseWF
+libbaseWF: $(FUNC).o 
+	@echo "************** Making libbaseWatchFunction"
+	ar -rv $(MOCKLIBS)/Function_Lib/libbaseWF.a $(FUNC).o
+	@echo "************** libbaseWatchFunction made"
 
 #CI for the base watch function
 $(CI)_CI.o: $(SRCLIB)/$(CI)_CI.cpp $(SRCLIB)/$(CI)_CI.h
