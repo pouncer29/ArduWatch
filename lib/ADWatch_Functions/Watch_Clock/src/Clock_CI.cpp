@@ -16,8 +16,35 @@ using namespace std;
 //Clock_CI
 //****************************************************************************************
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main(){
-	cout<<"Welcome to the Clock build..."<<endl;
+	int success = 1; // Exit of 1 assumes failure
+	cout<<"BEGINNING UNIT TESTS FOR CLOCK"<<endl;
 	return 0;
 }
 
