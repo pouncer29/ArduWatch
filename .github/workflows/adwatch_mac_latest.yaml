@@ -5,7 +5,7 @@ on:
     branches:
       - master
       - Dev/*
-      - Sauske
+	  - HiddenLeaf/*
 jobs:
   build:
 
