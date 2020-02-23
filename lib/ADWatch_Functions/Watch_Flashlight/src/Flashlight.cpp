@@ -15,6 +15,7 @@ Synopsis: The implementation for the flashlight class. Assigns colours and activ
 //****************************************************************************************
 
 /** Flashflight()
+	Parameters: None
   	@Synopsis: Initializes fancy colours
  */
 Flashlight::Flashlight(void){
@@ -41,11 +42,11 @@ Flashlight::Flashlight(void){
 	colours[7] = red;
 }
 
-/** Flashlight
- * @Synopsis: An override for the inherited colour wipe, one that uses no delay.
- * @param c - the colour to switch to.
- * @param wait - The delay between switches
- * @param ring - The NeoPixel Ring to display colours on
+/** colorWipe()
+  @Synopsis: An override for the inherited colour wipe, one that uses no delay.
+  @param c - the colour to switch to.
+  @param wait - The delay between switches
+  @param ring - The NeoPixel Ring to display colours on
  */
 void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
   for(uint8_t i=0; i<12; i++) {
@@ -63,7 +64,7 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
  */
 void Flashlight::on(Adafruit_NeoPixel* ring){	
 	colorWipe(lightColour,0,ring);
-		
+
 	return;
 }
 
@@ -75,6 +76,7 @@ void Flashlight::on(Adafruit_NeoPixel* ring){
  */
 void Flashlight::off(Adafruit_NeoPixel* ring){
 	ring->clear();
+	ring->show();
 	return;
 }
 
@@ -99,16 +101,15 @@ uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
 	@precond: ceasePin is attached to a button that will change state
 	@postcond: light strobes
 	
-	@param: ceasePin - the number of the pin that we will watch for a cease in strobe.
  	@param: ring - the ring we are displaying the strobe on.
 	
 	@Synopsis: While the button/switch has not been activeated, rapidly turn the lights from
 			  full white to full off. strobe.
 */
-void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
+void Flashlight::strobe(bool keep, Adafruit_NeoPixel* ring){
 	uint8_t flip = 0;
 	uint32_t colour = lightColour;
-	while(digitalRead(ceasePin)==LOW){
+	if(keep){
 		//Strobe Delay
 		delay(30);
 
@@ -128,7 +129,7 @@ void Flashlight::strobe(uint8_t ceasePin, Adafruit_NeoPixel* ring){
 		}
 
 		//Show colours
-		colorWipe(colour,0,ring);
+		colorWipe(colour,50,ring);
 	}
 	return;
 }

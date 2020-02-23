@@ -8,11 +8,16 @@ Synopsis: outline for the Clock function.
 #ifndef Clock_h
 #define Clock_h
 
-#include <Arduino.h>
-#include <TimeLib.h>
+#ifndef CI
+	#include <TimeLib.h>
+	#include <Adafruit_NeoPixel.h>
+#else
+	#include <TimeLib_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
+#endif 
+
 #include <Clock_Face.h>
 #include <Clock_Gears.h>
-#include <Adafruit_NeoPixel.h>
 
 
 /** Watch_Clock

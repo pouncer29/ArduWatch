@@ -7,8 +7,14 @@
 #ifndef Compass_Needle_h
 #define	Compass_Needle_h
 
-#include <Adafruit_NeoPixel.h>
-#include <RingInterface.h>
+#ifndef CI
+	#include <Adafruit_NeoPixel.h>
+	#include <RingInterface.h>
+#else
+	#include <Adafruit_NeoPixel_MOCK.h>
+	#include <RingInterface_MOCK.h>
+#endif
+
 
 /** Compass_Needle
    --------------

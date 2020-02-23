@@ -6,7 +6,16 @@
 
 #ifndef RingInterface_h
 #define	RingInterface_h
-#include <Adafruit_NeoPixel.h>
+
+//If we are CI, we need to get the mock lib version
+#ifdef CI
+	#include <Arduino_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
+#else
+	#include <Adafruit_NeoPixel.h>
+#endif
+
+
 /** RingInterface
 	------------
 	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 

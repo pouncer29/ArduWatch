@@ -5,7 +5,7 @@ Date: May 25th, 2018
 Synopsis: The implementation for Speedometer.h
 */
 
-#include <Speedometer.h>
+#include "Speedometer.h"
 
 
 
@@ -18,7 +18,7 @@ Synopsis: The implementation for Speedometer.h
  */
 Speedometer::Speedometer(){
 	dial = new Speed_Dial();
-	gauge = new Speed_Gauge(0);
+	gauge = new Speed_Gauge(0.0);
 }
 
 /** setRegionA()

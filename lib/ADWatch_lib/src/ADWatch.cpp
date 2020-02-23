@@ -21,6 +21,7 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	speedo = new Speedometer();
 	compass = new Compass();
 	light = new Flashlight();
+	functionCount = 6; //Including "refresh"
 
 	//grab colours for flourish/fn() switch
 	clock_colour =	clock->face->minColour;
@@ -96,8 +97,8 @@ void ADWatch::showHeading(float heading){
 
 */
 void ADWatch::showLight(){
-	//light = new Flashlight(ring);
 	//ring->setBrightness(80);
+	ring->setPixelColor(6,light_colour);
 	light->on(ring);
 }
 
@@ -160,9 +161,8 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait){
 void ADWatch::refresh(bool cond){
 	uint32_t refreshMe_colours[3] = {clock_colour,compass_colour,speedo_colour};
 
-	//While we are not tracking a satelite
-	while(cond) {
-		//just for asthetic for now. Doesn't do anything
+	//If not satelite found
+	if(cond) {
 		for (int i = 0; i < 3; i++) {
 			//All this is is a reverse Flourish to signify refresh rather than show
 			for (uint8_t j = 11; j > 0; j--) {
@@ -171,12 +171,11 @@ void ADWatch::refresh(bool cond){
 				ring->show();
 				delay(50);
 			}
-			delay(50 * 3);
+			delay(150);
 			ring->clear();
 			ring->show();
 		}
 	}
-
 	flourish(light->green,30);
 	delay(30);
 	ring->clear();
@@ -192,5 +191,21 @@ void ADWatch::refresh(bool cond){
 void ADWatch::showError(uint32_t errColour){
 	setPixels(errColour);
 	ring->show();
+}
+
+/**
+ *
+ * @param reading - the potentiometer reading to map to the enum
+ * @return an integer that maps to the
+ */
+uint8_t ADWatch::getWatchFunction(int reading){
+	uint8_t functionId = reading / 100;
+	if(functionId > 10)
+		return 10;
+	else if(functionId > 5)
+		return (functionId-functionCount);
+	else
+		return functionId;
+
 }
 
