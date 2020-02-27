@@ -27,7 +27,7 @@ SRCLIB = ./src
 #ADWatch CI exe
 watch_ADWatch: $(FUNC).o $(FUNC)_CI.o
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(FUNC)_CI_TEST $(FUNC).o $(FUNC)_CI.o \
-	-L$(MOCKLIBS) -lmock -L$(FUNCLIB) -ladwfunc -lc++
+	-L$(MOCKLIBS) -L$(FUNCLIB) $(LDFLAGS) -ladwfunc 
 
 #CI for the base watch function
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h

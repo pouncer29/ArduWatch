@@ -31,7 +31,7 @@ FUNC = Speed
 watch_speedometer: $(FUNC)_Gauge.o $(FUNC)_Dial.o $(FUNC)ometer.o $(FUNC)ometer_CI.o
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Speedometer_CI $(FUNC)ometer_CI.o \
 	$(FUNC)ometer.o $(FUNC)_Gauge.o $(FUNC)_Dial.o \
-	-L $(MOCKLIBS) -lmock -lc++
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #libSpeedometer
 lib$(FUNC): $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o

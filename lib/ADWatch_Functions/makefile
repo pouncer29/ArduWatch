@@ -13,7 +13,7 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-all: watch_Functions base_watch run_tests
+all: watch_Functions base_watch 
 	@echo "********************* FUNCTION MAKE COMPLETE ************************"
 
 watch_Functions: 

@@ -30,7 +30,7 @@ FUNC = Compass
 #Compass CI exe
 watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 
 #libCompass

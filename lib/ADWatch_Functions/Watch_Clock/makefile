@@ -33,7 +33,7 @@ FUNC = Clock
 #Crreate CI exe
 watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #libClock 
 lib$(FUNC): $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
