@@ -37,6 +37,7 @@ base_watchFunction:  $(FUNC).o $(CI)_CI.o
 libbaseWF: $(FUNC).o 
 	@echo "************** Making libbaseWatchFunction"
 	ar -rv $(MOCKLIBS)/Function_Lib/libbaseWF.a $(FUNC).o
+	cp $(FUNC).o $(MOCKLIBS)/Function_Lib
 	@echo "************** libbaseWatchFunction made"
 
 #CI for the base watch function

@@ -37,9 +37,10 @@ watch_flashlight: $(FUNC).o $(FUNC)_CI.o
 lib$(FUNC): $(FUNC).o 
 	@echo "************** Making libAD$(FUNC)"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o
+	cp $(FUNC).o $(MOCKLIBS)/Function_Lib	
 	@echo "************** libADC$(FUNC) made"
 
-#CI for the funcometer
+#CI for the flashlight
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \

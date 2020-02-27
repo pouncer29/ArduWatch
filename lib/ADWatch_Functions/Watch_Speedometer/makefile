@@ -38,6 +38,7 @@ lib$(FUNC): $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o
 	@echo "************** Making libAD$(FUNC)ometer"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC)ometer.a $(FUNC)ometer.o \
 	$(FUNC)_Dial.o $(FUNC)_Gauge.o
+	cp $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o $(MOCKLIBS)/Function_Lib
 	@echo "************** libADC$(FUNC)ometer made"
 
 
