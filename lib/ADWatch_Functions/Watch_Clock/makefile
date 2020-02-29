@@ -40,7 +40,7 @@ lib$(FUNC): $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
 	@echo "************** Making libAD$(FUNC)"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
 	cp $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o $(MOCKLIBS)/Function_Lib
-	@echo "************** libADC$(FUNC) made"
+	@echo "************** libAD$(FUNC) made"
 
 #CI
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h

@@ -1,7 +1,8 @@
 #ifndef TIMELIB_M_H
 #define TIMELIB_M_H
 
-#include<time.h>
+//#include<time.h>
+#include<ctime>
 #include<cinttypes>
 
 time_t now();
