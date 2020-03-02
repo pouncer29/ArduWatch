@@ -209,8 +209,6 @@ void gears_GetIndex(){
 
 
 int Clock_GearsTests(){
-	int clock_pass = 1;
-
 	cout<<"****************** TESTING GEARS ****************************"<<endl;
 	gears_Constructor();
 	gears_GetIndex();
@@ -218,8 +216,53 @@ int Clock_GearsTests(){
 	return 0;
 }
 
+uint16_t modIt(uint8_t min){
+	return (min%5) * 64;
+}
+
+/**
+	Tests that the face when it mods a minute colour, it produces the same color for 
+	0, and any other divisible by 5.
+*/
+void face_ModMinColor(){
+	cout<<"Testing Min Colour Modification ..."<<endl;
+	
+	//Construct Face
+	Clock_Face* testFace = new Clock_Face();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	int tstHr = 12;
+	int tstSec = 36;
+
+	setTime(tstHr,0,tstSec);
+	time_t testTime = now();
+		
+	//5 Minute intervals should all be the same as modded with 0
+	testFace->modMinColour(testTime,testRing);
+	uint32_t moddedColor = testFace->minColour;
+	uint32_t fiveMod_val = moddedColor; // Mod 0 should be the same for every 5 minute interval
+	cout<<"5 min Color is: "<<fiveMod_val<<endl;
+
+	for(int i = 5; i < 60; i += 5){
+	
+		//Setup time
+		setTime(tstHr,i,tstSec);
+		testTime = now();
+		
+		// mod min colour
+		testFace->modMinColour(testTime,testRing);
+		moddedColor = testFace->minColour;
+
+		//Assert is the same as all other 5's
+		assert(fiveMod_val == moddedColor);
+	}
+	
+	cout<<"Mod Minute Color Tests Passed -- PASSED"<<endl;
+	
+}
 
 int Clock_FaceTests(){
+	cout<<"****************** TESTING FACE ****************************"<<endl;
+	face_ModMinColor();
 	return 0;
 }
 
@@ -230,10 +273,10 @@ int ClockTests(){
 
 
 int main(){
-	int success = 1; // Exit of 1 assumes failure
 	cout<<"BEGINNING UNIT TESTS FOR CLOCK"<<endl;
 
 	Clock_GearsTests();
+	Clock_FaceTests();
 	return 0;
 }
 
