@@ -216,10 +216,6 @@ int Clock_GearsTests(){
 	return 0;
 }
 
-uint16_t modIt(uint8_t min){
-	return (min%5) * 64;
-}
-
 /**
 	Tests that the face when it mods a minute colour, it produces the same color for 
 	0, and any other divisible by 5.
@@ -256,7 +252,7 @@ void face_ModMinColor(){
 		assert(fiveMod_val == moddedColor);
 	}
 	
-	cout<<"Mod Minute Color Tests Passed -- PASSED"<<endl;
+	cout<<"Mod Minute Color Tests -- PASSED"<<endl;
 	
 }
 
@@ -266,8 +262,87 @@ int Clock_FaceTests(){
 	return 0;
 }
 
+/**
+	clock_PlaceHands()
+	- Checks the cases for place hands
+		- disperse
+		- overlap
+		- Tail removal
+*/
+void clock_PlaceHands(){	
 
-int ClockTests(){
+	//Setup
+	cout<<"Testing Clock Place Hands..."<<endl;
+	uint8_t hr = 0;
+	uint8_t min = 0;
+	uint8_t sec = 0;
+	int avg = 0;
+	int val = 0;
+
+	Adafruit_NeoPixel* ring = new Adafruit_NeoPixel();
+	Clock* testClock = new Clock();
+	uint32_t hrColour = testClock->face->hrColour;
+	uint32_t minColour = testClock->face->minColour;
+	uint32_t secColour = testClock->face->secColour;
+
+	//avg(avg(sec,min),hr)
+	//Cross 0
+	testClock->placeHands(hr,min,sec,ring);
+	minColour = testClock->face->minColour;
+	avg = ((minColour + secColour)/2 + hrColour)/2;
+	val = GetVal(0,'c');
+	assert(avg == val);
+	cout<<"GetAverageCross, overlap all 0 -- PASSED"<<endl;
+
+	//Min/Sec overlap
+	hr = 9;
+	min = 0 ;
+	sec = 0;
+	testClock->placeHands(hr,min,sec,ring);
+	minColour = testClock->face->minColour;
+	avg = (minColour + secColour)/2;
+	val = GetVal(0,'c');
+	assert(avg == val);
+	cout<<"GetAverageCross, overlap min/sec 0 -- PASSED"<<endl;
+
+	//Hour/Sec overlap
+	hr = 0;
+	min = 9 ;
+	sec = 0;
+	testClock->placeHands(hr,min,sec,ring);
+	minColour = testClock->face->minColour;
+	avg = (hrColour + secColour)/2;
+	val = GetVal(0,'c');
+	assert(avg == val);
+	cout<<"GetAverageCross, overlap hr/sec 0 -- PASSED"<<endl;
+
+	//Hour/Min overlap
+	hr = 9;
+	min = 9 ;
+	sec = 0;
+	testClock->placeHands(hr,min,sec,ring);
+	minColour = testClock->face->minColour;
+	avg = (hrColour + minColour)/2;
+	val = GetVal(9,'c');
+	assert(avg == val);
+	cout<<"GetAverageCross, overlap hr/sec idx:9 -- PASSED"<<endl;
+
+
+	cout<<"Avg: "<<avg<<endl;
+	cout<<"Val: "<<val<<endl;
+	cout<<"Hr, Min, Sec"<<endl;
+	cout<<hrColour<<","<<minColour<<","<<secColour<<endl;
+
+
+
+
+}
+
+
+int Clock_Tests(){
+	cout<<"****************** TESTING CLOCK ****************************"<<endl;
+	clock_PlaceHands();
+	
 	return 0;
 }
 
@@ -277,6 +352,7 @@ int main(){
 
 	Clock_GearsTests();
 	Clock_FaceTests();
+	Clock_Tests();
 	return 0;
 }
 
