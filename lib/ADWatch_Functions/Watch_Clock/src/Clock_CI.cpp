@@ -346,10 +346,109 @@ void clock_PlaceHands(){
 
 }
 
+void clock_TrackTime(){
+	cout<<"Testing Clock TrackTime..."<<endl;
+
+	//Setup ring
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+
+	//Setup time
+	int tstHr = 0;
+	int tstSec = 15;
+	int tstMin = 45;
+	setTime(tstHr,tstMin,tstSec);
+	time_t testTime = now();
+
+	//Construct
+	Clock* testClock = new Clock();
+
+	//Grab Colours 
+	uint32_t hrColour = testClock->face->hrColour;
+	uint32_t minColour = testClock->face->minColour;
+	uint32_t secColour = testClock->face->secColour;
+
+	//Call it!	
+	testClock->trackTime(testTime,testRing);
+
+	//Grab Resulting Colours
+	uint32_t ringColour_hr = GetVal((tstHr % 12),'c');
+	uint32_t ringColour_min = GetVal((tstMin % 12),'c');
+	uint32_t ringColour_sec= GetVal((tstSec % 12),'c');
+
+	/*
+	cout<<"Hour,Min,Sec"<<endl;
+	cout<<ringColour_hr<<","<<ringColour_min<<","<<ringColour_sec<<endl;
+	cout<<hrColour<<","<<minColour<<","<<secColour<<endl;
+	*/
+
+
+	//Assert they were set
+	assert(ringColour_hr == hrColour);
+	assert(ringColour_min == minColour);
+	assert(ringColour_sec == secColour);
+	
+	cout<<"TrackTime, Disperse hr=12, min=45, sec=15 -- PASSED"<<endl;
+}
+
+void clock_SetWatchTime(){
+
+	cout<<"Testing Clock SetWatchTime..."<<endl;
+
+	//Setup ring
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+
+	//Setup time
+	uint8_t tstHr = 6;
+	uint8_t tstMin = 45;
+	time_t testTime = now();
+
+	//Construct
+	Clock* testClock = new Clock();
+
+	//Call it!
+	testClock->setWatchTime(tstHr,tstMin,testTime,testRing);
+
+	//Grab Colours 
+	uint32_t hrColour = testClock->face->hrColour;
+	uint32_t minColour = testClock->face->minColour;
+	uint32_t secColour = testClock->face->secColour;
+
+	//Grab Resulting Colours
+	uint32_t ringColour_hr = GetVal((tstHr % 12),'c');
+	uint32_t ringColour_min = GetVal((tstMin % 12),'c');
+	uint32_t ringColour_sec= GetVal((0 % 12),'c');
+
+	/*
+	cout<<"Hour,Min,Sec"<<endl;
+	cout<<ringColour_hr<<","<<ringColour_min<<","<<ringColour_sec<<endl;
+	cout<<hrColour<<","<<minColour<<","<<secColour<<endl;
+	*/
+
+	//Grab Time...
+	int hr = hour(now());
+	int min = minute(now());
+	int sec = second(now());
+	
+	//Assert time was set	
+	assert(hr == tstHr);
+	assert(min == tstMin);
+	assert(sec == 0);
+
+	//Assert colours were set
+	assert(ringColour_hr == hrColour);
+	assert(ringColour_min == minColour);
+	assert(ringColour_sec == secColour);
+	
+	cout<<"SetWatchTime, hr=6, min=45, sec=0(by default) -- PASSED"<<endl;
+
+}
+
 int Clock_Tests(){
 	cout<<"****************** TESTING CLOCK ****************************"<<endl;
 	clock_PlaceHands();
-	
+	clock_TrackTime();
+	clock_SetWatchTime();
+
 	return 0;
 }
 
