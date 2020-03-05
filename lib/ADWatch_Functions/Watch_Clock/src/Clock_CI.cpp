@@ -292,7 +292,7 @@ void clock_PlaceHands(){
 	avg = ((minColour + secColour)/2 + hrColour)/2;
 	val = GetVal(0,'c');
 	assert(avg == val);
-	cout<<"GetAverageCross, overlap all 0 -- PASSED"<<endl;
+	cout<<"PlaceHands, overlap all 0 -- PASSED"<<endl;
 
 	//Min/Sec overlap
 	hr = 9;
@@ -303,7 +303,7 @@ void clock_PlaceHands(){
 	avg = (minColour + secColour)/2;
 	val = GetVal(0,'c');
 	assert(avg == val);
-	cout<<"GetAverageCross, overlap min/sec 0 -- PASSED"<<endl;
+	cout<<"PlaceHands, overlap min/sec 0 -- PASSED"<<endl;
 
 	//Hour/Sec overlap
 	hr = 0;
@@ -314,7 +314,7 @@ void clock_PlaceHands(){
 	avg = (hrColour + secColour)/2;
 	val = GetVal(0,'c');
 	assert(avg == val);
-	cout<<"GetAverageCross, overlap hr/sec 0 -- PASSED"<<endl;
+	cout<<"PlaceHands, overlap hr/sec 0 -- PASSED"<<endl;
 
 	//Hour/Min overlap
 	hr = 9;
@@ -325,19 +325,26 @@ void clock_PlaceHands(){
 	avg = (hrColour + minColour)/2;
 	val = GetVal(9,'c');
 	assert(avg == val);
-	cout<<"GetAverageCross, overlap hr/sec idx:9 -- PASSED"<<endl;
+	cout<<"PlaceHands, overlap hr/min idx:9 -- PASSED"<<endl;
 
 
-	cout<<"Avg: "<<avg<<endl;
-	cout<<"Val: "<<val<<endl;
-	cout<<"Hr, Min, Sec"<<endl;
-	cout<<hrColour<<","<<minColour<<","<<secColour<<endl;
+	//Disperse
+	hr = 3;
+	min = 6 ;
+	sec = 9;
+	testClock->placeHands(hr,min,sec,ring);
+	minColour = testClock->face->minColour;
+	uint32_t ringColour_hr = GetVal(hr,'c');
+	uint32_t ringColour_min = GetVal(min,'c');
+	uint32_t ringColour_sec= GetVal(sec,'c');
 
-
-
+	assert(ringColour_hr == hrColour);
+	assert(ringColour_min == minColour);
+	assert(ringColour_sec == secColour);
+	
+	cout<<"PlaceHands, Disperse hrIdx=3, minIdx=6, secIdx=9 -- PASSED"<<endl;
 
 }
-
 
 int Clock_Tests(){
 	cout<<"****************** TESTING CLOCK ****************************"<<endl;
