@@ -1,6 +1,6 @@
 
 CC = gcc
-CPPFLAGS = -Wall
+CPPFLAGS = -Wall -g
 USER = $(shell whoami)
 
 #paths

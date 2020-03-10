@@ -443,11 +443,116 @@ void clock_SetWatchTime(){
 
 }
 
+void clock_RemoveTail(){
+	cout<<"Testing Clock RemoveTail..."<<endl;
+
+	//Setup ring
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+
+	//Setup time
+	int tstHr = 0;
+	int tstSec = 1;
+	int tstMin = 2;
+	int eraseMe = 999;
+	int value = 0;
+	int tstIdx = 0;
+
+	//Construct
+	Clock* testClock = new Clock();
+	Clock_Face* testFace = new Clock_Face();
+	uint32_t blank = testFace->blank;
+	uint32_t secColour = testFace->secColour;
+	
+	//Setup clock
+	setTime(tstHr,tstMin,tstSec);
+	time_t testTime = now();
+	testClock->trackTime(testTime,testRing);
+
+
+	//TEST - Remove at index 11
+
+	//Set colour
+	testRing->setPixelColor(11,eraseMe);
+
+	//Remove 
+	tstIdx = tstHr-1;
+	testClock->removeTail(tstIdx,tstHr,tstSec,tstMin,testRing);
+	value = GetVal(11,'c');
+	/*
+	int TailIdx = -1 % 12;
+	cout<<"Colours: Val: "<<value<<" blank: "<<blank<<"TailIdx: "<<TailIdx<<endl;
+	*/
+	
+	//Assert was erased and is blank
+	assert(value != eraseMe);
+	assert(value == blank);
+	
+	cout<<"RemoveTail (11) , hrIdx=0, minIdx=1, secIdx=2 -- PASSED"<<endl;
+
+	// TEST Important Index (do not remove 11)
+	tstHr = 0;
+	tstMin = 1;
+	tstSec = 11;
+	tstIdx = tstHr-1;
+
+	setTime(tstHr,tstMin,tstSec);
+	testTime = now();
+
+	testRing = new Adafruit_NeoPixel();
+	testClock->trackTime(testTime,testRing);
+	testRing->setPixelColor(11,secColour);
+
+	/*
+	int hrC = GetVal(tstHr,'c');
+	int minC = GetVal(tstMin,'c');
+	int secC = GetVal(tstSec,'c');
+	cout<<"Hour,Min,Sec"<<endl;
+	cout<<hrC<<","<<minC<<","<<secc<<endl;
+	*/
+	
+	testClock->removeTail(tstIdx,tstHr,tstMin,tstSec,testRing);
+	value = GetVal(tstSec,'c');
+	
+	//Assert is not te original value, not 0, is SecColour	
+	assert(value != eraseMe);
+	assert(value != 0);
+	assert(value == secColour);
+	
+	cout<<"RemoveTail (Important 11) , hrIdx=0, minIdx=1, secIdx=11 -- PASSED"<<endl;
+
+	//At 1
+	tstHr = 1;
+	tstMin = 2;
+	tstSec = 2;
+	tstIdx = tstHr-1;
+
+	setTime(tstHr,tstMin,tstSec);
+	testTime = now();
+
+	testRing = new Adafruit_NeoPixel();
+	testClock->trackTime(testTime,testRing);
+	testRing->setPixelColor(tstIdx,eraseMe);
+
+	/*
+	cout<<"Hour,Min,Sec"<<endl;
+	cout<<hrC<<","<<minC<<","<<secC<<endl;
+	*/
+	
+	testClock->removeTail(tstIdx,tstHr,tstMin,tstSec,testRing);
+	value = GetVal(tstIdx,'c');
+
+	//Assert is not te original value, not 0, is SecColour	
+	assert(value != eraseMe);
+	assert(value == blank);
+	cout<<"RemoveTail (1) , hrIdx=1, minIdx=0, secIdx=0 -- PASSED"<<endl;
+}
+
 int Clock_Tests(){
 	cout<<"****************** TESTING CLOCK ****************************"<<endl;
 	clock_PlaceHands();
 	clock_TrackTime();
 	clock_SetWatchTime();
+	clock_RemoveTail();
 
 	return 0;
 }
