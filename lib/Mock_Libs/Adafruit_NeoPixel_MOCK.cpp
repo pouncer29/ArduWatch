@@ -40,6 +40,8 @@ int GetVal(int n, char select){
 	}else if (select == 'c'){
 		return ring[n].c;
 	}
+	return -1;
+
 }
 
 

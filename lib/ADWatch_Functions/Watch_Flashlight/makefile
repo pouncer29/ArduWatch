@@ -31,7 +31,7 @@ FUNC = Flashlight
 #Created Tests for Flashlight 
 watch_flashlight: $(FUNC).o $(FUNC)_CI.o 
 	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI $(FUNC)_CI.o $(FUNC).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	-L $(MOCKLIBS) -L $(FUNCLIB) -lmock -lc++
 
 #libFlashlight
 lib$(FUNC): $(FUNC).o 
@@ -48,7 +48,7 @@ $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h
 	$(CC) $(CPPFLAGS) -c \
-	-I $(SRCLIB) -I $(MOCKLIBS) -I $(FUNCDIR)/Base_WatchFunction/src \
+	-I $(SRCLIB) -I $(MOCKLIBS) \
 	$(SRCLIB)/$(FUNC).cpp 
 	@echo "Created $(FUNC)."
 
