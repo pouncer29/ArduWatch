@@ -7,12 +7,6 @@ Synopsis: outline for CI for Flashlight
 #ifndef FLASHLIGHT_CI_h
 #define FLASHLIGHT_CI_h
 
-//#ifndef CI
-//	#include <Adafruit_NeoPixel.h>
-//#else
-//	#include <Adafruit_NeoPixel_MOCK.h>
-//#endif
-
 #include <Flashlight.h>
 
 /** Flashlight_CI
