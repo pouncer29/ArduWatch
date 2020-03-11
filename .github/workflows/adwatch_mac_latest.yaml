@@ -6,7 +6,6 @@ on:
       - master
       - Dev/*
       - HiddenLeaf/*
-      - sakura-*
 jobs:
   build:
 
