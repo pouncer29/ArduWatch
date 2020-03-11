@@ -17,7 +17,7 @@ FUNC = NOTHING
 #targets 
 .PHONEY: clean
 
-all: base_watchFunction libbaseWF clean
+all: base_watchFunction clean #libbaseWF -- for later maybe 
 	@echo "********************* BASE_WAATCHFUNCTION TESTS BUILT ************************"
 
 clean:

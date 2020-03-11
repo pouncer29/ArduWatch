@@ -38,7 +38,7 @@ class Clock{
 		void trackTime(time_t,Adafruit_NeoPixel*);
 		void placeHands(uint8_t,uint8_t,uint8_t, Adafruit_NeoPixel*);
 		void setWatchTime(uint8_t,uint8_t,time_t,Adafruit_NeoPixel*); //Considering that we may not need to set. method may be donezo
-		void removeTail(uint8_t,uint8_t,uint8_t,uint8_t,Adafruit_NeoPixel*);
+		void removeTail(int8_t,uint8_t,uint8_t,uint8_t,Adafruit_NeoPixel*);
 };
 
 #endif

@@ -73,7 +73,7 @@ void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx,Adafruit_NeoP
    @precond: None
    @postcond: Removed the residual illumination left by passing hands
   
-   @param: uint8_t's tailIdx - the index who's tail will remove
+   @param: int8_t tailIdx - the index who's tail will remove
    @param: hrIdx - the index occupied by hour hand
    @param: minIdx - the index occupied by minute hand
    @param: secIdx - the index occupied by the seconds hand
@@ -81,11 +81,14 @@ void Clock::placeHands(uint8_t hrIdx,uint8_t minIdx,uint8_t secIdx,Adafruit_NeoP
 
    @Synopsis: Goes to an index, if it isn't important, blank it.
 */
-void Clock::removeTail(uint8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t secIdx,
+void Clock::removeTail(int8_t tailIdx,uint8_t hrIdx,uint8_t minIdx, uint8_t secIdx,
 						Adafruit_NeoPixel* ring){
 	
 	//At 12:00 v !@12.
-	tailIdx = tailIdx % 12;
+	if(tailIdx == -1)
+		tailIdx = 11;
+	else
+		tailIdx = tailIdx % 12;
 	
 	//Don't blank important indicies.
 	if (tailIdx == hrIdx || tailIdx == minIdx || tailIdx == secIdx)
