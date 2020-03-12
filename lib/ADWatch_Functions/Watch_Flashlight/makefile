@@ -30,16 +30,17 @@ FUNC = Flashlight
 
 #Created Tests for Flashlight 
 watch_flashlight: $(FUNC).o $(FUNC)_CI.o 
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI $(FUNC)_CI.o $(FUNC).o \
-	-L $(MOCKLIBS) -L $(FUNCLIB) -lmock -lc++
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI.out $(FUNC)_CI.o $(FUNC).o \
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #libFlashlight
 lib$(FUNC): $(FUNC).o 
 	@echo "************** Making libAD$(FUNC)"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o
+	cp $(FUNC).o $(MOCKLIBS)/Function_Lib	
 	@echo "************** libADC$(FUNC) made"
 
-#CI for the funcometer
+#CI for the flashlight
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \

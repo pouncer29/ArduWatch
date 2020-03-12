@@ -29,14 +29,15 @@ FUNC = Compass
 
 #Compass CI exe
 watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
-	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI.out $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 
 #libCompass
 lib$(FUNC): $(FUNC).o $(FUNC)_Magnet.o $(FUNC)_Needle.o
 	@echo "************** Making libAD$(FUNC)"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o $(FUNC)_Magnet.o $(FUNC)_Needle.o
+	cp $(FUNC).o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(MOCKLIBS)/Function_Lib	
 	@echo "************** libADC$(FUNC) made"
 
 #CI

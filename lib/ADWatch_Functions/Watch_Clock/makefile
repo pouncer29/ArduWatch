@@ -32,14 +32,15 @@ FUNC = Clock
 
 #Crreate CI exe
 watch_clock: $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o $(FUNC)_CI.o  
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Clock_CI $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Clock_CI.out $(FUNC)_CI.o $(FUNC)_Gears.o $(FUNC)_Face.o $(FUNC).o \
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #libClock 
 lib$(FUNC): $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
 	@echo "************** Making libAD$(FUNC)"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC).a $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o
-	@echo "************** libADC$(FUNC) made"
+	cp $(FUNC).o $(FUNC)_Face.o $(FUNC)_Gears.o $(MOCKLIBS)/Function_Lib
+	@echo "************** libAD$(FUNC) made"
 
 #CI
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h

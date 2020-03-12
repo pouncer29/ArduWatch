@@ -453,8 +453,8 @@ void clock_RemoveTail(){
 	int tstHr = 0;
 	int tstSec = 1;
 	int tstMin = 2;
-	int eraseMe = 999;
-	int value = 0;
+	uint32_t eraseMe = 999;
+	uint32_t value = 0;
 	int tstIdx = 0;
 
 	//Construct

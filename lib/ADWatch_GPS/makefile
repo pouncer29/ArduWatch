@@ -29,8 +29,8 @@ TOOL = GPSTools
 
 #CI
 $(TOOL):  $(TOOL).o $(TOOL)_CI.o
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(TOOL)_CI $(TOOL)_CI.o $(TOOL).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(TOOL)_CI.out $(TOOL)_CI.o $(TOOL).o \
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #lib GPSTools
 lib$(TOOL): $(TOOL).o 
