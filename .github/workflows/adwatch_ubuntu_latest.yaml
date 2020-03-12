@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - HiddenLeaf/*
+      - Sakura-0-*
 jobs:
   build:
 
