@@ -30,7 +30,7 @@ FUNC = Flashlight
 
 #Created Tests for Flashlight 
 watch_flashlight: $(FUNC).o $(FUNC)_CI.o 
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI $(FUNC)_CI.o $(FUNC).o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Flashlight_CI.out $(FUNC)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) $(LDFLAGS)
 
 #libFlashlight

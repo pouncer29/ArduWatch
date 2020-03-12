@@ -26,7 +26,7 @@ SRCLIB = ./src
 
 #ADWatch CI exe
 watch_ADWatch: $(FUNC).o $(FUNC)_CI.o
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(FUNC)_CI_TEST $(FUNC).o $(FUNC)_CI.o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(FUNC)_CI.out $(FUNC).o $(FUNC)_CI.o \
 	-L$(MOCKLIBS) -L$(FUNCLIB) $(LDFLAGS) -ladwfunc 
 	@echo "******************** ADWatch Made *******************"
 

@@ -30,7 +30,7 @@ CI = Base_WatchFunction
 
 #CI for Base WF
 base_watchFunction:  $(FUNC).o $(CI)_CI.o
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Base_WatchFunction_CI $(CI)_CI.o $(FUNC).o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Base_WatchFunction_CI.out $(CI)_CI.o $(FUNC).o \
 	-L $(MOCKLIBS) $(LDFLAGS)
 
 #lib baseWF
