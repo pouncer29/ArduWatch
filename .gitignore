@@ -35,5 +35,4 @@
 *.app
 
 #Paths
-lib/ADWatch_CI_Tests/*
 Documents/GPS_Output
