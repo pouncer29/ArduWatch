@@ -51,8 +51,12 @@ libs:
 	$(MAKE) -C $(FUNCLIB)
 	@echo "******************* ALL LIBS MADE ************************"
 
+ifeq ($(OS),Darwin)
 watchController:
 	$(MAKE) -C $(PROJDIR)/lib/ADWatch_lib
-
+else
+watchController:
+	@echo "************** SKIPPING ADWATCH BUILD FOR $(OS) ****************"
+endif
 
 

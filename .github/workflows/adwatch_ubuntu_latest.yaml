@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - HiddenLeaf/*
 jobs:
   build:
 
