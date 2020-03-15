@@ -40,6 +40,7 @@ void magnet_GetCurHeading(){
 	//Notify
 	cout<<"Magnet Get Heading -- PASSED"<<endl;
 	
+	return;
 }
 
 /**
@@ -62,6 +63,8 @@ void magnet_UpdateHeading(){
 
 	//Notify	
 	cout<<"Magnet Update Heading -- PASSED"<<endl;
+	
+	return;
 }
 
 void magnet_GetHeadingIndex(){
@@ -169,7 +172,8 @@ void magnet_GetHeadingIndex(){
 	}
 
 	cout<<"Magnet Get Heading Index -- PASSED"<<endl;
-	
+
+	return;	
 }
 
 /**
@@ -190,6 +194,7 @@ int Magnet_Tests(){
 void needle_Constructor(){
 
 	cout<<"Testing Needle Constructor Assignes Colours "<<endl;
+	
 	//Construct
 	Compass_Needle* testNeedle = new Compass_Needle();
 	
@@ -204,6 +209,7 @@ void needle_Constructor(){
 
 	cout<<"Needle Constructor Colour Assign -- PASSED"<<endl;
 	
+	return;	
 }
 /**
 	@Synopsis: Tests for the Compass Ring Interface (Needle)
@@ -253,12 +259,15 @@ void compass_PlaceNeedle(){
 	assert(result == CrossColour);
 	
 	cout<<"Compass PlaceNeedl[0] (North) -- PASSED"<<endl;
+	
+	return;
 }
 
 /**
 	@Synopsis: checks that the previous index is removed.
 */
 void compass_RemoveTail(){
+
 	cout<<"Testing Compass Remove Tail"<<endl;
 	//Setup
 	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
@@ -336,7 +345,26 @@ void compass_TrackHeading(){
 	@Synopsis: Checks that the compas heading is set
 */
 void compass_SetCompassHeading(){
-	assert(false);
+	cout<<"Testing Compass Set Heading"<<endl;
+	
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	Compass* testCompass = new Compass();
+	float curHeading = testCompass->magnet->getCurHeading();
+	float testHeading = 90.0;
+
+	//Assert we are 0
+	assert(curHeading == 0);
+
+	//Set it
+	testCompass->setCompassHeading(testHeading,testRing);
+
+	//Grab
+	float result = testCompass->magnet->getCurHeading();
+
+	//Check
+	assert(result == testHeading);
+	
+	cout<<"Compass Set Heading -- PASSED"<<endl;
 }
 
 /**
