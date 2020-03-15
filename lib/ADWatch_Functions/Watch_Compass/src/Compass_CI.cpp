@@ -180,7 +180,7 @@ void magnet_GetHeadingIndex(){
 	@Synopsis: Tests for the Compass Indexer (Magnet)
 */
 int Magnet_Tests(){
-	cout<<"********************** TESTING MAGNET **********************"<<endl;
+	cout<<"********************** TESTING MAGNET ***********************"<<endl;
 	magnet_GetCurHeading();
 	magnet_UpdateHeading();
 	magnet_GetHeadingIndex();
@@ -215,7 +215,7 @@ void needle_Constructor(){
 	@Synopsis: Tests for the Compass Ring Interface (Needle)
 */
 int Needle_Tests(){
-	cout<<"********************** TESTING NEEDLE **********************"<<endl;
+	cout<<"*********************** TESTING NEEDLE **********************"<<endl;
 	needle_Constructor();
 	return 0;
 }
@@ -371,7 +371,7 @@ void compass_SetCompassHeading(){
 	@Synopsis: Tests for the Compass controller
 */
 int Compass_Tests(){
-	cout<<"******************** TESTING COMPASS ********************"<<endl;
+	cout<<"********************** TESTING COMPASS **********************"<<endl;
 	compass_PlaceNeedle();
 	compass_RemoveTail();
 	compass_TrackHeading();
@@ -388,6 +388,7 @@ int main(){
 	Magnet_Tests();
 	Needle_Tests();
 	Compass_Tests();
+	cout<<"******************** COMPASS TESTS PASSED *******************"<<endl;
 	return 0;
 }
 

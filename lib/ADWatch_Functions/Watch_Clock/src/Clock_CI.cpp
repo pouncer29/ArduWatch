@@ -586,11 +586,11 @@ int Clock_Tests(){
 	@Synopsis: Clock tests
 */
 int main(){
-	cout<<"************** BEGINNING UNIT TESTS FOR CLOCK *************"<<endl;
-
+	cout<<"*************** BEGINNING UNIT TESTS FOR CLOCK **************"<<endl;
 	Clock_GearsTests();
 	Clock_FaceTests();
 	Clock_Tests();
+	cout<<"********************* CLOCK TESTS PASSED ********************"<<endl;
 	return 0;
 }
 
