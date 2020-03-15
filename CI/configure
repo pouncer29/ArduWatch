@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # Name: Frank Lewis
 # NSID: fbl773
 # Student #: 11194945
@@ -7,6 +7,7 @@
 # Synopsis: "Beans on toast...weird."
 
 echo Begin ADWatch Configure
+cd ./CI
 pwd
 if [[ -d ./ADWatch_CI_Tests ]]
 then
