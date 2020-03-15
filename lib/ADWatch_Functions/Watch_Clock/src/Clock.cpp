@@ -150,6 +150,7 @@ void Clock::setWatchTime(uint8_t hr, uint8_t min, time_t localTime, Adafruit_Neo
 	trackTime(localTime,ring);
 	
 	//Remove tail
+	//TODO: Maybe remove this (Causes a test case to fail...)
 	ring->clear();
 }
 
