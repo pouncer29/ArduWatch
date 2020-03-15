@@ -90,7 +90,7 @@ void Compass::removeTail(float h,Adafruit_NeoPixel* ring){
  */
 void Compass::trackHeading(float h,Adafruit_NeoPixel* ring){
 	
-	//Remvoe tail also handels update now.
+	//Remove tail also handels update now.
 	removeTail(h,ring);
 	
 	//Assign colours to the appropriate indicies.	

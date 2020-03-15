@@ -298,14 +298,38 @@ void compass_RemoveTail(){
 	cout<<"Compass Remove Tail -- PASSED"<<endl;
 
 	return;
-	
 }
 
 /**
 	@Synopsis: checks that track heading is able to place and track
 */
 void compass_TrackHeading(){
-	assert(false);
+	cout<<"Testing Compass Remove Tail"<<endl;
+
+	//Setup
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	Compass* testCompass = new Compass();
+	Compass_Magnet* testMagnet = testCompass->magnet;
+	uint32_t NeedleColour = testCompass->needle->needleColour;
+	float testHeading = 180.0; // idx 6
+	float testPrevHeading = 270.0; // idx 9
+	
+	//Setup env
+	testMagnet->updateHeading(testPrevHeading);
+	
+	//Run
+	testCompass->trackHeading(testHeading,testRing);
+	
+	//Grab
+	uint32_t removedResult = GetVal(6,'c');
+	uint32_t result = GetVal(9,'c');
+
+	//Check
+	assert(removedResult == 0);
+	assert(result == NeedleColour);
+	
+	cout<<"Compass Track Heading -- PASSED"<<endl;
+	return;
 }
 
 /**
