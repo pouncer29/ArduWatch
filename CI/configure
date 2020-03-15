@@ -8,11 +8,11 @@
 
 echo Begin ADWatch Configure
 
-if [[ -d ./lib/ADWatch_CI_Tests ]]
+if [[ -d ./ADWatch_CI_Tests ]]
 then
 	echo CI test folder exists
 else
 	echo Creating ADWatch_CI_Tests
-	mkdir ./lib/ADWatch_CI_Tests
+	mkdir ./ADWatch_CI_Tests
 fi
 
