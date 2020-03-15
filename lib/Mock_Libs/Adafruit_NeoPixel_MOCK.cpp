@@ -26,7 +26,15 @@ void Adafruit_NeoPixel::setPixelColor(uint16_t n, uint32_t c){
 	ring[n].c = c;
 }
 void Adafruit_NeoPixel::setBrightness(uint8_t){}
-void Adafruit_NeoPixel::clear(void){}
+void Adafruit_NeoPixel::clear(void)
+{
+	/*blank it
+	for(int i = 0; i < 12;i++){
+		this->setPixelColor(i,0);
+		this->setPixelColor(i,0,0,0,0);
+	}
+	*/
+}
 
 int GetVal(int n, char select){
 	if (select == 'r'){

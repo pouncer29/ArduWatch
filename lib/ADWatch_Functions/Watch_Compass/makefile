@@ -3,7 +3,7 @@
 #   Date: February 15, 2020
 
 CC = gcc #$(ARDUBIN)/tools/avr/bin/avrdude #-std=gnu++17
-CPPFLAGS= -Wall -D CI #-n -V
+CPPFLAGS= -Wall -D CI -g #-n -V
 
 # Get what OS they are on
 PLATFORM := $(shell uname)
@@ -29,7 +29,7 @@ FUNC = Compass
 
 #Compass CI exe
 watch_compass: $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o $(FUNC)_CI.o  
-	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/watch_Compass_CI.out $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
+	$(CC) $(CPPFLAGS)  -o $(TESTDIR)/Watch_Compass_CI.out $(FUNC)_CI.o $(FUNC)_Magnet.o $(FUNC)_Needle.o $(FUNC).o \
 	-L $(MOCKLIBS) $(LDFLAGS)
 
 
