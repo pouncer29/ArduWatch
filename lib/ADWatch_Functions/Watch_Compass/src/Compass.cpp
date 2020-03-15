@@ -52,9 +52,9 @@ void Compass::placeNeedle(uint8_t headingIdx, Adafruit_NeoPixel* ring){
 /** removeTail()
  
   @precond:none
-  @postcond: Removed the residual illumination left by passing hands
+  @postcond: Removed the residual illumination left by previous headings
  
-  @param: uint8_t tailIdx - the index who's tail e will remove
+  @param: uint8_t tailIdx - the index who's tail we will remove
   @param: NeoPixel* ring - the ring to set colours on
  
   @Synopsis: Goes to an index, if it isn't important, blank it.
@@ -64,7 +64,7 @@ void Compass::removeTail(float h,Adafruit_NeoPixel* ring){
 	//Store old Heading	
 	prevHeadIdx = magnet->getHeadingIndex();
 
-	//Grab New Time
+	//Grab New Heading
 	magnet->updateHeading(h);
 
 	//Reset Current heading

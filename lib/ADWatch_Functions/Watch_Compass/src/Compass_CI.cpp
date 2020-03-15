@@ -214,12 +214,117 @@ int Needle_Tests(){
 	return 0;
 }
 
+
+/**
+	@Synopsis: placeNeedle test, checks that ring colour is set to proper
+				colour at proper index and crossover
+*/
+void compass_PlaceNeedle(){
+	cout<<"Testing Compass Place Needle "<<endl;
+
+	//Setup
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	Compass* testCompass = new Compass();
+	uint8_t testHeading = 2;
+	uint32_t NorthColour = testCompass->needle->northColour;
+	uint32_t NeedleColour = testCompass->needle->needleColour;
+	uint32_t CrossColour = testCompass->
+							needle->getAverageCross(NeedleColour, NorthColour);
+
+	//Run	
+	testCompass->placeNeedle(testHeading,testRing);
+
+	//Grab
+	uint32_t result = GetVal(testHeading,'c');
+	
+	//check
+	assert(result == NeedleColour);
+
+	cout<<"Compass PlaceNeedle[n] -- PASSED"<<endl;
+
+	//Crossover (Facing north)
+	//Run
+	testCompass->placeNeedle(0,testRing);
+	
+	//Grab
+	result = GetVal(0,'c');
+	
+	//check
+	assert(result == CrossColour);
+	
+	cout<<"Compass PlaceNeedl[0] (North) -- PASSED"<<endl;
+}
+
+/**
+	@Synopsis: checks that the previous index is removed.
+*/
+void compass_RemoveTail(){
+	cout<<"Testing Compass Remove Tail"<<endl;
+	//Setup
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	Compass* testCompass = new Compass();
+	Compass_Magnet* testMag = testCompass->magnet;	
+	uint16_t testColour = 12;
+	uint8_t testPrevIdx = 1;
+
+	//Setup env
+	testRing->setPixelColor(testPrevIdx,testColour);
+	testMag->updateHeading(30.0); //30 -> idx 1
+
+	//Run
+	testCompass->removeTail(90.0,testRing); //90 -> idx 3
+
+	//Grab
+	uint32_t result = GetVal(testPrevIdx,'c');
+
+	//Check
+	assert(result != testColour);
+	assert(result == 0); 
+
+	//We are at 90 (idx 3) call again, no change
+	//Setup
+	testRing->setPixelColor(3,testColour);
+	
+	//Run
+	testCompass->removeTail(90.0,testRing);
+
+	//Grab
+	result = GetVal(3,'c');
+
+	//Check
+	assert(result != 0);
+	assert(result == testColour);
+
+	cout<<"Compass Remove Tail -- PASSED"<<endl;
+
+	return;
+	
+}
+
+/**
+	@Synopsis: checks that track heading is able to place and track
+*/
+void compass_TrackHeading(){
+	assert(false);
+}
+
+/**
+	@Synopsis: Checks that the compas heading is set
+*/
+void compass_SetCompassHeading(){
+	assert(false);
+}
+
 /**
 	@Synopsis: Tests for the Compass controller
 */
 int Compass_Tests(){
 	cout<<"********************** TESTING COMPASS **********************"<<endl;
-	assert(false);
+	compass_PlaceNeedle();
+	compass_RemoveTail();
+	compass_TrackHeading();
+	compass_SetCompassHeading();
+	return 0;
 }
 
 
