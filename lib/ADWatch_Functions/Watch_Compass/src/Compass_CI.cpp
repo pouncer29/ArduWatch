@@ -330,8 +330,8 @@ void compass_TrackHeading(){
 	testCompass->trackHeading(testHeading,testRing);
 	
 	//Grab
-	uint32_t removedResult = GetVal(6,'c');
-	uint32_t result = GetVal(9,'c');
+	uint32_t removedResult = GetVal(9,'c');
+	uint32_t result = GetVal(6,'c');
 
 	//Check
 	assert(removedResult == 0);
@@ -371,7 +371,7 @@ void compass_SetCompassHeading(){
 	@Synopsis: Tests for the Compass controller
 */
 int Compass_Tests(){
-	cout<<"********************** TESTING COMPASS **********************"<<endl;
+	cout<<"******************** TESTING COMPASS ********************"<<endl;
 	compass_PlaceNeedle();
 	compass_RemoveTail();
 	compass_TrackHeading();
