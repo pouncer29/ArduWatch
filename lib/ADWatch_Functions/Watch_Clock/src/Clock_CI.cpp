@@ -2,8 +2,8 @@
 Author: Ben Lewis
 Date: February 16th, 2020
 
-Synopsis: Because Arduino code is tough to make with gcc,and all I want is a verified
-build, I've created this class. Perhaps I will add some tests in here too.. eventually
+Synopsis: Because Arduino code is tough to make with gcc,and all I want is a 
+verified build, I've created this class. 
 */
 
 #include "Clock_CI.h"
@@ -11,9 +11,9 @@ build, I've created this class. Perhaps I will add some tests in here too.. even
 using namespace std;
 
 
-//****************************************************************************************
+//******************************************************************************
 //Clock_CI
-//****************************************************************************************
+//******************************************************************************
 
 /* CLOCK_GEARS TESTS */
 
@@ -43,6 +43,9 @@ void gears_Constructor(){
 }
 
 
+/** 
+	@Synopsis: Tests ability to update time
+*/
 void gears_UpdateTime(){
 	cout<<"Testing Gears Update Time"<<endl;
 	
@@ -62,7 +65,9 @@ void gears_UpdateTime(){
 	cout<<"Gears Update Time -- PASSED"<<endl;
 }
 
-/** Tests for Index Retrival*/
+/** 
+	@Synopsis: Tests for Index Retrival
+*/
 void gears_GetIndex(){
 	cout<<"Testing Gears Get Index"<<endl;
 	Clock_Gears* testGears = new Clock_Gears();
@@ -207,9 +212,12 @@ void gears_GetIndex(){
 
 }
 
+/**
+	@Synopsis: Tests for the Index handler for the Clock
+*/
 
 int Clock_GearsTests(){
-	cout<<"****************** TESTING GEARS ****************************"<<endl;
+	cout<<"********************** TESTING GEARS ************************"<<endl;
 	gears_Constructor();
 	gears_GetIndex();
 
@@ -217,8 +225,10 @@ int Clock_GearsTests(){
 }
 
 /**
-	Tests that the face when it mods a minute colour, it produces the same color for 
-	0, and any other divisible by 5.
+	@Synopsis: Testing the ability to modify the minute colour on the Face
+
+	Tests that the face when it mods a minute colour, it produces the same 
+	color for 0, and any other divisible by 5.
 */
 void face_ModMinColor(){
 	cout<<"Testing Min Colour Modification ..."<<endl;
@@ -235,7 +245,7 @@ void face_ModMinColor(){
 	//5 Minute intervals should all be the same as modded with 0
 	testFace->modMinColour(testTime,testRing);
 	uint32_t moddedColor = testFace->minColour;
-	uint32_t fiveMod_val = moddedColor; // Mod 0 should be the same for every 5 minute interval
+	uint32_t fiveMod_val = moddedColor; //Mod 0 should be same for every 5th min 
 	cout<<"5 min Color is: "<<fiveMod_val<<endl;
 
 	for(int i = 5; i < 60; i += 5){
@@ -256,13 +266,17 @@ void face_ModMinColor(){
 	
 }
 
+/**
+	@Synopsis: Tests for the Ring Interface of the Clock (Face)
+*/
 int Clock_FaceTests(){
-	cout<<"****************** TESTING FACE ****************************"<<endl;
+	cout<<"************************ TESTING FACE ***********************"<<endl;
 	face_ModMinColor();
 	return 0;
 }
 
 /**
+	@Synopsis: Testing track time for Clock
 	clock_PlaceHands()
 	- Checks the cases for place hands
 		- disperse
@@ -346,6 +360,9 @@ void clock_PlaceHands(){
 
 }
 
+/**
+	@Synopsis: Testing track time for Clock
+*/
 void clock_TrackTime(){
 	cout<<"Testing Clock TrackTime..."<<endl;
 
@@ -390,6 +407,9 @@ void clock_TrackTime(){
 	cout<<"TrackTime, Disperse hr=12, min=45, sec=15 -- PASSED"<<endl;
 }
 
+/**
+	@Synopsis: Testing set time for Clock
+*/
 void clock_SetWatchTime(){
 
 	cout<<"Testing Clock SetWatchTime..."<<endl;
@@ -443,6 +463,9 @@ void clock_SetWatchTime(){
 
 }
 
+/**
+	@Synopsis: Testing tail remove for Clock
+*/
 void clock_RemoveTail(){
 	cout<<"Testing Clock RemoveTail..."<<endl;
 
@@ -547,19 +570,23 @@ void clock_RemoveTail(){
 	cout<<"RemoveTail (1) , hrIdx=1, minIdx=0, secIdx=0 -- PASSED"<<endl;
 }
 
+/**
+@synopsis: Tests for the clock component controller
+*/
 int Clock_Tests(){
-	cout<<"****************** TESTING CLOCK ****************************"<<endl;
+	cout<<"*********************** TESTING CLOCK ***********************"<<endl;
 	clock_PlaceHands();
 	clock_TrackTime();
 	clock_SetWatchTime();
 	clock_RemoveTail();
-
 	return 0;
 }
 
-
+/**
+	@Synopsis: Clock tests
+*/
 int main(){
-	cout<<"BEGINNING UNIT TESTS FOR CLOCK"<<endl;
+	cout<<"************** BEGINNING UNIT TESTS FOR CLOCK *************"<<endl;
 
 	Clock_GearsTests();
 	Clock_FaceTests();

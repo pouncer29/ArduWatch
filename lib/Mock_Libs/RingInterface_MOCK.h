@@ -10,9 +10,10 @@
 #include "Arduino_MOCK.h"
 /** RingInterface
 	------------
-	This class serves as the Interface with the Neopixel ring for all watch functions. Thats right. 
-	Speedometer, Compass, Watch_Clock, Flashlight. They all need special colours, they for the most part all
-	implement average, clear, or wipe. This class provides them that.
+	This class serves as the Interface with the Neopixel ring for all watch 
+	functions. Thats right.	Speedometer, Compass, Watch_Clock, Flashlight. 
+	They all need special colours, they for the most part all implement average, 
+	clear, or wipe. This class provides them that.
 */
 class RingInterface{
 	
