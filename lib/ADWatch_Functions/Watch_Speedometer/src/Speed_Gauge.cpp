@@ -59,7 +59,7 @@ uint8_t Speed_Gauge::getSpeedIndex(void) {
 		idx= -1 * ((-1 * speed/20) - 6);
 	else
 		idx = (speed/20) - 6;
-	return idx;
+	return idx; //old impl used <=120, in that case ret idx % 12
 }
 
 /** updateSpeed()
