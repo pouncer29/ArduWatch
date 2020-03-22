@@ -71,26 +71,160 @@ void gauge_UpdateSpeed(){
 */
 void gauge_GetSpeedIndex(){
 	cout<<"Testing Gauge Get Speed Index"<<endl; 
-	assert(false);
 	//Setup 
 	float testSpeed = 0.0;
 	Speed_Gauge* testGauge = new Speed_Gauge(testSpeed);
+	uint8_t result = 55;
 	
 	//Remember, the speeodmeter indexer starts at idx 6
 	//Check
 	// val -> idx
-	//testSpeed->
+
 	// [0,19) -> 6
-	// [20,40) -> 7
-	// [40,60) -> 8
-	// [60,80) -> 9
-	// [80,100) -> 10
-	// [100,120) -> 11
-	// [120,140) -> 0
-	// [120,160) -> 1
-	// [120,180) -> 3
-	// [180,200) -> 4
+	cout<<"Testing heading [0km,20km) -> 6..."<<endl;
+	for(float i = 0.0; i < 20.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 6);
+	}
 	
+	// [20,40) -> 7
+	cout<<"Testing heading [20km,40km) -> 7..."<<endl;
+	for(float i = 20.0; i < 40.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 7);
+	}
+
+	// [40,60) -> 8
+	cout<<"Testing heading [40km,60km) -> 8..."<<endl;
+	for(float i = 40.0; i < 60.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 8);
+	}
+	// [60,80) -> 9
+	cout<<"Testing heading [60km,80km) -> 9..."<<endl;
+	for(float i = 60.0; i < 80.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 9);
+	}
+
+
+	// [80,100) -> 10
+	cout<<"Testing heading [80km,100km) -> 10..."<<endl;
+	for(float i = 80.0; i < 100.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 10);
+	}
+
+	// [100,120) -> 11
+	cout<<"Testing heading [100km,120km) -> 11..."<<endl;
+	for(float i = 100.0; i < 120.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 11);
+	}
+
+	// [120,140) -> 0
+	cout<<"Testing heading [120km,140km) -> 0..."<<endl;
+	for(float i = 120.0; i < 140.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		cout<<"Checking value: "<<i<<endl;
+		cout<<" Result is: "<<result<<endl;
+		assert(result == 0);
+	}
+
+	// [140,160) -> 1
+	cout<<"Testing heading [140km,160km) -> 1..."<<endl;
+	for(float i = 140.0; i < 160.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 1);
+	}
+
+	// [160,180) -> 2
+	cout<<"Testing heading [160km,180km) -> 2..."<<endl;
+	for(float i = 160.0; i < 180.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 2);
+	}
+
+	// [180,200) -> 3
+	cout<<"Testing heading [180km,200km) -> 3..."<<endl;
+	for(float i = 180.0; i < 200.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 3);
+	}
+
+	// [180,200) -> 4
+	cout<<"Testing heading [180km,200km) -> 4..."<<endl;
+	for(float i = 200.0; i < 220.0; i+=0.5){
+		//Set Speed
+		testGauge->updateSpeed(i);
+		
+		//Get Index
+		result = testGauge->getSpeedIndex();
+		
+		//Check
+		assert(result == 4);
+	}
+
 
 	cout<<"Gauge Get Speed Index -- PASSED"<<endl;
 }
