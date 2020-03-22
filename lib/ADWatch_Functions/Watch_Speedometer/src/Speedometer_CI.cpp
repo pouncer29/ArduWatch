@@ -168,8 +168,6 @@ void gauge_GetSpeedIndex(){
 		result = testGauge->getSpeedIndex();
 		
 		//Check
-		cout<<"Checking value: "<<i<<endl;
-		cout<<" Result is: "<<result<<endl;
 		assert(result == 0);
 	}
 
