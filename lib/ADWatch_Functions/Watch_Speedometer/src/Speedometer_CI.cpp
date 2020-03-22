@@ -210,7 +210,7 @@ void gauge_GetSpeedIndex(){
 		assert(result == 3);
 	}
 
-	// [180,200) -> 4
+	// [200,220) -> 4
 	cout<<"Testing heading [180km,200km) -> 4..."<<endl;
 	for(float i = 200.0; i < 220.0; i+=0.5){
 		//Set Speed
