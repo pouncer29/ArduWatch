@@ -64,8 +64,6 @@ void gauge_UpdateSpeed(){
 }
 
 
-
-
 /**
 	@Synopsis: tests indexer for cur speed
 */
@@ -239,11 +237,38 @@ int Gauge_Tests(){
 }
 
 /**
+	@Synopsis: Testing colour setup for the RingInterface
+*/
+void dial_Constructor(){
+	cout<<"Testing Dial Constructor"<<endl;
+
+	//Setup 
+	Speed_Dial* testDial = new Speed_Dial();
+
+	//Grab
+	uint32_t regionA = testDial->regionAColour;
+	uint32_t regionB = testDial->regionBColour;
+	uint32_t regionC = testDial->regionCColour;
+	
+	//Not 0
+	assert(regionA != 0);
+	assert(regionB != 0);
+	assert(regionC != 0);
+
+	//Not the same
+	assert(regionA != regionB && regionA != regionC);
+	assert(regionB != regionC);
+	
+	
+	cout<<"Dial Constructor -- PASSED"<<endl;
+}
+
+/**
 	@Synopsis: Ring Interface tests for the Speedometer (Dial)
 */
 int Dial_Tests(){
 	cout<<"*********************** TESTING Dial ************************"<<endl;
-	assert(false);
+	dial_Constructor();
 	return 0;
 }
 
