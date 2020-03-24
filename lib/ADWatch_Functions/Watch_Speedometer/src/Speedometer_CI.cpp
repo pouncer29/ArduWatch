@@ -383,7 +383,56 @@ void speedo_SetRegionC(){
 */
 void speedo_SetDial(){
 	cout<<"Testing Speedometer Set Dial"<<endl;
-	assert(false);
+	//Setup
+	Speedometer* testSpeedo = new Speedometer();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	uint32_t regionAColour = testSpeedo->dial->regionAColour;
+	uint32_t regionBColour = testSpeedo->dial->regionBColour;
+	uint32_t regionCColour = testSpeedo->dial->regionCColour;
+
+	//Run
+	//[6,9)
+	testSpeedo->setDial(8,testRing);
+	cout<<"Testing one Region set..."<<endl;
+	//Region A set
+	assert(GetVal(6,'c') == regionAColour);
+	assert(GetVal(7,'c') == regionAColour);
+	assert(GetVal(8,'c') == regionAColour);
+	cout<<"Region A set..."<<endl;
+
+	//[9,12)
+	testSpeedo->setDial(11,testRing);
+	cout<<"Testing two Region set..."<<endl;
+	// Region A set
+	assert(GetVal(6,'c') == regionAColour);
+	assert(GetVal(7,'c') == regionAColour);
+	assert(GetVal(8,'c') == regionAColour);
+	cout<<"Region A set..."<<endl;
+	// & Region B set
+	assert(GetVal(9,'c') == regionBColour);
+	assert(GetVal(10,'c') == regionBColour);
+	cout<<"Region B set..."<<endl;
+
+	//[0,4)
+	cout<<"Testing full Region set..."<<endl;
+	testSpeedo->setDial(0,testRing);
+	// Region A set
+	assert(GetVal(6,'c') == regionAColour);
+	assert(GetVal(7,'c') == regionAColour);
+	assert(GetVal(8,'c') == regionAColour);
+	cout<<"Region A set..."<<endl;
+	// & Region B set
+	assert(GetVal(9,'c') == regionBColour);
+	assert(GetVal(10,'c') == regionBColour);
+	assert(GetVal(11,'c') == regionBColour);
+	cout<<"Region B set..."<<endl;
+	// & Region C set
+	assert(GetVal(0,'c') == regionCColour);
+	assert(GetVal(1,'c') == regionCColour);
+	assert(GetVal(2,'c') == regionCColour);
+	assert(GetVal(3,'c') == regionCColour);
+	cout<<"Region C set..."<<endl;
+	
 	cout<<"Speedometer SetDial -- PASSED"<<endl;
 }
 
