@@ -273,10 +273,149 @@ int Dial_Tests(){
 }
 
 /**
+	@Synopsis Tests that the speedometer sets region A color properly.
+*/
+void speedo_SetRegionA(){
+	cout<<"Testing Speedometer Set Region A"<<endl;
+	//Setup
+	Speedometer* testSpeedo = new Speedometer();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	uint32_t regionAColour = testSpeedo->dial->regionAColour;
+
+	//Grab
+	uint32_t result = 0;
+
+	//6
+	testSpeedo->setRegionA(6,testRing);
+	result = GetVal(6,'c');
+	
+	//Check
+	assert(result == regionAColour);
+	assert(GetVal(7,'c') == 0);
+	assert(GetVal(8,'c') == 0);
+
+	//8
+	testSpeedo->setRegionA(8,testRing);
+	result = GetVal(8,'c');
+
+	//Check
+	assert(result == regionAColour);
+	assert(GetVal(7,'c') == regionAColour);
+	assert(GetVal(6,'c') == regionAColour);
+		
+	cout<<"Speedometer Set Region A -- PASSED"<<endl;
+}
+
+/**
+	@Synopsis Tests that the speedometer sets region B color properly.
+*/
+void speedo_SetRegionB(){
+	cout<<"Testing Speedometer Set Region B"<<endl;
+	//Setup
+	Speedometer* testSpeedo = new Speedometer();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	uint32_t regionBColour = testSpeedo->dial->regionBColour;
+
+	//Grab
+	uint32_t result = 0;
+
+	//6
+	testSpeedo->setRegionB(10,testRing);
+	result = GetVal(9,'c');
+	
+	//Check
+	assert(result == regionBColour);
+	assert(GetVal(10,'c') == 0);
+	assert(GetVal(11,'c') == 0);
+
+	//11
+	testSpeedo->setRegionB(12,testRing);
+	result = GetVal(11,'c');
+
+	//Check
+	assert(result == regionBColour);
+	assert(GetVal(9,'c') == regionBColour);
+	assert(GetVal(10,'c') == regionBColour);
+		
+	cout<<"Speedometer Set Region B -- PASSED"<<endl;
+}
+
+/**
+	@Synopsis Tests that the speedometer sets region C color properly.
+*/
+void speedo_SetRegionC(){
+	cout<<"Testing Speedometer Set Region C"<<endl;
+	//Setup
+	Speedometer* testSpeedo = new Speedometer();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	uint32_t regionCColour = testSpeedo->dial->regionCColour;
+
+	//Grab
+	uint32_t result = 0;
+
+	//6
+	testSpeedo->setRegionC(0,testRing);
+	result = GetVal(0,'c');
+	
+	//Check
+	assert(result == regionCColour);
+	assert(GetVal(1,'c') == 0);
+	assert(GetVal(2,'c') == 0);
+	assert(GetVal(3,'c') == 0);
+	assert(GetVal(4,'c') == 0);
+
+	//8
+	testSpeedo->setRegionC(4,testRing);
+	result = GetVal(4,'c');
+
+	//Check
+	assert(result == regionCColour);
+	assert(GetVal(0,'c') == regionCColour);
+	assert(GetVal(1,'c') == regionCColour);
+	assert(GetVal(2,'c') == regionCColour);
+	assert(GetVal(3,'c') == regionCColour);
+		
+	cout<<"Speedometer Set Region C -- PASSED"<<endl;
+}
+
+/**
+	@Synopsis: Checks that all regions are set properly
+*/
+void speedo_SetDial(){
+	cout<<"Testing Speedometer Set Dial"<<endl;
+	assert(false);
+	cout<<"Speedometer SetDial -- PASSED"<<endl;
+}
+
+/**
+	@Synopsis: Checks speed setter
+*/
+void speedo_SetSpeed(){
+	cout<<"Testing Speedometer Set Speed "<<endl;
+	assert(false);
+	cout<<"Speedometer SetSpeed -- PASSED"<<endl;
+}
+
+/**
+	@Synopsis: Checks that speed is set and dial is good.
+*/
+void speedo_TrackSpeed(){
+	cout<<"Testing Speedometer Track Speed"<<endl;
+	assert(false);
+	cout<<"Speedometer TrackSpeed -- PASSED"<<endl;
+}
+
+/**
 	@Synopsis: Tests for the speedometer controller
 */
 int Speedometer_Tests(){
-	assert(false);
+	cout<<"******************** TESTING SPEEDOMETER ********************"<<endl;
+	speedo_SetRegionA();
+	speedo_SetRegionB();
+	speedo_SetRegionC();
+	speedo_SetDial();
+	speedo_SetSpeed();
+	speedo_TrackSpeed();
 	return 0;
 }
 
