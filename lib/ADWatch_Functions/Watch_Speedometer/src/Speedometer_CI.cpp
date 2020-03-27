@@ -441,7 +441,22 @@ void speedo_SetDial(){
 */
 void speedo_SetSpeed(){
 	cout<<"Testing Speedometer Set Speed "<<endl;
-	assert(false);
+	
+	//Setup
+	Speedometer* testSpeedo = new Speedometer();
+	float testSpeed = 33.3;
+	
+	//Base check
+	float result = testSpeedo->gauge->getCurSpeed();
+	assert(result == 0.0);
+
+	//Call
+	testSpeedo->setSpeed(testSpeed);
+	
+	//Grab
+	result = testSpeedo->gauge->getCurSpeed();
+	assert(result == testSpeed);
+
 	cout<<"Speedometer SetSpeed -- PASSED"<<endl;
 }
 
@@ -450,7 +465,51 @@ void speedo_SetSpeed(){
 */
 void speedo_TrackSpeed(){
 	cout<<"Testing Speedometer Track Speed"<<endl;
-	assert(false);
+
+	//Setup
+	Speedometer* testSpeedo = new Speedometer();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	uint32_t regionAColour = testSpeedo->dial->regionAColour;
+	uint32_t regionBColour = testSpeedo->dial->regionBColour;
+	uint32_t regionCColour = testSpeedo->dial->regionCColour;
+	/*
+	cout<<"Region A: "<<regionAColour<<endl;
+	cout<<"Region B: "<<regionBColour<<endl;
+	cout<<"Region C: "<<regionCColour<<endl;
+	*/
+	
+	float testSpeed = 60.0;
+	uint32_t result = 0.0;
+	
+	//Run[60km]
+	testSpeedo->trackSpeed(testSpeed,testRing);
+	result = GetVal(8,'c');
+	/*
+	cout<<"Expecting at index 8: "<<regionAColour<<endl;
+	cout<<"       At Index 8 is: "<<result<<endl;
+	*/
+	assert(result == regionAColour);
+
+	//Run[120km]
+	testSpeed = 120.0;
+	testSpeedo->trackSpeed(testSpeed,testRing);
+	result = GetVal(11,'c');
+	/*
+	cout<<"Expecting at index 11: "<<regionBColour<<endl;
+	cout<<"       At Index 11 is: "<<result<<endl;
+	*/
+	assert(result == regionBColour);
+
+	//Run[180km]
+	testSpeed = 180.0;
+	testSpeedo->trackSpeed(testSpeed,testRing);
+	result = GetVal(3,'c');
+	/*
+	cout<<"Expecting at index 3: "<<regionAColour<<endl;
+	cout<<"       At Index 3 is: "<<result<<endl;
+	*/
+	assert(result == regionCColour);
+	
 	cout<<"Speedometer TrackSpeed -- PASSED"<<endl;
 }
 
