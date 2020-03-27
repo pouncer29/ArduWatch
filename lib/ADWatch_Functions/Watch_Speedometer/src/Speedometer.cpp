@@ -74,7 +74,7 @@ void Speedometer::setRegionC(uint8_t offsC,Adafruit_NeoPixel* ring){
 		ring->setPixelColor(i,dial->regionCColour);
 }
 
-/** placeNeedle()
+/** setDial()
 	@precond: speed is set
 	@postcond: speed is displayed
   
