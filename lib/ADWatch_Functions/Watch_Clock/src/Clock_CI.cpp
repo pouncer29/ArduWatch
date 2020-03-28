@@ -411,7 +411,6 @@ void clock_TrackTime(){
 	@Synopsis: Testing set time for Clock
 */
 void clock_SetWatchTime(){
-
 	cout<<"Testing Clock SetWatchTime..."<<endl;
 
 	//Setup ring
