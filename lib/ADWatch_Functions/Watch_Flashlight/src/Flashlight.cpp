@@ -62,7 +62,6 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
  */
 void Flashlight::on(Adafruit_NeoPixel* ring){	
 	colorWipe(lightColour,0,ring);
-
 	return;
 }
 
@@ -80,7 +79,7 @@ void Flashlight::off(Adafruit_NeoPixel* ring){
 	@Synopsis: Jazzy colour version of on. Cycles through the count of colours. Uses a static counter to maintain
  				where it was left.
 */
-uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
+uint32_t Flashlight::party(){
 	static uint16_t count = 0;	
 	count++;
 	if(count > 29)
@@ -120,7 +119,7 @@ void Flashlight::strobe(bool keep, Adafruit_NeoPixel* ring){
 		if(flip > 20){
 			flip =0;
 			//pick random color
-			colour = party(ring);
+			colour = party();
 		}
 
 		//Show colours

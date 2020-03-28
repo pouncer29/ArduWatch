@@ -15,7 +15,6 @@ else
 	echo Directory ADWatch_CI_Tests not found. Abort.
 	exit 1
 fi
-pwd
 # Run all .out files
 for t in *.out
 do
@@ -24,7 +23,7 @@ do
 	./$t
 	RET=$?
 	if [ $RET -ne 0 ]; then
-		echo ******************* Test for $t FAILED **************************
+		echo "------------------- Test for $t FAILED --------------------------"
 	fi
 done
 exit 0
