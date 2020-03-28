@@ -34,7 +34,7 @@ Flashlight::Flashlight(void){
 	//store the colours.
 	colours[0] = lightColour;
 	colours[1] = violet;
-	colours[2] =indigo;
+	colours[2] = indigo;
 	colours[3] = blue;
 	colours[4] = green;
 	colours[5] = yellow;
@@ -55,8 +55,6 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
 	ring->show();
 }
 
-
-
 /** on()
    @precond: strip has been instantiated
    @postcond: all of the lights are turned on to the defined light colour
@@ -67,9 +65,6 @@ void Flashlight::on(Adafruit_NeoPixel* ring){
 
 	return;
 }
-
-
-
 
 /** off()
   @Synopsis: actually just a wrapper for the clear function

@@ -21,7 +21,7 @@ using namespace std;
 
 /** gears_Constructer*/
 void gears_Constructor(){
-	cout<<"Testing Gears Constructor"<<endl;
+	cout<<"Testing Gears Constructor..."<<endl;
 
 	//Setup
 	int tstHr = 12;
@@ -47,7 +47,7 @@ void gears_Constructor(){
 	@Synopsis: Tests ability to update time
 */
 void gears_UpdateTime(){
-	cout<<"Testing Gears Update Time"<<endl;
+	cout<<"Testing Gears Update Time..."<<endl;
 	
 	//Setup
 	int tstHr = 12;
@@ -69,7 +69,7 @@ void gears_UpdateTime(){
 	@Synopsis: Tests for Index Retrival
 */
 void gears_GetIndex(){
-	cout<<"Testing Gears Get Index"<<endl;
+	cout<<"Testing Gears Get Index..."<<endl;
 	Clock_Gears* testGears = new Clock_Gears();
 
 	cout<<"Testing Hour Index Retrival..."<<endl;
