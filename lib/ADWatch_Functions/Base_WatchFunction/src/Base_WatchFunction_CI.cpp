@@ -15,21 +15,49 @@ using namespace std;
 //Base_WatchFunction
 //****************************************************************************************
 
+
+/**
+   @Synopsis checks that Colour wipe sets colours
+ */
 void ringInterface_ColourWipe(){
-	cout<<"Testing RingInterface <METHOD>..."<<endl;
+	cout<<"Testing RingInterface Colour Wipe..."<<endl;
 	//Setup
-	//Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
-	assert(false);
-	cout<<"RingInterface <METHOD> -- PASSED"<<endl;
+	RingInterface* testRI = new RingInterface();
+	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	uint32_t testColour = 44;
+
+	//Call
+	testRI->colorWipe(testColour,0,testRing);
+	
+	//Check
+	uint32_t result = 0;
+	for(int i = 0; i < 12; i++){
+		result = GetVal(i,'c');
+		assert(result == testColour);	
+	}
+	
+	cout<<"RingInterface ColourWipe -- PASSED"<<endl;
 }
 
 /**
    @Synopsis checks that the 2 colours are averaged
  */
 void ringInteface_GetAverageCross(){
-	cout<<"Testing RingInterface <METHOD>..."<<endl;
-	assert(false);
-	cout<<"RingInterface <METHOD> -- PASSED"<<endl;
+	cout<<"Testing RingInterface Get Average Cross..."<<endl;
+
+	//Setup
+	RingInterface* testRI = new RingInterface();
+	uint32_t colourA = 45;
+	uint32_t colourB = 12;
+	uint32_t avg = (colourA + colourB) / 2;
+	
+	//Call
+	uint32_t result = testRI->getAverageCross(colourA,colourB);
+	
+	//Check
+	assert(result == avg);
+	
+	cout<<"RingInterface GetAverageCross -- PASSED"<<endl;
 }
 
 
@@ -40,7 +68,6 @@ int RingInterface_Tests(){
 	cout<<"***************** TESTING RING INTERFACE ****************"<<endl;
 	ringInterface_ColourWipe();
 	ringInteface_GetAverageCross();
-	assert(false);
 	return 0;
 }
 /**
