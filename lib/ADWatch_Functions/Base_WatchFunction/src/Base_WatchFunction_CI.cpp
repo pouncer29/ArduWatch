@@ -11,13 +11,45 @@ build, I've created this class. Perhaps I will add some tests in here too.. even
 
 using namespace std;
 
-
 //****************************************************************************************
 //Base_WatchFunction
 //****************************************************************************************
 
+void ringInterface_ColourWipe(){
+	cout<<"Testing RingInterface <METHOD>..."<<endl;
+	//Setup
+	//Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
+	assert(false);
+	cout<<"RingInterface <METHOD> -- PASSED"<<endl;
+}
+
+/**
+   @Synopsis checks that the 2 colours are averaged
+ */
+void ringInteface_GetAverageCross(){
+	cout<<"Testing RingInterface <METHOD>..."<<endl;
+	assert(false);
+	cout<<"RingInterface <METHOD> -- PASSED"<<endl;
+}
+
+
+/**
+   @Synopsis: Tests for the Ring Interface
+ */
+int RingInterface_Tests(){
+	cout<<"***************** TESTING RING INTERFACE ****************"<<endl;
+	ringInterface_ColourWipe();
+	ringInteface_GetAverageCross();
+	assert(false);
+	return 0;
+}
+/**
+   @Synopsis: Test for the BaseWatchFunctions 
+ */
 int main(){
-	cout<<"Welcome to the Base_WatchFunction build..."<<endl;
+	cout<<"***** BEGINNING UNIT TESTS FOR BASE WATCH FUNCTION ******"<<endl;
+	RingInterface_Tests();	
+	cout<<"************ BASE WATCH FUNCTION TESTS PASSED ***********"<<endl;
 	return 0;
 }
 
