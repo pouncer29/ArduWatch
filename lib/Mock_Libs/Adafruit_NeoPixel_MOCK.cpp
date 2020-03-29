@@ -34,7 +34,7 @@ void Adafruit_NeoPixel::clear(void)
 	}
 }
 
-int GetVal(int n, char select){
+uint32_t GetVal(int n, char select){
 	if (select == 'r'){
 		return ring[n].r;
 	}else if (select == 'g'){

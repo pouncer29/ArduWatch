@@ -231,7 +231,7 @@ int Clock_GearsTests(){
 	color for 0, and any other divisible by 5.
 */
 void face_ModMinColor(){
-	cout<<"Testing Min Colour Modification ..."<<endl;
+	cout<<"Testing Min Colour Modification..."<<endl;
 	
 	//Construct Face
 	Clock_Face* testFace = new Clock_Face();
@@ -427,16 +427,6 @@ void clock_SetWatchTime(){
 	//Call it!
 	testClock->setWatchTime(tstHr,tstMin,testTime,testRing);
 
-	//Grab Colours 
-	uint32_t hrColour = testClock->face->hrColour;
-	uint32_t minColour = testClock->face->minColour;
-	uint32_t secColour = testClock->face->secColour;
-
-	//Grab Resulting Colours
-	uint32_t ringColour_hr = GetVal((tstHr % 12),'c');
-	uint32_t ringColour_min = GetVal((tstMin % 12),'c');
-	uint32_t ringColour_sec= GetVal((0 % 12),'c');
-
 	/*
 	cout<<"Hour,Min,Sec"<<endl;
 	cout<<ringColour_hr<<","<<ringColour_min<<","<<ringColour_sec<<endl;
@@ -453,11 +443,6 @@ void clock_SetWatchTime(){
 	assert(min == tstMin);
 	assert(sec == 0);
 
-	//Assert colours were set
-	assert(ringColour_hr == hrColour);
-	assert(ringColour_min == minColour);
-	assert(ringColour_sec == secColour);
-	
 	cout<<"SetWatchTime, hr=6, min=45, sec=0(by default) -- PASSED"<<endl;
 
 }

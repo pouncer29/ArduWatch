@@ -8,6 +8,7 @@ Synopsis: outline for CI for Flashlight
 #define FLASHLIGHT_CI_h
 
 #include <Flashlight.h>
+#include <assert.h>
 
 /** Flashlight_CI
    -----------

@@ -21,7 +21,7 @@ using namespace std;
 	@Synopsis: tests getter for cur speed
 */
 void gauge_GetCurSpeed(){
-	cout<<"Testing Gauge Get Speed"<<endl; 
+	cout<<"Testing Gauge Get Speed..."<<endl; 
 
 	//Setup 
 	float testSpeed = 25.4;
@@ -43,7 +43,7 @@ void gauge_GetCurSpeed(){
 	@Synopsis: tests update function for speed
 */
 void gauge_UpdateSpeed(){
-	cout<<"Testing Gauge Update Speed"<<endl; 
+	cout<<"Testing Gauge Update Speed..."<<endl; 
 
 	//setup
 	float testSpeed = 50.6;
@@ -68,7 +68,7 @@ void gauge_UpdateSpeed(){
 	@Synopsis: tests indexer for cur speed
 */
 void gauge_GetSpeedIndex(){
-	cout<<"Testing Gauge Get Speed Index"<<endl; 
+	cout<<"Testing Gauge Get Speed Index..."<<endl; 
 	//Setup 
 	float testSpeed = 0.0;
 	Speed_Gauge* testGauge = new Speed_Gauge(testSpeed);
@@ -240,7 +240,7 @@ int Gauge_Tests(){
 	@Synopsis: Testing colour setup for the RingInterface
 */
 void dial_Constructor(){
-	cout<<"Testing Dial Constructor"<<endl;
+	cout<<"Testing Dial Constructor..."<<endl;
 
 	//Setup 
 	Speed_Dial* testDial = new Speed_Dial();
@@ -276,7 +276,7 @@ int Dial_Tests(){
 	@Synopsis Tests that the speedometer sets region A color properly.
 */
 void speedo_SetRegionA(){
-	cout<<"Testing Speedometer Set Region A"<<endl;
+	cout<<"Testing Speedometer Set Region A..."<<endl;
 	//Setup
 	Speedometer* testSpeedo = new Speedometer();
 	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
@@ -310,7 +310,7 @@ void speedo_SetRegionA(){
 	@Synopsis Tests that the speedometer sets region B color properly.
 */
 void speedo_SetRegionB(){
-	cout<<"Testing Speedometer Set Region B"<<endl;
+	cout<<"Testing Speedometer Set Region B..."<<endl;
 	//Setup
 	Speedometer* testSpeedo = new Speedometer();
 	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
@@ -344,7 +344,7 @@ void speedo_SetRegionB(){
 	@Synopsis Tests that the speedometer sets region C color properly.
 */
 void speedo_SetRegionC(){
-	cout<<"Testing Speedometer Set Region C"<<endl;
+	cout<<"Testing Speedometer Set Region C..."<<endl;
 	//Setup
 	Speedometer* testSpeedo = new Speedometer();
 	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
@@ -382,7 +382,7 @@ void speedo_SetRegionC(){
 	@Synopsis: Checks that all regions are set properly
 */
 void speedo_SetDial(){
-	cout<<"Testing Speedometer Set Dial"<<endl;
+	cout<<"Testing Speedometer Set Dial..."<<endl;
 	//Setup
 	Speedometer* testSpeedo = new Speedometer();
 	Adafruit_NeoPixel* testRing = new Adafruit_NeoPixel();
@@ -440,7 +440,7 @@ void speedo_SetDial(){
 	@Synopsis: Checks speed setter
 */
 void speedo_SetSpeed(){
-	cout<<"Testing Speedometer Set Speed "<<endl;
+	cout<<"Testing Speedometer Set Speed..."<<endl;
 	
 	//Setup
 	Speedometer* testSpeedo = new Speedometer();
@@ -464,7 +464,7 @@ void speedo_SetSpeed(){
 	@Synopsis: Checks that speed is set and dial is good.
 */
 void speedo_TrackSpeed(){
-	cout<<"Testing Speedometer Track Speed"<<endl;
+	cout<<"Testing Speedometer Track Speed..."<<endl;
 
 	//Setup
 	Speedometer* testSpeedo = new Speedometer();
