@@ -7,6 +7,7 @@
 #include "GPSTools.h"
 #include <TimeLib_MOCK.h>
 #include <iostream>
+#include <cmath>
 #include <assert.h>
 
 using namespace std;
