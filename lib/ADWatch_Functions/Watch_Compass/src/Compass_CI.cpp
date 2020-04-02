@@ -382,10 +382,9 @@ int Compass_Tests(){
 	return 0;
 }
 
-
-
-
-
+/*
+  @Synopsis: Tests for the Compass Component
+ */
 int main(){
 	cout<<"************* BEGINNING UNIT TESTS FOR COMPASS **************"<<endl;
 	Magnet_Tests();
