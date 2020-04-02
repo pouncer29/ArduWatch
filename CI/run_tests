@@ -5,7 +5,8 @@
 # Synopsis: "Beans on toast...weird."
 
 echo \n************************ Begin ADWatch Tests ****************************
-
+FAILEDTESTS=""
+FAILEDCOUNT=0
 cd ./CI
 # Check for directory
 if [[ -d ./ADWatch_CI_Tests ]]
@@ -15,7 +16,6 @@ else
 	echo Directory ADWatch_CI_Tests not found. Abort.
 	exit 1
 fi
-pwd
 # Run all .out files
 for t in *.out
 do
@@ -24,8 +24,18 @@ do
 	./$t
 	RET=$?
 	if [ $RET -ne 0 ]; then
-		echo ******************* Test for $t FAILED **************************
+		echo "------------------- Test for $t FAILED --------------------------"
+		let "FAILEDCOUNT++"
+		FAILEDTESTS="$FAILEDTESTS$t "
+	
 	fi
 done
+echo "-------------------------------------------------------------------------"
+if [ $FAILEDCOUNT -gt 0 ]; then
+	echo "$FAILEDCOUNT Tests Failed ( $FAILEDTESTS)"
+	exit 1
+else
+	echo "All tests Passed"
+fi
 exit 0
 

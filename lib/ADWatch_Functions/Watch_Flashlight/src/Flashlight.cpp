@@ -34,7 +34,7 @@ Flashlight::Flashlight(void){
 	//store the colours.
 	colours[0] = lightColour;
 	colours[1] = violet;
-	colours[2] =indigo;
+	colours[2] = indigo;
 	colours[3] = blue;
 	colours[4] = green;
 	colours[5] = yellow;
@@ -55,8 +55,6 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
 	ring->show();
 }
 
-
-
 /** on()
    @precond: strip has been instantiated
    @postcond: all of the lights are turned on to the defined light colour
@@ -64,12 +62,8 @@ void Flashlight::colorWipe(uint32_t c, uint8_t wait,Adafruit_NeoPixel* ring) {
  */
 void Flashlight::on(Adafruit_NeoPixel* ring){	
 	colorWipe(lightColour,0,ring);
-
 	return;
 }
-
-
-
 
 /** off()
   @Synopsis: actually just a wrapper for the clear function
@@ -85,7 +79,7 @@ void Flashlight::off(Adafruit_NeoPixel* ring){
 	@Synopsis: Jazzy colour version of on. Cycles through the count of colours. Uses a static counter to maintain
  				where it was left.
 */
-uint32_t Flashlight::party(Adafruit_NeoPixel* ring){
+uint32_t Flashlight::party(){
 	static uint16_t count = 0;	
 	count++;
 	if(count > 29)
@@ -125,7 +119,7 @@ void Flashlight::strobe(bool keep, Adafruit_NeoPixel* ring){
 		if(flip > 20){
 			flip =0;
 			//pick random color
-			colour = party(ring);
+			colour = party();
 		}
 
 		//Show colours

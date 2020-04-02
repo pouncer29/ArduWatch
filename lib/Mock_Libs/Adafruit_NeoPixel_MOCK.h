@@ -3,7 +3,7 @@
 
 #include <cinttypes>
 
-int GetVal(int,char);
+uint32_t GetVal(int,char);
 
 class Adafruit_NeoPixel
 {

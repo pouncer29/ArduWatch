@@ -21,7 +21,7 @@ using namespace std;
 
 /** gears_Constructer*/
 void gears_Constructor(){
-	cout<<"Testing Gears Constructor"<<endl;
+	cout<<"Testing Gears Constructor..."<<endl;
 
 	//Setup
 	int tstHr = 12;
@@ -47,7 +47,7 @@ void gears_Constructor(){
 	@Synopsis: Tests ability to update time
 */
 void gears_UpdateTime(){
-	cout<<"Testing Gears Update Time"<<endl;
+	cout<<"Testing Gears Update Time..."<<endl;
 	
 	//Setup
 	int tstHr = 12;
@@ -69,7 +69,7 @@ void gears_UpdateTime(){
 	@Synopsis: Tests for Index Retrival
 */
 void gears_GetIndex(){
-	cout<<"Testing Gears Get Index"<<endl;
+	cout<<"Testing Gears Get Index..."<<endl;
 	Clock_Gears* testGears = new Clock_Gears();
 
 	cout<<"Testing Hour Index Retrival..."<<endl;
@@ -231,7 +231,7 @@ int Clock_GearsTests(){
 	color for 0, and any other divisible by 5.
 */
 void face_ModMinColor(){
-	cout<<"Testing Min Colour Modification ..."<<endl;
+	cout<<"Testing Min Colour Modification..."<<endl;
 	
 	//Construct Face
 	Clock_Face* testFace = new Clock_Face();
@@ -411,7 +411,6 @@ void clock_TrackTime(){
 	@Synopsis: Testing set time for Clock
 */
 void clock_SetWatchTime(){
-
 	cout<<"Testing Clock SetWatchTime..."<<endl;
 
 	//Setup ring
@@ -427,16 +426,6 @@ void clock_SetWatchTime(){
 
 	//Call it!
 	testClock->setWatchTime(tstHr,tstMin,testTime,testRing);
-
-	//Grab Colours 
-	uint32_t hrColour = testClock->face->hrColour;
-	uint32_t minColour = testClock->face->minColour;
-	uint32_t secColour = testClock->face->secColour;
-
-	//Grab Resulting Colours
-	uint32_t ringColour_hr = GetVal((tstHr % 12),'c');
-	uint32_t ringColour_min = GetVal((tstMin % 12),'c');
-	uint32_t ringColour_sec= GetVal((0 % 12),'c');
 
 	/*
 	cout<<"Hour,Min,Sec"<<endl;
@@ -454,11 +443,6 @@ void clock_SetWatchTime(){
 	assert(min == tstMin);
 	assert(sec == 0);
 
-	//Assert colours were set
-	assert(ringColour_hr == hrColour);
-	assert(ringColour_min == minColour);
-	assert(ringColour_sec == secColour);
-	
 	cout<<"SetWatchTime, hr=6, min=45, sec=0(by default) -- PASSED"<<endl;
 
 }

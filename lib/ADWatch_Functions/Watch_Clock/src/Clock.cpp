@@ -146,8 +146,8 @@ void Clock::setWatchTime(uint8_t hr, uint8_t min, time_t localTime, Adafruit_Neo
 	gears->updateTime(now());
 	
 	//Track the time being set.
-	//TrackTime really just tracks hand placement. It is ideal for this!
-	trackTime(localTime,ring);
+	//TrackTime really just tracks hand placement. It is ideal for this!  
+	//trackTime(localTime,ring);  -- ONLY IF WE ARE SETTING TIME MANUALLY
 	
 	//Remove tail
 	//TODO: Maybe remove this (Causes a test case to fail...)
