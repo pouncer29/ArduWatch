@@ -3,7 +3,7 @@
 #   Date: February 15, 2020
 
 CC = gcc #$(ARDUBIN)/tools/avr/bin/avrdude #-std=gnu++17
-CPPFLAGS= -Wall -D CI #-n -V
+CPPFLAGS= -Wall -D CI#-n -V
 
 # Get what OS they are on
 PLATFORM := $(shell uname)
@@ -26,8 +26,9 @@ SRCLIB = ./src
 
 #ADWatch CI exe
 watch_ADWatch: $(FUNC).o $(FUNC)_CI.o
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(FUNC)_CI_TEST $(FUNC).o $(FUNC)_CI.o \
-	-L$(MOCKLIBS) -lmock -L$(FUNCLIB) -ladwfunc -lc++
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/$(FUNC)_CI.out $(FUNC).o $(FUNC)_CI.o \
+	-L$(MOCKLIBS) -L$(FUNCLIB) $(LDFLAGS) -ladwfunc 
+	@echo "******************** ADWatch Made *******************"
 
 #CI for the base watch function
 $(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h

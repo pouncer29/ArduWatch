@@ -15,27 +15,25 @@ USER=$(shell whoami)
 
 
 # PathHelpers
-PROJDIR = $(shell pwd)
-FUNCDIR = $(PROJDIR)/lib/ADWatch_Functions
-MOCKLIBS = $(PROJDIR)/lib/Mock_Libs
-TESTDIR = $(PROJDIR)/lib/ADWatch_CI_TESTS
-FUNCLIB = $(MOCKLIBS)/Function_Lib
+export PROJDIR := $(shell pwd)
+export FUNCDIR := $(PROJDIR)/lib/ADWatch_Functions
+export MOCKLIBS := $(PROJDIR)/lib/Mock_Libs
+export TESTDIR := $(PROJDIR)/CI/ADWatch_CI_Tests
+export FUNCLIB := $(MOCKLIBS)/Function_Lib
 
-
-export 
+ifeq ($(OS),Linux)
+	export LDFLAGS = -lmock -lstdc++
+else ifeq ($(OS), Darwin)
+	export LDFLAGS = -lmock -lc++
+endif
 
 all: start libs watchController
-	@echo "********************* CI MAKE COMPLETE ************************"
+	@echo "*********************** CI MAKE COMPLETE ***************************"
 
 
 .PHONEY: start all libs watchController
 
 start:
-	export PROJDIR
-	export MOCKDIR 
-	export TESTDIR
-	export FUNCDIR
-	export FUNCLIB
 	@echo "*********************** BEGINNING WATCH BUILD *****************"
 	@echo "User: $(USER) OS: $(OS) PLATFORM: $(PLATFORM) ARCH: $(ARCH)"
 	@echo "current dir is $(shell pwd)"
@@ -43,18 +41,22 @@ start:
 
 
 libs: 
-	@echo "*********************** CREATING LIBS ****************************"
-	@echo "************************ MAKING MOCKLIB **************************"
+	@echo "*********************** CREATING LIBS ******************************"
+	@echo "************************ MAKING MOCKLIB ****************************"
 	$(MAKE) -C $(MOCKLIBS)
-	@echo "************************ TOOLS AND FUNCTIONS MADE ***************"
+	@echo "************************ TOOLS AND FUNCTIONS MADE ******************"
 	$(MAKE) -C $(FUNCDIR)
 	$(MAKE) -C $(PROJDIR)/lib/ADWatch_GPS
-	@echo "************************ MAKING ADWFUNCLIB **************************"
+	@echo "************************ MAKING ADWFUNCLIB *************************"
 	$(MAKE) -C $(FUNCLIB)
-	@echo "******************* ALL LIBS MADE ************************"
+	@echo "************************** ALL LIBS MADE ***************************"
 
+ifeq ($(OS),Darwin)
 watchController:
 	$(MAKE) -C $(PROJDIR)/lib/ADWatch_lib
-
+else
+watchController:
+	@echo "**************** SKIPPING ADWATCH BUILD FOR $(OS) ******************"
+endif
 
 

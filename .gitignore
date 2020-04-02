@@ -20,6 +20,9 @@
 *.mod
 *.smod
 
+#Vim
+*.swp
+
 # Compiled Static libraries
 *.lai
 *.la
@@ -30,4 +33,6 @@
 *.exe
 *.out
 *.app
+
+#Paths
 Documents/GPS_Output

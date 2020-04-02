@@ -45,7 +45,7 @@ void Clock_Face::modMinColour(time_t localTime,Adafruit_NeoPixel* ring){
     minMod--;   //So that subtract 1 from 256 to prevent wrapping and not from 0 to go out of bounds on the strip array.
 
   //Minute becomes more red and less green as it progresses.
-  minColour = ring->Color(0+minMod,255-minMod,95,0);
+  minColour = ring->Color(minMod,255-minMod,95,0);
   ring->setPixelColor(11,blank); //The original Magic 11 appearance.
   return;
 }

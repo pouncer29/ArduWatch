@@ -34,7 +34,6 @@ class GPSTools{
 		time_t grabTime();
 		float grabSpeed(void);
 		float grabHeading(void);
-		void update(void);
 		bool hasFix(void);
 
 	private:

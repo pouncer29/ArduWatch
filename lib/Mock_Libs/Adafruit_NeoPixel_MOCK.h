@@ -3,6 +3,8 @@
 
 #include <cinttypes>
 
+uint32_t GetVal(int,char);
+
 class Adafruit_NeoPixel
 {
  public:

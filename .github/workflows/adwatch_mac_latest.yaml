@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - master
-      - Dev/*
-      - Sauske
+      - HiddenLeaf/*
 jobs:
   build:
 
@@ -13,10 +12,12 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2 
-    #- name: configured
-      #run: ./configure
+    - name: configured
+      run: ./CI/configure
     - name: make
       run: make
+    - name: test
+      run: ./CI/run_tests
     #- name: make check
     #  run: make check
     #- name: make distcheck

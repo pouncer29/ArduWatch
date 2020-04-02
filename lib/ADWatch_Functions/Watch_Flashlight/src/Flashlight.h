@@ -30,7 +30,7 @@ class Flashlight: public RingInterface{
 		void off(Adafruit_NeoPixel*);
 		void strobe(bool,Adafruit_NeoPixel*);
 		void colorWipe(uint32_t,uint8_t,Adafruit_NeoPixel*);
-		uint32_t party(Adafruit_NeoPixel*);
+		uint32_t party();
 };
 
 #endif

@@ -14,13 +14,15 @@ Synopsis: outline for CI for Clock
 #include <TimeLib_MOCK.h>
 #include <Adafruit_NeoPixel_MOCK.h>
 
+#include <ctime>
+#include <iostream>
+#include <assert.h>
+
 /** Clock_CI
    -----------
 	Made for the CI of the clock class
 	
 */
-class Clock_CI{};
-
 int main();
 
 #endif

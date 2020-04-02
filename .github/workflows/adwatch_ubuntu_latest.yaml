@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - HiddenLeaf/*
 jobs:
   build:
 
@@ -11,5 +12,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2 
+    - name: configured
+      run: ./CI/configure
     - name: make
       run: make
+    - name: test
+      run: ./CI/run_tests

@@ -3,7 +3,7 @@
 #   Date: February 15, 2020
 
 CC = gcc #$(ARDUBIN)/tools/avr/bin/avrdude #-std=gnu++17
-CPPFLAGS= -Wall -D CI #-n -V
+CPPFLAGS= -Wall -D CI -g #-n -V
 
 # Get what OS they are on
 PLATFORM := $(shell uname)
@@ -29,15 +29,16 @@ FUNC = Speed
 
 # Speedometer CI exe
 watch_speedometer: $(FUNC)_Gauge.o $(FUNC)_Dial.o $(FUNC)ometer.o $(FUNC)ometer_CI.o
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Speedometer_CI $(FUNC)ometer_CI.o \
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Watch_Speedometer_CI.out $(FUNC)ometer_CI.o \
 	$(FUNC)ometer.o $(FUNC)_Gauge.o $(FUNC)_Dial.o \
-	-L $(MOCKLIBS) -lmock -lc++
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #libSpeedometer
 lib$(FUNC): $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o
 	@echo "************** Making libAD$(FUNC)ometer"
 	ar -rv $(MOCKLIBS)/Function_Lib/libAD$(FUNC)ometer.a $(FUNC)ometer.o \
 	$(FUNC)_Dial.o $(FUNC)_Gauge.o
+	cp $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o $(MOCKLIBS)/Function_Lib
 	@echo "************** libADC$(FUNC)ometer made"
 
 

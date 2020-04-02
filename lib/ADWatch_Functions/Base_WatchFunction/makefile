@@ -3,7 +3,7 @@
 #   Date: February 15, 2020
 
 CC = gcc #$(ARDUBIN)/tools/avr/bin/avrdude #-std=gnu++17
-CPPFLAGS= -Wall -D CI #-n -V
+CPPFLAGS= -Wall -D CI -g #-n -V
 
 # Get what OS they are on
 PLATFORM := $(shell uname)
@@ -17,7 +17,7 @@ FUNC = NOTHING
 #targets 
 .PHONEY: clean
 
-all: base_watchFunction libbaseWF clean
+all: base_watchFunction clean #libbaseWF -- for later maybe 
 	@echo "********************* BASE_WAATCHFUNCTION TESTS BUILT ************************"
 
 clean:
@@ -30,13 +30,14 @@ CI = Base_WatchFunction
 
 #CI for Base WF
 base_watchFunction:  $(FUNC).o $(CI)_CI.o
-	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Base_WatchFunction_CI $(CI)_CI.o $(FUNC).o \
-	-L $(MOCKLIBS) -lmock -lc++
+	$(CC) $(CPPFLAGS) -o $(TESTDIR)/Base_WatchFunction_CI.out $(CI)_CI.o $(FUNC).o \
+	-L $(MOCKLIBS) $(LDFLAGS)
 
 #lib baseWF
 libbaseWF: $(FUNC).o 
 	@echo "************** Making libbaseWatchFunction"
 	ar -rv $(MOCKLIBS)/Function_Lib/libbaseWF.a $(FUNC).o
+	cp $(FUNC).o $(MOCKLIBS)/Function_Lib
 	@echo "************** libbaseWatchFunction made"
 
 #CI for the base watch function

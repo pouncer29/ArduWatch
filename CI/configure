@@ -1,0 +1,21 @@
+#!/bin/bash
+# Name: Frank Lewis
+# NSID: fbl773
+# Student #: 11194945
+# Lecture: __
+# Lab: __
+# Synopsis: "Beans on toast...weird."
+
+echo Begin ADWatch Configure
+cd ./CI
+pwd
+if [[ -d ./ADWatch_CI_Tests ]]
+then
+	echo CI test folder exists
+else
+	echo Creating ADWatch_CI_Tests
+	mkdir ./ADWatch_CI_Tests
+fi
+
+ls
+

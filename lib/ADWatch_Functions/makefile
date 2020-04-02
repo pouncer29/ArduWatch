@@ -5,7 +5,7 @@
 #WATCH FUNCTIONS MAKEFILE
 
 CC = gcc #$(ARDUBIN)/tools/avr/bin/avrdude #-std=gnu++17
-CPPFLAGS= -Wall -D CI #-n -V
+CPPFLAGS= -Wall -D CI -g #-n -V
 
 # Get what OS they are on
 PLATFORM := $(shell uname)
@@ -13,7 +13,7 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-all: watch_Functions base_watch run_tests
+all: watch_Functions base_watch 
 	@echo "********************* FUNCTION MAKE COMPLETE ************************"
 
 watch_Functions: 
