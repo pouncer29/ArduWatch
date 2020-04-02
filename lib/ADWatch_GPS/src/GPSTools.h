@@ -7,10 +7,16 @@
 #ifndef GPSTools_h
 #define	GPSTools_h
 
-#include <Adafruit_GPS.h>
-#include <TimeLib.h>
-#include <Arduino.h>
-#include <SoftwareSerial.h>
+#ifndef CI
+	#include <Adafruit_GPS.h>
+	#include <TimeLib.h>
+	#include <Arduino.h>
+	#include <SoftwareSerial.h>
+#else
+	#include <TimeLib_MOCK.h>
+	#include <Adafruit_GPS_MOCK.h>
+	#include <Arduino_MOCK.h>
+#endif
 
 /** GPSTools
    --------------
@@ -28,7 +34,6 @@ class GPSTools{
 		time_t grabTime();
 		float grabSpeed(void);
 		float grabHeading(void);
-		void update(void);
 		bool hasFix(void);
 
 	private:

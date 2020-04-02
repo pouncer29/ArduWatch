@@ -23,19 +23,16 @@ GPSTools::GPSTools(Adafruit_GPS* myGPS,int32_t adj){
 //Handles the UTC timezones with our given degrees
 int32_t GPSTools::tzAdjust(float deg){
 
-	int32_t	adjustment;
-
+	int32_t	adjustment = 0;
 	///The adjustment +/- 1 is because of my goofed timezone. It should maybe be removed.
 	if(deg < 0) {
 		adjustment = ((-1 * deg) / 15) * -1;
-		return adjustment + 1; //Saskatoon is -6, this fn gives -7... So I cheated
+		return adjustment+1; //Saskatoon is -6, this fn gives -7... So I cheated
 	}
 	else {
-		adjustment = deg / 15;
+		return adjustment = deg / 15;
 	}
-
-
-	}
+}
 
 /** grabTime()
 	precond: gps is initialized
