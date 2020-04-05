@@ -43,10 +43,10 @@ lib$(FUNC): $(FUNC)ometer.o $(FUNC)_Dial.o $(FUNC)_Gauge.o
 
 
 #CI for the funcometer
-$(FUNC)ometer_CI.o: $(SRCLIB)/$(FUNC)ometer_CI.cpp $(SRCLIB)/$(FUNC)ometer_CI.h
+$(FUNC)ometer_CI.o: $(FUNC)ometer_CI.cpp $(FUNC)ometer_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
-	$(SRCLIB)/$(FUNC)ometer_CI.cpp 
+	$(FUNC)ometer_CI.cpp 
 	@echo "Created CI component for $(FUNC)ometer (groovy)."
 
 #Speedometer Components

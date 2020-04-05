@@ -4,12 +4,7 @@
 	Synopsis: GPSTools CI Tests
 */
 
-#include "GPSTools.h"
-#include <TimeLib_MOCK.h>
-#include <iostream>
-#include <cmath>
-#include <assert.h>
-
+#include "GPSTools_CI.h"
 using namespace std;
 
 

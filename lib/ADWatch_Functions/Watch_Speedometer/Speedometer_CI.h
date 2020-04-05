@@ -11,11 +11,13 @@ Synopsis: outline for CI for Speedometer
 	#include <Adafruit_NeoPixel.h>
 #else
 	#include <Adafruit_NeoPixel_MOCK.h>
+	#include <iostream>
+	#include <assert.h>
+	#include <Speedometer.h>
+	#include <Speed_Gauge.h>
+	#include <Speed_Dial.h>
 #endif
 
-#include <Speedometer.h>
-#include <Speed_Gauge.h>
-#include <Speed_Dial.h>
 
 /** Speedometer_CI
    -----------

@@ -41,10 +41,10 @@ lib$(FUNC): $(FUNC).o
 	@echo "************** libADC$(FUNC) made"
 
 #CI for the flashlight
-$(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
+$(FUNC)_CI.o: $(FUNC)_CI.cpp $(FUNC)_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
-	$(SRCLIB)/$(FUNC)_CI.cpp 
+	$(FUNC)_CI.cpp 
 	@echo "Created CI component for $(FUNC)."
 
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h
