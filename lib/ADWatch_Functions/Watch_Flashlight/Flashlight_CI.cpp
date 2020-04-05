@@ -5,7 +5,6 @@ Synopsis: Unit tests for the flashlight tests.
 */
 
 #include "Flashlight_CI.h"
-
 using namespace std;
 
 

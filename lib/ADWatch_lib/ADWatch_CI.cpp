@@ -6,13 +6,7 @@ Synopsis: Because Arduino code is tough to make with gcc,and all I want is a ver
 build, I've created this class. Perhaps I will add some tests in here too.. eventually
 */
 
-#ifdef CI
-	#include "ADWatch_CI.h"
-	#include <iostream>
-	#include <ADWatch.h>
-#endif
-
-
+#include "ADWatch_CI.h"
 using namespace std;
 
 

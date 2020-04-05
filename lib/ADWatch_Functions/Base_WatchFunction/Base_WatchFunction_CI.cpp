@@ -7,8 +7,6 @@ build, I've created this class. Perhaps I will add some tests in here too.. even
 */
 
 #include "Base_WatchFunction_CI.h"
-#include <iostream>
-
 using namespace std;
 
 //****************************************************************************************

@@ -7,8 +7,11 @@ Synopsis: outline for CI for BaseWatchFunction
 #ifndef BASE_WATCH_FN_CI_h
 #define BASE_WATCH_FN_CI_h
 
-#include <RingInterface.h>
-#include <assert.h>
+#ifdef CI
+	#include <RingInterface.h>
+	#include <assert.h>
+	#include <iostream>
+#endif
 
 /** BaseWatchFunction_CI
    -----------

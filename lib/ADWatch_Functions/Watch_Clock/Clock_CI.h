@@ -8,15 +8,16 @@ Synopsis: outline for CI for Clock
 #ifndef CLOCK_CI_h
 #define CLOCK_CI_h
 
-#include "./src/Clock.h"
-#include "./src/Clock_Gears.h"
-#include "./src/Clock_Face.h"
-#include <TimeLib_MOCK.h>
-#include <Adafruit_NeoPixel_MOCK.h>
-
-#include <ctime>
-#include <iostream>
-#include <assert.h>
+#ifdef CI
+	#include <Clock.h>
+	#include <Clock_Gears.h>
+	#include <Clock_Face.h>
+	#include <TimeLib_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
+	#include <ctime>
+	#include <iostream>
+	#include <assert.h>
+#endif
 
 /** Clock_CI
    -----------

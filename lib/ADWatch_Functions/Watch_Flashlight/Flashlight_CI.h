@@ -7,9 +7,11 @@ Synopsis: outline for CI for Flashlight
 #ifndef FLASHLIGHT_CI_h
 #define FLASHLIGHT_CI_h
 
-#include <Flashlight.h>
-#include <assert.h>
-#include <iostream>
+#ifdef CI
+	#include <Flashlight.h>
+	#include <assert.h>
+	#include <iostream>
+#endif
 
 /** Flashlight_CI
    -----------

@@ -7,15 +7,15 @@ Synopsis: outline for CI for Speedometer
 #ifndef SPEEDOMETER_CI_h
 #define SPEEDOMETER_CI_h
 
-#ifndef CI
-	#include <Adafruit_NeoPixel.h>
-#else
+#ifdef CI
 	#include <Adafruit_NeoPixel_MOCK.h>
 	#include <iostream>
 	#include <assert.h>
 	#include <Speedometer.h>
 	#include <Speed_Gauge.h>
 	#include <Speed_Dial.h>
+#else
+	#include <Adafruit_NeoPixel.h>
 #endif
 
 

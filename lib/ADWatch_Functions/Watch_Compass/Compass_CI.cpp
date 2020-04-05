@@ -6,10 +6,6 @@ Synopsis: Compass Tests
 */
 
 #include "Compass_CI.h"
-
-#include <assert.h>
-#include <iostream>
-
 using namespace std;
 
 
