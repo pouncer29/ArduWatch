@@ -5,12 +5,14 @@ Date: May 16th, 2018
 Synopsis: Compass_Magnet: The means of moving a compass needle.
 
 */
-#ifdef CI
-	#include <cinttypes>
-#endif
-
 #ifndef Compass_Magnet_h
 #define Compass_Magnet_h
+
+#ifdef CI
+	#include <cinttypes>
+#else
+	#include <Arduino.h>
+#endif
 
 
 

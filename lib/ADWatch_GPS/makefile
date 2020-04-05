@@ -39,10 +39,10 @@ lib$(TOOL): $(TOOL).o
 	@echo "************** lib $(TOOL) made"
 
 #CI for the gpsToools 
-$(TOOL)_CI.o: $(SRCLIB)/$(TOOL)_CI.cpp 
+$(TOOL)_CI.o: $(TOOL)_CI.cpp $(TOOL)_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
-	$(SRCLIB)/$(TOOL)_CI.cpp 
+	$(TOOL)_CI.cpp 
 	@echo "Created CI component for $(TOOL)."
 
 # GPSTools object

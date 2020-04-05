@@ -41,10 +41,10 @@ libbaseWF: $(FUNC).o
 	@echo "************** libbaseWatchFunction made"
 
 #CI for the base watch function
-$(CI)_CI.o: $(SRCLIB)/$(CI)_CI.cpp $(SRCLIB)/$(CI)_CI.h
+$(CI)_CI.o: $(CI)_CI.cpp $(CI)_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
-	$(SRCLIB)/$(CI)_CI.cpp 
+	$(CI)_CI.cpp 
 	@echo "Created CI component for $(CI)."
 
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h

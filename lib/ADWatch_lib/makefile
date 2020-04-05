@@ -31,13 +31,13 @@ watch_ADWatch: $(FUNC).o $(FUNC)_CI.o
 	@echo "******************** ADWatch Made *******************"
 
 #CI for the base watch function
-$(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
+$(FUNC)_CI.o: $(FUNC)_CI.cpp $(FUNC)_CI.h
 	@echo "********* STARTED $(FUNC)_CI BUILD ***************"
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) -I $(FUNCDIR)/Watch_Clock/src \
 	-I $(FUNCDIR)/Watch_Compass/src -I $(FUNCDIR)/Watch_Speedometer/src \
 	-I $(FUNCDIR)/Watch_Flashlight/src -I $(PROJDIR)/lib/ADWatch_GPS/src \
-	$(SRCLIB)/$(FUNC)_CI.cpp 
+	$(FUNC)_CI.cpp 
 	@echo "Created CI component for $(FUNC)."
 
 $(FUNC).o: $(SRCLIB)/$(FUNC).cpp $(SRCLIB)/$(FUNC).h

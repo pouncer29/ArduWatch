@@ -6,13 +6,6 @@ Synopsis: Compass Tests
 */
 
 #include "Compass_CI.h"
-#include "Compass_Needle.h"
-#include "Compass_Magnet.h"
-#include <Adafruit_NeoPixel_MOCK.h>
-
-#include <assert.h>
-#include <iostream>
-
 using namespace std;
 
 

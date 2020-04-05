@@ -7,7 +7,6 @@ verified build, I've created this class.
 */
 
 #include "Clock_CI.h"
-
 using namespace std;
 
 
