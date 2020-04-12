@@ -20,6 +20,7 @@
 
  /* Watch Nonsense*/
  ADWatch* watch = new ADWatch(ring);
+ uint8_t prevFn;
  /* End Watch Nonsense*/
  
  void setup()
@@ -40,20 +41,60 @@
   /*Watch Setup*/
   randomSeed(analogRead(0));
   setTime(12,59,15,12,04,2020);
+  prevFn = 0;
 }
 
 void loop()                   
 {
+  int choice = dialSelect();
+  Serial.print("Choice is: ");Serial.println(choice);
+  debugOut(choice);
   time_t curTime = now();
-  printTime(curTime);
-	debugOut(hour(curTime));
-  watch->showTime(curTime);
- delay(2000);
+    ring->clear();
+    ring->show();
+  /*Clear ring if different from last fn*/
+  if(prevFn != choice){
+    Serial.print("Choice Switched From ");Serial.print(prevFn);Serial.print(" to "); Serial.println(choice);
+  }
+
+  /*If is greater than switch*/
+  if(choice == 0){
+      ring->clear();
+      ring->show();
+  } else if (choice == 1){
+     printTime(curTime);
+     watch->showTime(curTime);
+  } else if(choice == 2){
+      float heading = randFloat(0,360);
+      printFloat("heading",heading);
+      watch->showHeading(heading);
+  } else if(choice == 3){
+     float testSpeed = randFloat(0,200);
+      printFloat("Speed",testSpeed);
+      watch->showSpeed(testSpeed);
+  }
+  else{
+    writeToRing(8);
+  }
+  prevFn = choice;
+  delay(2000);
+    
+      
+  }
+
+/*Random Float*/
+float randFloat(int lower, int upper){
+  float randFloat = random(lower,upper);
+  return randFloat;
 }
 
 /* printTime*/
 void printTime(time_t tm){
-  Serial.print("Time: ");Serial.print(hour(tm));Serial.print(":");Serial.print(minute(tm));Serial.print(":");Serial.println(second(tm));
+  Serial.print("Time is: ");Serial.print(hour(tm));Serial.print(":");Serial.print(minute(tm));Serial.print(":");Serial.println(second(tm));
+}
+
+void printFloat(String lable, float value){
+  Serial.print(lable);Serial.print(" is: ");Serial.println(value);
 }
 
 /* Writes testColor to the specified index on the ring*/
@@ -96,5 +137,5 @@ void debugOut(int code){
 int dialSelect(){
   float reading = analogRead(A0);
   Serial.print("Reading: "); Serial.println(reading);
-  return reading / 10;
+  return (int) reading / 10;
 }

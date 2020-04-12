@@ -21,8 +21,6 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800
 Adafruit_NeoPixel* ring = &strip;
 ADBug debugger = ADBug(ring);
 
-
-
 //Using a master watch Class
 ADWatch watch = ADWatch(ring);
 
