@@ -15,8 +15,7 @@
 
    return: nothing
  */
-GPSTools::GPSTools(Adafruit_GPS* myGPS,int32_t adj){
-	gps = myGPS;
+GPSTools::GPSTools(int32_t adj){
 	this->adjust = adj;
 }
 
@@ -38,13 +37,13 @@ int32_t GPSTools::tzAdjust(float deg){
 	precond: gps is initialized
 	postcond: a time_t of the current time is produced
 
-	Parameters: None
+	Parameters: gps - the Adafruit GPS to pull the time off of 
 
 	Synopsis: Takes apart the GPS time and puts it into a fresh time_t object
 
 	return: the current time according to the GPS module as a time_t
 */
-time_t GPSTools::grabTime(){
+time_t GPSTools::grabTime(Adafruit_GPS* gps){
 
 	int32_t hour;
 	if(gps->fix){
@@ -66,13 +65,13 @@ time_t GPSTools::grabTime(){
 	precond: gps has been initialized and we have a fix
 	postcond: speed is produced as a float from GPS
 	
-	Parameters: none
+	Parameters: gps - the Adafruit_GPS we will pull the speed form
 	
 	Synopsis: grabs speed reading in knots from gps, converts and returns it as a kmph value
 
 	return: a float from the GPS module readings
 */
-float GPSTools::grabSpeed(void){
+float GPSTools::grabSpeed(Adafruit_GPS* gps){
 	if(gps->fix)
 		return gps->speed * 1.852;
 	else
@@ -83,13 +82,13 @@ float GPSTools::grabSpeed(void){
 	precond: GPS readings are initialized
 	postcond: None
 
-	Parameters: None
+	Parameters: gps - The AdafruitGPS we will pull the heading data from
 	
 	Synopsis: produces an array index value from a GPS reading
 
 	return: nothing
 */
-float GPSTools::grabHeading(void){
+float GPSTools::grabHeading(Adafruit_GPS* gps){
 	if(gps->fix)
 		return gps->angle;
 	else
@@ -101,13 +100,13 @@ float GPSTools::grabHeading(void){
 	precond: GPS is initialized
 	postcond: the tracked variable is updated
 
-	Parameters: None
+	Parameters: gps - The AdafruitGPS we will pull the fix data from
 	
 	Synopsis: Keeps the tracked gps reading up to date
 
 	return: nothing
 */
-bool GPSTools::hasFix(void){
+bool GPSTools::hasFix(Adafruit_GPS* gps){
 	return gps->fix;
 }
 

@@ -1,63 +1,105 @@
+#include <Adafruit_GPS.h>
+#include <SoftwareSerial.h>
 #include <Adafruit_NeoPixel.h>
+#include <SoftwareSerial.h>
+#include <GPSTools.h>
+#include <Adafruit_GPS.h>
 #include <TimeLib.h>
-#include<ADWatch.h>
+#include <ADWatch.h>
 
-/* LED code outpus */
-#define PZero 12
-#define POne 11
-#define PTwo 10
-#define PThree 9
-/* End LED Code outputs */
+/* LED OUTPUT CODES */
+#define PZero 9
+#define POne 10
+#define PTwo 11
+#define PThree 12
+/* END LED OUTPUT CODES*/
 
 /* Ring Nonsense */
   #define PIN 6
   #define NUM_LEDS 12
   #define BRIGHTNESS 10
   Adafruit_NeoPixel* ring = new Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
-
   uint32_t testColour;
- /* End Ring Nonsense*/
+  /* End Ring Nonsense*/
 
- /* Watch Nonsense*/
+  /* Watch Nonsense*/
  ADWatch* watch = new ADWatch(ring);
  uint8_t prevFn;
  /* End Watch Nonsense*/
- 
- void setup()
+
+/*GPSNonsense */
+SoftwareSerial mySerial(3, 2);
+Adafruit_GPS GPS(&mySerial);
+GPSTools gTools = GPSTools(&GPS,7);
+/* End GPS Nonsense*/
+
+
+#define GPSECHO  true
+
+void setup()
 {
-  /* Code out Setup */
+
+ /* Code out Setup */
   pinMode(PThree,OUTPUT);
   pinMode(PTwo,OUTPUT);
   pinMode(POne,OUTPUT);
-  pinMode(PZero,OUTPUT);
+  pinMode(PZero,OUTPUT);  
   Serial.begin(115200);
+  delay(5000);
+  Serial.println("TESTING SETUP -- Complete");
 
-  /*Ring Setup*/
-  testColour = ring->Color(255,255,0,50);
-  ring->begin();
-  ring->clear();
-  ring->setBrightness(BRIGHTNESS);
+  /*GPS Setup*/
+   // connect at 115200 so we can read the GPS fast enough and echo without dropping chars
+  // also spit it out
+  Serial.begin(115200);
+  delay(5000);
+  GPS.begin(9600);
+  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ);   // 1 Hz update rate
+  GPS.sendCommand(PGCMD_ANTENNA);
+  delay(1000);
+  mySerial.println(PMTK_Q_RELEASE);
+  Serial.println("GPS SETUP -- Complete");
+
 
   /*Watch Setup*/
   randomSeed(analogRead(0));
-  setTime(12,59,15,12,04,2020);
+  //setTime(12,59,15,12,04,2020);
   prevFn = 0;
+  Serial.println("FLOW SETUP -- Complete");
 }
 
-void loop()                   
+void loop()                    
 {
+  /* GPS loop nonsense */
+  char c = GPS.read();
+  if ((c) && (GPSECHO))
+    Serial.write(c);
+  if (GPS.newNMEAreceived()) {
+
+    if (!GPS.parse(GPS.lastNMEA()))
+      return;  
+  }
+  
+
+  Serial.print("GPS has fix: "); Serial.println(GPS.fix == true);
+  printGPS(GPS);
+
   int choice = dialSelect();
   Serial.print("Choice is: ");Serial.println(choice);
   debugOut(choice);
+
+  
   time_t curTime = now();
-    ring->clear();
-    ring->show();
+  ring->clear();
+  ring->show();
+   
   /*Clear ring if different from last fn*/
   if(prevFn != choice){
     Serial.print("Choice Switched From ");Serial.print(prevFn);Serial.print(" to "); Serial.println(choice);
   }
 
-  /*If is greater than switch*/
+ /* fn Choice*/
   if(choice == 0){
       ring->clear();
       ring->show();
@@ -76,16 +118,35 @@ void loop()
   else{
     writeToRing(8);
   }
+  
   prevFn = choice;
+  
   delay(2000);
-    
-      
-  }
+}
 
 /*Random Float*/
 float randFloat(int lower, int upper){
   float randFloat = random(lower,upper);
   return randFloat;
+}
+
+/*print gps stats*/
+void printGPS(Adafruit_GPS g){
+  if(g.fix == true){
+    debugOut(15);
+    Serial.print("Quality: ");Serial.println(g.fixquality);
+    Serial.print("Time: ");
+    Serial.print(g.hour, DEC); Serial.print(':');Serial.print(g.minute, DEC); Serial.print(':');Serial.print(g.seconds, DEC); Serial.println('.');
+    Serial.print("Longitude: ");Serial.println(g.longitude, 4);
+    Serial.print("Longitude Degrees: ");Serial.print(g.longitudeDegrees, 4);Serial.println(g.lon);
+    Serial.print("Angle: ");Serial.println(g.angle);
+    Serial.print("Speed (kn): "); Serial.println(g.speed);
+    Serial.print("Speed (kmph): "); Serial.println(g.speed * 1.852);
+    Serial.print("Satellites: "); Serial.println((int) g.satellites);
+    setTime(gTools.grabTime());
+  } else {
+    Serial.println("GPS: NO SIGNAL");
+  }
 }
 
 /* printTime*/
@@ -137,5 +198,5 @@ void debugOut(int code){
 int dialSelect(){
   float reading = analogRead(A0);
   Serial.print("Reading: "); Serial.println(reading);
-  return (int) reading / 10;
+  return (int) ((int) reading / 100);
 }

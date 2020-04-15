@@ -14,25 +14,25 @@ Synopsis:
 ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	// Ring
 	ring = strip;
-	ring->setBrightness(20);
+	//ring->setBrightness(20);
 
 	// init features
 	clock = new Clock();
 	speedo = new Speedometer();
 	compass = new Compass();
-	light = new Flashlight();
+	//light = new Flashlight();
 	functionCount = 6; //Including "refresh"
 
 	//grab colours for flourish/fn() switch
+
 	clock_colour =	clock->face->minColour;
 	speedo_colour = speedo->dial->regionBColour;
 	compass_colour = compass->needle->northColour;
-	light_colour = light->lightColour;
-	party_colour = light->violet;
-	blank = light->blank;
-	error_colour = light->red; 
-	
-	return;
+	//light_colour = light->lightColour;
+	//party_colour = light->violet;
+	//blank = light->blank;
+	//error_colour = light->red; 
+
 }
 
 
@@ -159,28 +159,7 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait){
  * @Synopsis: Refreshes the watch, and displays loading-esq colours as it does.
  */
 void ADWatch::refresh(bool cond){
-	uint32_t refreshMe_colours[3] = {clock_colour,compass_colour,speedo_colour};
 
-	//If not satelite found
-	if(cond) {
-		for (int i = 0; i < 3; i++) {
-			//All this is is a reverse Flourish to signify refresh rather than show
-			for (uint8_t j = 11; j > 0; j--) {
-				ring->setPixelColor(0, error_colour);
-				ring->setPixelColor(j, refreshMe_colours[i]);
-				ring->show();
-				delay(50);
-			}
-			delay(150);
-			ring->clear();
-			ring->show();
-		}
-	}
-	flourish(light->green,30);
-	delay(30);
-	ring->clear();
-	ring->show();
-	//call some refresh function while we run the clock.
 	
 }
 
