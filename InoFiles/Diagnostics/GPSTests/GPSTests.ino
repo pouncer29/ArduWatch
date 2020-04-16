@@ -100,7 +100,6 @@ void loop()                     // run over and over again
       setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
       //printTime(now());
       //setTime(gTools.grabTime(GPS));
-    }
   /* End GPS Poll */
       /*Selector */
   int choice = dialSelect();
@@ -108,9 +107,6 @@ void loop()                     // run over and over again
   debugOut(choice);
   /* End Selector*/
     /* Flow Setup */
-  if(GPS.fix == true){
-    debugOut(15);
-    debugOut(0);
   /*Clear ring if different from last fn*/
   if(prevFn != choice){
       ring->clear();
@@ -124,22 +120,22 @@ void loop()                     // run over and over again
   } else if (choice == 1){
      //ring->clear();
      //setTime(curTime);
-//     printTime(now());
+     printTime(now());
      watch->showTime(now());
      ring->show();
   } else if(choice == 2){
       ring->clear();
       //float heading = randFloat(0,360);
-      float heading = gTools.grabHeading(GPS);
-    //  printFloat("heading",heading);
-      watch->showHeading(heading);
+      //float heading = gTools.grabHeading(GPS);
+      printFloat("GPS Heading",GPS.angle);
+      watch->showHeading(GPS.angle);
       ring->show();
   } else if(choice == 3){
       ring->clear();
     // float speed = randFloat(0,200);
-      float speed = gTools.grabSpeed(GPS);
-     // printFloat("Speed",speed);
-      watch->showSpeed(speed);
+      //float speed = gTools.grabSpeed(GPS);
+      //printFloat("GPS Speed",GPS.speed * 1.825);
+      watch->showSpeed(GPS.speed * 1.825);
       ring->show();
   }
   else{
@@ -149,9 +145,9 @@ void loop()                     // run over and over again
   prevFn = choice;
   }
   /* End Flow Setup */
-
   }
-}
+  }
+
 
 /*************** SUPPLEMENTAL FUNCTIONS *************************/
 /*Random Float*/
