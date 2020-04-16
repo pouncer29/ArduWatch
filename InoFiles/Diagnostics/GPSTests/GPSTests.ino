@@ -130,14 +130,14 @@ void loop()                     // run over and over again
   } else if(choice == 2){
       ring->clear();
       //float heading = randFloat(0,360);
-      float heading = gTools.grabHeading(&GPS);
+      float heading = gTools.grabHeading(GPS);
     //  printFloat("heading",heading);
       watch->showHeading(heading);
       ring->show();
   } else if(choice == 3){
       ring->clear();
     // float speed = randFloat(0,200);
-      float speed = gTools.grabSpeed(&GPS);
+      float speed = gTools.grabSpeed(GPS);
      // printFloat("Speed",speed);
       watch->showSpeed(speed);
       ring->show();
