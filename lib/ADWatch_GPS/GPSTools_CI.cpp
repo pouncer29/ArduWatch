@@ -18,20 +18,20 @@ using namespace std;
 void gpsTools_GrabTime(){
 	cout<<"Testing GPSTools GrabTime..."<<endl;
 	//Setup
-	Adafruit_GPS* testGPS = new Adafruit_GPS();
+	Adafruit_GPS testGPS = Adafruit_GPS();
 	GPSTools* testTools = new GPSTools(0);
 	uint8_t tstHr = 14;
 	uint8_t tstMin = 22;
 	uint8_t tstSec = 10;
-	testGPS->SetFix(true);
-	testGPS->SetTime(tstHr,tstMin,tstSec);	
+	testGPS.SetFix(true);
+	testGPS.SetTime(tstHr,tstMin,tstSec);	
 	
 	time_t result;
 
 	//Call with...
 		
 	//UTC time
-	testGPS->SetLongitude(0.0);	
+	testGPS.SetLongitude(0.0);	
 	result = testTools->grabTime(testGPS);	
 	assert(result != 0);
 	assert(now() == result);
@@ -39,12 +39,12 @@ void gpsTools_GrabTime(){
 	//SaskTime
 	
 	//Grab UTC 0
-	testGPS->SetTime(0,0,0);	
+	testGPS.SetTime(0,0,0);	
 	time_t utcNow = testTools->grabTime(testGPS);
 	
 	//Setup Sask Time
 	testTools = new GPSTools(-6);
-	testGPS->SetLongitude(-106.6);
+	testGPS.SetLongitude(-106.6);
 	result = testTools->grabTime(testGPS);	
 	setTime(18,0,0);
 	time_t saskTime = now();
@@ -56,9 +56,9 @@ void gpsTools_GrabTime(){
 
 	//No Fix
 	testTools = new GPSTools(-6);
-	testGPS->SetFix(false);
-	testGPS->SetLongitude(58.8);
-	testGPS->SetTime(0,0,0);
+	testGPS.SetFix(false);
+	testGPS.SetLongitude(58.8);
+	testGPS.SetTime(0,0,0);
 	result = testTools->grabTime(testGPS);
 
 	//Check we did not ask Longitude for a new Timzone adjustment.
@@ -77,11 +77,11 @@ void gpsTools_GrabSpeed(){
 	cout<<"Testing GPSTools GrabSpeed..."<<endl;
 
 	//Setup
-	Adafruit_GPS* testGPS = new Adafruit_GPS();
+	Adafruit_GPS testGPS = Adafruit_GPS();
 	GPSTools* testTools = new GPSTools(0);
-	testGPS->SetFix(false);
+	testGPS.SetFix(false);
 	float testSpeed = 10.799;
-	testGPS->SetSpeed(testSpeed);
+	testGPS.SetSpeed(testSpeed);
 
 	float eps = 0.05;
 	float result = 0.0;
@@ -96,7 +96,7 @@ void gpsTools_GrabSpeed(){
 	assert (result <= eps );
 
 	//Grab(with fix)
-	testGPS->SetFix(true);		
+	testGPS.SetFix(true);		
 
 	//Check
 	expected = 20.0;
@@ -114,11 +114,11 @@ void gpsTools_GrabHeading(){
 	cout<<"Testing GPSTools GrabHeading..."<<endl;
 	
 	//Setup
-	Adafruit_GPS* testGPS = new Adafruit_GPS();
+	Adafruit_GPS testGPS = Adafruit_GPS();
 	GPSTools* testTools = new GPSTools(0);
-	testGPS->SetFix(false);
+	testGPS.SetFix(false);
 	float testHeading = 80.034;
-	testGPS->SetAngle(testHeading);
+	testGPS.SetAngle(testHeading);
 
 	float eps = 0.05;
 	float result = 0.0;
@@ -134,7 +134,7 @@ void gpsTools_GrabHeading(){
 	assert(result <= eps);
 
 	//Grab (With Fix)
-	testGPS->SetFix(true);
+	testGPS.SetFix(true);
 	expected = testHeading;
 	heading = testTools->grabHeading(testGPS);
 	result = abs(heading - expected);

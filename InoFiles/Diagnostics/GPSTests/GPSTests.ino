@@ -48,7 +48,6 @@ GPSTools gTools = GPSTools(7);
 
 void setup()
 {
-
   /* GPS Setup*/
   Serial.begin(115200);
   delay(5000);
@@ -67,9 +66,16 @@ void setup()
   pinMode(PZero,OUTPUT);  
   Serial.println("TESTING SETUP -- Complete");
 
+  /*Ring Setup*/
+  ring->begin();
+  ring->clear();
+  ring->show();
+  ring->setBrightness(20);
+  Serial.println("RING SETUP -- Complete");
+
    /*Watch Setup*/
   randomSeed(analogRead(0));
-  //setTime(12,59,15,12,04,2020);
+  setTime(12,59,15,12,04,2020);
   prevFn = 0;
   Serial.println("FLOW SETUP -- Complete");
   
@@ -79,8 +85,8 @@ uint32_t timer = millis();
 void loop()                     // run over and over again
 {
   char c = GPS.read();
-  if ((c) && (GPSECHO))
-    Serial.write(c);
+  //if ((c) && (GPSECHO))
+    //Serial.write(c);
   if (GPS.newNMEAreceived()) {
     if (!GPS.parse(GPS.lastNMEA()))
       return; 
@@ -89,18 +95,22 @@ void loop()                     // run over and over again
   if (timer > millis())  timer = millis();
   if (millis() - timer > 2000) {
     timer = millis();
-    printGPS(&GPS);
-  }
+    //printGPS(GPS);
+    if(GPS.fix == true){
+      setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
+      //printTime(now());
+      //setTime(gTools.grabTime(GPS));
+    }
   /* End GPS Poll */
       /*Selector */
   int choice = dialSelect();
- // Serial.print("Choice is: ");Serial.println(choice);
+  //Serial.print("Choice is: ");Serial.println(choice);
   debugOut(choice);
   /* End Selector*/
-  
     /* Flow Setup */
   if(GPS.fix == true){
-    time_t curTime = gTools.grabTime(&GPS);
+    debugOut(15);
+    debugOut(0);
   /*Clear ring if different from last fn*/
   if(prevFn != choice){
       ring->clear();
@@ -110,31 +120,37 @@ void loop()                     // run over and over again
     /* fn Choice*/
   if(choice == 0){
       ring->clear();
-      //ring->show();
+      ring->show();
   } else if (choice == 1){
-     ring->clear();
-     //printTime(curTime);
-     setTime(curTime);
+     //ring->clear();
+     //setTime(curTime);
+//     printTime(now());
      watch->showTime(now());
      ring->show();
   } else if(choice == 2){
-      float heading = randFloat(0,360);
-      printFloat("heading",heading);
+      ring->clear();
+      //float heading = randFloat(0,360);
+      float heading = gTools.grabHeading(&GPS);
+    //  printFloat("heading",heading);
       watch->showHeading(heading);
+      ring->show();
   } else if(choice == 3){
-     float testSpeed = randFloat(0,200);
-      printFloat("Speed",testSpeed);
-      watch->showSpeed(testSpeed);
+      ring->clear();
+    // float speed = randFloat(0,200);
+      float speed = gTools.grabSpeed(&GPS);
+     // printFloat("Speed",speed);
+      watch->showSpeed(speed);
+      ring->show();
   }
   else{
     writeToRing(8);
   }
-  
+
   prevFn = choice;
   }
   /* End Flow Setup */
 
-
+  }
 }
 
 /*************** SUPPLEMENTAL FUNCTIONS *************************/
@@ -145,18 +161,18 @@ float randFloat(int lower, int upper){
 }
 
 /*print gps stats*/
-void printGPS(Adafruit_GPS* g){
-  if(g->fix == true){
+void printGPS(Adafruit_GPS g){
+  if(g.fix == true){
    // debugOut(15);
-    Serial.print("Quality: ");Serial.println(g->fixquality);
+    Serial.print("Quality: ");Serial.println(g.fixquality);
     Serial.print("Time: ");
-    Serial.print(g->hour, DEC); Serial.print(':');Serial.print(g->minute, DEC); Serial.print(':');Serial.print(g->seconds, DEC); Serial.println('.');
-    Serial.print("Longitude: ");Serial.println(g->longitude, 4);
-    Serial.print("Longitude Degrees: ");Serial.print(g->longitudeDegrees, 4);Serial.println(g->lon);
-    Serial.print("Angle: ");Serial.println(g->angle);
-    Serial.print("Speed (kn): "); Serial.println(g->speed);
-    Serial.print("Speed (kmph): "); Serial.println(g->speed * 1.852);
-    Serial.print("Satellites: "); Serial.println((int) g->satellites);
+    Serial.print(g.hour, DEC); Serial.print(':');Serial.print(g.minute, DEC); Serial.print(':');Serial.print(g.seconds, DEC); Serial.println('.');
+    Serial.print("Longitude: ");Serial.println(g.longitude, 4);
+    Serial.print("Longitude Degrees: ");Serial.print(g.longitudeDegrees, 4);Serial.println(g.lon);
+    Serial.print("Angle: ");Serial.println(g.angle);
+    Serial.print("Speed (kn): "); Serial.println(g.speed);
+    Serial.print("Speed (kmph): "); Serial.println(g.speed * 1.852);
+    Serial.print("Satellites: "); Serial.println((int) g.satellites);
     //setTime(gTools.grabTime(&g));
   } else {
     Serial.println("GPS: NO SIGNAL");

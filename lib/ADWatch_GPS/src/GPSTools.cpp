@@ -43,22 +43,21 @@ int32_t GPSTools::tzAdjust(float deg){
 
 	return: the current time according to the GPS module as a time_t
 */
-time_t GPSTools::grabTime(Adafruit_GPS* gps){
+time_t GPSTools::grabTime(Adafruit_GPS gps){
 
 	int32_t hour;
-	if(gps->fix){
-		int32_t adj = tzAdjust(gps->longitudeDegrees);
+	if(gps.fix){
+		int32_t adj = tzAdjust(gps.longitudeDegrees);
 		if(adj != this->adjust){
 			this->adjust = adj;
 		}
 	}
 
 	///this is Jarrods magic 24hour converter. It works similar to how the 24 hour converter works in the clock app
-	hour = (((gps->hour + adjust)%24)+24) % 24;
-	setTime(hour,gps->minute,gps->seconds,gps->day,gps->month,gps->year);
+	hour = (((gps.hour + adjust)%24)+24) % 24;
+	setTime(hour,gps.minute,gps.seconds,gps.day,gps.month,gps.year);
 
-	time_t time = now();
-	return time;
+	return now();
 }
 
 /** grabSpeed()
@@ -71,9 +70,9 @@ time_t GPSTools::grabTime(Adafruit_GPS* gps){
 
 	return: a float from the GPS module readings
 */
-float GPSTools::grabSpeed(Adafruit_GPS* gps){
-	if(gps->fix)
-		return gps->speed * 1.852;
+float GPSTools::grabSpeed(Adafruit_GPS gps){
+	if(gps.fix)
+		return gps.speed * 1.852;
 	else
 		return 0;
 }
@@ -88,9 +87,9 @@ float GPSTools::grabSpeed(Adafruit_GPS* gps){
 
 	return: nothing
 */
-float GPSTools::grabHeading(Adafruit_GPS* gps){
-	if(gps->fix)
-		return gps->angle;
+float GPSTools::grabHeading(Adafruit_GPS gps){
+	if(gps.fix)
+		return gps.angle;
 	else
 		return 0;
 
@@ -106,7 +105,7 @@ float GPSTools::grabHeading(Adafruit_GPS* gps){
 
 	return: nothing
 */
-bool GPSTools::hasFix(Adafruit_GPS* gps){
-	return gps->fix;
+bool GPSTools::hasFix(Adafruit_GPS gps){
+	return gps.fix;
 }
 

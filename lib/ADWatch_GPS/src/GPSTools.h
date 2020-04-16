@@ -30,10 +30,10 @@ class GPSTools{
 		int adjust;
 		//Methods
 		GPSTools(int32_t);
-		time_t grabTime(Adafruit_GPS*);
-		float grabSpeed(Adafruit_GPS*);
-		float grabHeading(Adafruit_GPS*);
-		bool hasFix(Adafruit_GPS*);
+		time_t grabTime(Adafruit_GPS);
+		float grabSpeed(Adafruit_GPS);
+		float grabHeading(Adafruit_GPS);
+		bool hasFix(Adafruit_GPS);
 
 	private:
 		//Methods

@@ -5,7 +5,6 @@
 #include <Compass.h>
 #include <Speedometer.h>
 #include <Flashlight.h>
-#include <GPSTools.h>
 
 #ifndef CI
 	#include <Adafruit_NeoPixel.h>
