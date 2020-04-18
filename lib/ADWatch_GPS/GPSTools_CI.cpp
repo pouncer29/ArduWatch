@@ -97,13 +97,6 @@ void gpsTools_GrabSpeed(){
 	float expected = 0.0;
 	float speed = -5.5;
 
-	//Grab (No Fix)
-	speed = testTools->grabSpeed(testGPS.speed);
-
-	//Check
-	result = abs(speed - expected);
-	assert (result <= eps );
-
 	//Grab(with fix)
 	testGPS.SetFix(true);		
 
@@ -134,14 +127,6 @@ void gpsTools_GrabHeading(){
 	float expected = 0.0;
 	float heading = -5.5;
 	
-	//Grab (No Fix)
-	heading = testTools->grabHeading(testGPS.angle);
-	expected = 0.0;
-	result = abs(heading - expected);
-	
-	//Check
-	assert(result <= eps);
-
 	//Grab (With Fix)
 	testGPS.SetFix(true);
 	expected = testHeading;
