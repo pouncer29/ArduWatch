@@ -58,55 +58,32 @@ void loop()
   }
 
   /*If is greater than switch*/
- 
-  switch(choice){
-    case 0:
-      ring->clear();
-      ring->show();
-      break;
-    case 1:
-      printTime(curTime);
-      watch->showTime(curTime);
-      break;
-    case 2:
-      float heading = randFloat(0,360);
-      printFloat("heading",heading);
-      watch->showHeading(heading);
-      break;
-    case 3:
-      float testSpeed = randFloat(0,200);
-      printFloat("Speed",testSpeed);
-      watch->showSpeed(testSpeed);
-      break;
-     default:
-      writeToRing(8);
-      break;
-     
-  }
-  
- /*
   if(choice == 0){
       ring->clear();
       ring->show();
-  } else if (choice == 1){
-     printTime(curTime);
-     watch->showTime(curTime);
+  } else if(choice == 1){
+      printTime(curTime);
+      watch->showTime(curTime);
   } else if(choice == 2){
       float heading = randFloat(0,360);
       printFloat("heading",heading);
       watch->showHeading(heading);
   } else if(choice == 3){
-     float testSpeed = randFloat(0,200);
+      float testSpeed = randFloat(0,200);
       printFloat("Speed",testSpeed);
       watch->showSpeed(testSpeed);
+  } else if(choice == 4){
+	watch->showLight();
+  } else if (choice == 5){
+      while(choice == 5){
+	        watch->showStrobe(choice);
+          choice = dialSelect();  
+        }
+  } else {
+	Serial.print("Choice: ");Serial.print(choice);Serial.println(" Not recognized");
   }
-  else{
-    writeToRing(8);
-  }
-  */
   prevFn = choice;
   delay(2000);
-    
       
   }
 

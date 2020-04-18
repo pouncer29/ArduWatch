@@ -96,33 +96,21 @@ uint32_t Flashlight::party(){
 	@postcond: light strobes
 	
  	@param: ring - the ring we are displaying the strobe on.
+ 	@param: keep - the condition on which we decide to either fight for our right to party or call the cops.
 	
 	@Synopsis: While the button/switch has not been activeated, rapidly turn the lights from
 			  full white to full off. strobe.
 */
 void Flashlight::strobe(bool keep, Adafruit_NeoPixel* ring){
-	uint8_t flip = 0;
-	uint32_t colour = lightColour;
+	static uint16_t flip = 0;
 	if(keep){
-		//Strobe Delay
-		delay(30);
-
-		//Start off
-		ring->clear();
-		ring->show();
-		
-		//Wait and flip colour
-		delay(100);
+		uint32_t colour = 0;
+		delay(40);
 		flip++;
-
-		//swap colours
-		if(flip > 20){
-			flip =0;
-			//pick random color
+		if(flip > 1){
+			flip = 0;
 			colour = party();
 		}
-
-		//Show colours
 		colorWipe(colour,50,ring);
 	}
 	return;

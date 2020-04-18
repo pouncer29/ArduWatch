@@ -20,7 +20,7 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	clock = new Clock();
 	speedo = new Speedometer();
 	compass = new Compass();
-	//light = new Flashlight();
+	light = new Flashlight();
 	functionCount = 6; //Including "refresh"
 
 	//grab colours for flourish/fn() switch
@@ -28,10 +28,10 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	clock_colour =	clock->face->minColour;
 	speedo_colour = speedo->dial->regionBColour;
 	compass_colour = compass->needle->northColour;
-	//light_colour = light->lightColour;
-	//party_colour = light->violet;
-	//blank = light->blank;
-	//error_colour = light->red; 
+	light_colour = light->lightColour;
+	party_colour = light->violet;
+	blank = light->blank;
+	error_colour = light->red; 
 
 }
 
@@ -111,9 +111,9 @@ void ADWatch::showLight(){
 	
 	@Synopsis: gets the party started, strobes at a rate of <idk> /s in white (for now)
 */
-void ADWatch::showStrobe(uint8_t ceasePin){
+void ADWatch::showStrobe(uint8_t choice){
 	delay(45);
-	light->strobe(ceasePin,ring);
+	light->strobe(choice == 5,ring);
 }
 	
 
