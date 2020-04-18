@@ -22,7 +22,7 @@
 /* GPS Nonsense */
 SoftwareSerial mySerial(3, 2);
 Adafruit_GPS GPS(&mySerial);
-GPSTools gTools = GPSTools(7);
+GPSTools gTools = GPSTools(6);
 #define GPSECHO  true
 /* End GPS Nonsense*/
 
@@ -75,7 +75,7 @@ void setup()
 
    /*Watch Setup*/
   randomSeed(analogRead(0));
-  setTime(12,59,15,12,04,2020);
+  //setTime(12,59,15,12,04,2020);
   prevFn = 0;
   Serial.println("FLOW SETUP -- Complete");
   
@@ -129,18 +129,19 @@ void loop()                     // run over and over again
   } else if(choice == 2){
       //ring->clear();
       //float heading = randFloat(0,360);
-      //float heading = gTools.grabHeading(GPS);
-      //float heading = GPS.heading;
-      //printFloat("GPS Heading",heading);
-      //watch->showHeading(GPS.angle);
+      float heading = gTools.grabHeading(GPS.angle);
+      //float heading = GPS.angle;
+      //float heading = 15.0;
+      printFloat("GPS_Heading",heading);
+      watch->showHeading(heading);
       //ring->show();
   } else if(choice == 3){
       //ring->clear();
-    // float speed = randFloat(0,200);
-      //float speed = gTools.grabSpeed(GPS);
-      // float speed = GPS.speed * 1.825;
-      //printFloat("GPS Speed", speed);
-      //watch->showSpeed(speed);
+      //float speed = randFloat(0,200);
+       float speed = gTools.grabSpeed(GPS.speed);
+       //float speed = GPS.speed * 1.825;
+       printFloat("GPS_Speed", speed);
+       watch->showSpeed(speed);
       //ring->show();
   }
   else{
@@ -185,7 +186,7 @@ void printTime(time_t tm){
   Serial.print("Time is: ");Serial.print(hour(tm));Serial.print(":");Serial.print(minute(tm));Serial.print(":");Serial.println(second(tm));
 }
 
-void printFloat(String lable, float value){
+void printFloat(char lable[], float value){
   Serial.print(lable);Serial.print(" is: ");Serial.println(value);
 }
 

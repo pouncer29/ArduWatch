@@ -74,11 +74,11 @@ int GPSTools::grabTime(time_t gpsTime,float longitude){
 
 	return: a float from the GPS module readings
 */
-float GPSTools::grabSpeed(Adafruit_GPS gps){
-	float speed = gps.speed * 1.852;
+float GPSTools::grabSpeed(float gpsSpeed){
+	float speed = gpsSpeed * 1.852;
 	if(speed < 0)
 		return 0;	
-	else if (gps.speed > 200)
+	else if (speed > 200)
 		return 200;
 	else
 		return speed;
@@ -94,8 +94,8 @@ float GPSTools::grabSpeed(Adafruit_GPS gps){
 
 	return: nothing
 */
-float GPSTools::grabHeading(Adafruit_GPS gps){
-	float angle = gps.angle;
+float GPSTools::grabHeading(float gpsHeading){
+	float angle = gpsHeading;
 	if(angle < 0)
 		return 0;
 	else if(angle > 360)
@@ -104,18 +104,3 @@ float GPSTools::grabHeading(Adafruit_GPS gps){
 		return angle;
 
 }
-
-/** hasFix()
-	precond: GPS is initialized
-	postcond: the tracked variable is updated
-
-	Parameters: gps - The AdafruitGPS we will pull the fix data from
-	
-	Synopsis: Keeps the tracked gps reading up to date
-
-	return: nothing
-*/
-bool GPSTools::hasFix(Adafruit_GPS gps){
-	return gps.fix;
-}
-
