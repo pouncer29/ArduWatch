@@ -53,15 +53,17 @@ int GPSTools::grabTime(time_t gpsTime,float longitude){
 		return 15;
 	}
 
-	int32_t adj = -7;/*= tzAdjust(longitude);
+	/* // Use this when things with the GPS don't suck.
+	int32_t adj = tzAdjust(longitude);
 	if(adj != this->adjust){
 			this->adjust = adj;
 	}*/
+
 	///this is Jarrods magic 24hour converter. It works similar to how the 24 hour converter works in the clock app
 	hr = (((hr + this->adjust)%24)+24) % 24;
 	setTime(hr,min,sec,day(gpsTime),month(gpsTime),year(gpsTime));
 
-	return 9;
+	return 0;
 }
 
 /** grabSpeed()

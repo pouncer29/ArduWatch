@@ -22,7 +22,7 @@
 /* GPS Nonsense */
 SoftwareSerial mySerial(3, 2);
 Adafruit_GPS GPS(&mySerial);
-GPSTools gTools = GPSTools(6);
+GPSTools gTools = GPSTools(-6);
 #define GPSECHO  true
 /* End GPS Nonsense*/
 
@@ -145,7 +145,7 @@ void loop()                     // run over and over again
       //ring->show();
   }
   else{
-    //writeToRing(8);
+    writeToRing(8);
   }
 
   prevFn = choice;
