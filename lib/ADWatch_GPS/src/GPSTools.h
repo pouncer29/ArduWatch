@@ -11,7 +11,6 @@
 	#include <Adafruit_GPS.h>
 	#include <TimeLib.h>
 	#include <Arduino.h>
-	#include <SoftwareSerial.h>
 #else
 	#include <TimeLib_MOCK.h>
 	#include <Adafruit_GPS_MOCK.h>
@@ -30,7 +29,7 @@ class GPSTools{
 		int adjust;
 		//Methods
 		GPSTools(int32_t);
-		time_t grabTime(Adafruit_GPS);
+		int grabTime(time_t,float);
 		float grabSpeed(Adafruit_GPS);
 		float grabHeading(Adafruit_GPS);
 		bool hasFix(Adafruit_GPS);

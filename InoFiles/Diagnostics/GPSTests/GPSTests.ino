@@ -43,7 +43,7 @@ GPSTools gTools = GPSTools(7);
 
   /* Watch Nonsense*/
  ADWatch* watch = new ADWatch(ring);
- uint8_t prevFn;
+ uint16_t prevFn;
  /* End Watch Nonsense*/
 
 void setup()
@@ -98,8 +98,11 @@ void loop()                     // run over and over again
     //printGPS(GPS);
     if(GPS.fix == true){
       setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
+      //setTime(12,15,30,18,04,2020);
       //printTime(now());
-      //setTime(gTools.grabTime(GPS));
+      int success = gTools.grabTime(now(),GPS.longitudeDegrees);
+      //debugOut(success);
+      
   /* End GPS Poll */
       /*Selector */
   int choice = dialSelect();
@@ -119,27 +122,29 @@ void loop()                     // run over and over again
       ring->show();
   } else if (choice == 1){
      //ring->clear();
-     //setTime(curTime);
-     printTime(now());
-     watch->showTime(now());
-     ring->show();
+     time_t curTime = now();
+     printTime(curTime);
+     watch->showTime(curTime);
+     //ring->show();
   } else if(choice == 2){
-      ring->clear();
+      //ring->clear();
       //float heading = randFloat(0,360);
       //float heading = gTools.grabHeading(GPS);
-      printFloat("GPS Heading",GPS.angle);
-      watch->showHeading(GPS.angle);
-      ring->show();
+      //float heading = GPS.heading;
+      //printFloat("GPS Heading",heading);
+      //watch->showHeading(GPS.angle);
+      //ring->show();
   } else if(choice == 3){
-      ring->clear();
+      //ring->clear();
     // float speed = randFloat(0,200);
       //float speed = gTools.grabSpeed(GPS);
-      //printFloat("GPS Speed",GPS.speed * 1.825);
-      watch->showSpeed(GPS.speed * 1.825);
-      ring->show();
+      // float speed = GPS.speed * 1.825;
+      //printFloat("GPS Speed", speed);
+      //watch->showSpeed(speed);
+      //ring->show();
   }
   else{
-    writeToRing(8);
+    //writeToRing(8);
   }
 
   prevFn = choice;

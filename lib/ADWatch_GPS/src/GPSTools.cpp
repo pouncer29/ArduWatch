@@ -43,25 +43,25 @@ int32_t GPSTools::tzAdjust(float deg){
 
 	return: the current time according to the GPS module as a time_t
 */
-time_t GPSTools::grabTime(Adafruit_GPS gps){
-	uint8_t hour = gps.hour;
-	uint8_t minute = gps.minute;
-	uint8_t seconds = gps.seconds;
+int GPSTools::grabTime(time_t gpsTime,float longitude){
+	int hr = hour(gpsTime);
+	int min = minute(gpsTime);
+	int sec = second(gpsTime);
 
 	//If we are about to set an invalid time, return the current time.
-	if(hour > 24 || minute > 60 || seconds > 60){
-		return now();
+	if(hr > 24 || min > 60 || sec > 60){
+		return 15;
 	}
 
-	int32_t adj = tzAdjust(gps.longitudeDegrees);
+	int32_t adj = -7;/*= tzAdjust(longitude);
 	if(adj != this->adjust){
 			this->adjust = adj;
-	}
+	}*/
 	///this is Jarrods magic 24hour converter. It works similar to how the 24 hour converter works in the clock app
-	hour = (((gps.hour + adjust)%24)+24) % 24;
-	setTime(hour,minute,seconds,gps.day,gps.month,gps.year);
+	hr = (((hr + this->adjust)%24)+24) % 24;
+	setTime(hr,min,sec,day(gpsTime),month(gpsTime),year(gpsTime));
 
-	return now();
+	return 9;
 }
 
 /** grabSpeed()
