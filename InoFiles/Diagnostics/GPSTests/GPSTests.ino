@@ -22,7 +22,7 @@
 /* GPS Nonsense */
 SoftwareSerial mySerial(3, 2);
 Adafruit_GPS GPS(&mySerial);
-GPSTools gTools = GPSTools(7);
+GPSTools gTools = GPSTools(-6);
 #define GPSECHO  true
 /* End GPS Nonsense*/
 
@@ -43,12 +43,11 @@ GPSTools gTools = GPSTools(7);
 
   /* Watch Nonsense*/
  ADWatch* watch = new ADWatch(ring);
- uint8_t prevFn;
+ uint16_t prevFn;
  /* End Watch Nonsense*/
 
 void setup()
 {
-
   /* GPS Setup*/
   Serial.begin(115200);
   delay(5000);
@@ -67,6 +66,13 @@ void setup()
   pinMode(PZero,OUTPUT);  
   Serial.println("TESTING SETUP -- Complete");
 
+  /*Ring Setup*/
+  ring->begin();
+  ring->clear();
+  ring->show();
+  ring->setBrightness(20);
+  Serial.println("RING SETUP -- Complete");
+
    /*Watch Setup*/
   randomSeed(analogRead(0));
   //setTime(12,59,15,12,04,2020);
@@ -79,8 +85,8 @@ uint32_t timer = millis();
 void loop()                     // run over and over again
 {
   char c = GPS.read();
-  if ((c) && (GPSECHO))
-    Serial.write(c);
+  //if ((c) && (GPSECHO))
+    //Serial.write(c);
   if (GPS.newNMEAreceived()) {
     if (!GPS.parse(GPS.lastNMEA()))
       return; 
@@ -89,18 +95,21 @@ void loop()                     // run over and over again
   if (timer > millis())  timer = millis();
   if (millis() - timer > 2000) {
     timer = millis();
-    printGPS(&GPS);
-  }
+    //printGPS(GPS);
+    if(GPS.fix == true){
+      setTime(GPS.hour,GPS.minute,GPS.seconds,GPS.day,GPS.month,GPS.year);
+      //setTime(12,15,30,18,04,2020);
+      //printTime(now());
+      int success = gTools.grabTime(now(),GPS.longitudeDegrees);
+      //debugOut(success);
+      
   /* End GPS Poll */
       /*Selector */
   int choice = dialSelect();
- // Serial.print("Choice is: ");Serial.println(choice);
+  //Serial.print("Choice is: ");Serial.println(choice);
   debugOut(choice);
   /* End Selector*/
-  
     /* Flow Setup */
-  if(GPS.fix == true){
-    time_t curTime = gTools.grabTime(&GPS);
   /*Clear ring if different from last fn*/
   if(prevFn != choice){
       ring->clear();
@@ -110,32 +119,41 @@ void loop()                     // run over and over again
     /* fn Choice*/
   if(choice == 0){
       ring->clear();
-      //ring->show();
+      ring->show();
   } else if (choice == 1){
-     ring->clear();
-     //printTime(curTime);
-     setTime(curTime);
-     watch->showTime(now());
-     ring->show();
+     //ring->clear();
+     time_t curTime = now();
+     printTime(curTime);
+     watch->showTime(curTime);
+     //ring->show();
   } else if(choice == 2){
-      float heading = randFloat(0,360);
-      printFloat("heading",heading);
+      //ring->clear();
+      //float heading = randFloat(0,360);
+      float heading = gTools.grabHeading(GPS.angle);
+      //float heading = GPS.angle;
+      //float heading = 15.0;
+      printFloat("GPS_Heading",heading);
       watch->showHeading(heading);
+      //ring->show();
   } else if(choice == 3){
-     float testSpeed = randFloat(0,200);
-      printFloat("Speed",testSpeed);
-      watch->showSpeed(testSpeed);
+      //ring->clear();
+      //float speed = randFloat(0,200);
+       float speed = gTools.grabSpeed(GPS.speed);
+       //float speed = GPS.speed * 1.825;
+       printFloat("GPS_Speed", speed);
+       watch->showSpeed(speed);
+      //ring->show();
   }
   else{
     writeToRing(8);
   }
-  
+
   prevFn = choice;
   }
   /* End Flow Setup */
+  }
+  }
 
-
-}
 
 /*************** SUPPLEMENTAL FUNCTIONS *************************/
 /*Random Float*/
@@ -145,18 +163,18 @@ float randFloat(int lower, int upper){
 }
 
 /*print gps stats*/
-void printGPS(Adafruit_GPS* g){
-  if(g->fix == true){
+void printGPS(Adafruit_GPS g){
+  if(g.fix == true){
    // debugOut(15);
-    Serial.print("Quality: ");Serial.println(g->fixquality);
+    Serial.print("Quality: ");Serial.println(g.fixquality);
     Serial.print("Time: ");
-    Serial.print(g->hour, DEC); Serial.print(':');Serial.print(g->minute, DEC); Serial.print(':');Serial.print(g->seconds, DEC); Serial.println('.');
-    Serial.print("Longitude: ");Serial.println(g->longitude, 4);
-    Serial.print("Longitude Degrees: ");Serial.print(g->longitudeDegrees, 4);Serial.println(g->lon);
-    Serial.print("Angle: ");Serial.println(g->angle);
-    Serial.print("Speed (kn): "); Serial.println(g->speed);
-    Serial.print("Speed (kmph): "); Serial.println(g->speed * 1.852);
-    Serial.print("Satellites: "); Serial.println((int) g->satellites);
+    Serial.print(g.hour, DEC); Serial.print(':');Serial.print(g.minute, DEC); Serial.print(':');Serial.print(g.seconds, DEC); Serial.println('.');
+    Serial.print("Longitude: ");Serial.println(g.longitude, 4);
+    Serial.print("Longitude Degrees: ");Serial.print(g.longitudeDegrees, 4);Serial.println(g.lon);
+    Serial.print("Angle: ");Serial.println(g.angle);
+    Serial.print("Speed (kn): "); Serial.println(g.speed);
+    Serial.print("Speed (kmph): "); Serial.println(g.speed * 1.852);
+    Serial.print("Satellites: "); Serial.println((int) g.satellites);
     //setTime(gTools.grabTime(&g));
   } else {
     Serial.println("GPS: NO SIGNAL");
@@ -168,7 +186,7 @@ void printTime(time_t tm){
   Serial.print("Time is: ");Serial.print(hour(tm));Serial.print(":");Serial.print(minute(tm));Serial.print(":");Serial.println(second(tm));
 }
 
-void printFloat(String lable, float value){
+void printFloat(char lable[], float value){
   Serial.print(lable);Serial.print(" is: ");Serial.println(value);
 }
 

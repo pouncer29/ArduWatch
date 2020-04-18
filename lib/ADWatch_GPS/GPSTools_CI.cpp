@@ -18,54 +18,63 @@ using namespace std;
 void gpsTools_GrabTime(){
 	cout<<"Testing GPSTools GrabTime..."<<endl;
 	//Setup
-	Adafruit_GPS* testGPS = new Adafruit_GPS();
+	Adafruit_GPS testGPS = Adafruit_GPS();
 	GPSTools* testTools = new GPSTools(0);
-	uint8_t tstHr = 14;
-	uint8_t tstMin = 22;
-	uint8_t tstSec = 10;
-	testGPS->SetFix(true);
-	testGPS->SetTime(tstHr,tstMin,tstSec);	
-	
+	uint16_t tstHr = 14;
+	uint16_t tstMin = 22;
+	uint16_t tstSec = 10;
+	uint16_t tstDay = 10;
+	uint16_t tstMonth = 12;
+	uint16_t tstYear = 2020;
+	testGPS.SetFix(true);
+
+	setTime(tstHr,tstMin,tstSec,tstDay,tstMonth,tstYear);
+	time_t expected = now();
 	time_t result;
+	uint8_t success = 15;
 
 	//Call with...
 		
 	//UTC time
-	testGPS->SetLongitude(0.0);	
-	result = testTools->grabTime(testGPS);	
+	testGPS.SetLongitude(0.0);	
+	success = testTools->grabTime(now(),0.0);
+	result = now();
+	//cout<<"GPS: "<<testGPS.hour<<":"<<testGPS.minute<<":"<<testGPS.seconds<<endl;
+	//cout<<"NOW: "<<hour(now())<<":"<<minute(now())<<":"<<second(now())<<endl;
+	assert(success == 0);
 	assert(result != 0);
-	assert(now() == result);
+	assert(expected == result);
 
 	//SaskTime
 	
 	//Grab UTC 0
-	testGPS->SetTime(0,0,0);	
-	time_t utcNow = testTools->grabTime(testGPS);
+	setTime(0,0,0,tstDay,tstMonth,tstYear);
+	testGPS.SetTime(0,0,0);	
+	testTools->grabTime(now(),0.0);
+	time_t utcNow = now();
 	
 	//Setup Sask Time
 	testTools = new GPSTools(-6);
-	testGPS->SetLongitude(-106.6);
-	result = testTools->grabTime(testGPS);	
-	setTime(18,0,0);
+	success = testTools->grabTime(now(),106.6);	
+	result = now();
+	setTime(18,0,0,tstDay,tstMonth,tstYear);
 	time_t saskTime = now();
 
 	//Check We are Sask time with sask latitutde
-	assert(result != 0);
+	assert(success == 0);
 	assert(result != utcNow);
 	assert(result == saskTime);
 
-	//No Fix
-	testTools = new GPSTools(-6);
-	testGPS->SetFix(false);
-	testGPS->SetLongitude(58.8);
-	testGPS->SetTime(0,0,0);
-	result = testTools->grabTime(testGPS);
+	//Data errors (Seems like the time library protects itelf from faulty times.
+	/*
+	setTime(25,65,6);
+	testTools = new GPSTools(0);
+	result = testTools->grabTime(now(),58.8);
+	cout<<"result: "<<result<<endl;
+	cout<<"NOW: "<<hour(now())<<":"<<minute(now())<<":"<<second(now())<<endl;
 
-	//Check we did not ask Longitude for a new Timzone adjustment.
-	assert(testTools->hasFix(testGPS) == false);
-	assert(result != 0);
-	assert(result != utcNow);
-	assert(result == saskTime);
+	assert(success != 0);
+	*/
 	
 	cout<<"GPSTools GrabTime -- PASSED"<<endl;
 }
@@ -77,30 +86,23 @@ void gpsTools_GrabSpeed(){
 	cout<<"Testing GPSTools GrabSpeed..."<<endl;
 
 	//Setup
-	Adafruit_GPS* testGPS = new Adafruit_GPS();
+	Adafruit_GPS testGPS = Adafruit_GPS();
 	GPSTools* testTools = new GPSTools(0);
-	testGPS->SetFix(false);
+	testGPS.SetFix(false);
 	float testSpeed = 10.799;
-	testGPS->SetSpeed(testSpeed);
+	testGPS.SetSpeed(testSpeed);
 
 	float eps = 0.05;
 	float result = 0.0;
 	float expected = 0.0;
 	float speed = -5.5;
 
-	//Grab (No Fix)
-	speed = testTools->grabSpeed(testGPS);
-
-	//Check
-	result = abs(speed - expected);
-	assert (result <= eps );
-
 	//Grab(with fix)
-	testGPS->SetFix(true);		
+	testGPS.SetFix(true);		
 
 	//Check
 	expected = 20.0;
-	speed = testTools->grabSpeed(testGPS);
+	speed = testTools->grabSpeed(testGPS.speed);
 	result = abs(speed - expected);
 	assert(result <= eps);
 
@@ -114,29 +116,21 @@ void gpsTools_GrabHeading(){
 	cout<<"Testing GPSTools GrabHeading..."<<endl;
 	
 	//Setup
-	Adafruit_GPS* testGPS = new Adafruit_GPS();
+	Adafruit_GPS testGPS = Adafruit_GPS();
 	GPSTools* testTools = new GPSTools(0);
-	testGPS->SetFix(false);
+	testGPS.SetFix(false);
 	float testHeading = 80.034;
-	testGPS->SetAngle(testHeading);
+	testGPS.SetAngle(testHeading);
 
 	float eps = 0.05;
 	float result = 0.0;
 	float expected = 0.0;
 	float heading = -5.5;
 	
-	//Grab (No Fix)
-	heading = testTools->grabHeading(testGPS);
-	expected = 0.0;
-	result = abs(heading - expected);
-	
-	//Check
-	assert(result <= eps);
-
 	//Grab (With Fix)
-	testGPS->SetFix(true);
+	testGPS.SetFix(true);
 	expected = testHeading;
-	heading = testTools->grabHeading(testGPS);
+	heading = testTools->grabHeading(testGPS.angle);
 	result = abs(heading - expected);
 	
 	//Check
