@@ -1,6 +1,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <TimeLib.h>
 #include<ADWatch.h>
+#include<ADbug.h>
 
 /* LED code outpus */
 #define PZero 9
@@ -15,7 +16,7 @@
   #define BRIGHTNESS 10
   Adafruit_NeoPixel* ring = new Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 
-  uint32_t testColour;
+  uint32_t errorColour;
  /* End Ring Nonsense*/
 
  /* Watch Nonsense*/
@@ -33,7 +34,7 @@
   Serial.begin(115200);
 
   /*Ring Setup*/
-  testColour = ring->Color(255,255,0,50);
+  errorColour = ring->Color(255,0,0,0);
   ring->begin();
   ring->clear();
   ring->setBrightness(BRIGHTNESS);
@@ -42,6 +43,10 @@
   randomSeed(analogRead(0));
   setTime(12,59,15,12,04,2020);
   prevFn = 0;
+
+  /*Debug Setup*/
+  setDebugColour(errorColour);
+  setVerbose(true);
 }
 
 void loop()                   
@@ -80,61 +85,14 @@ void loop()
           choice = dialSelect();  
         }
   } else {
+    writeToRing(ring,8);
+    setFlag(ring,2);
 	Serial.print("Choice: ");Serial.print(choice);Serial.println(" Not recognized");
   }
   prevFn = choice;
   delay(2000);
       
   }
-
-/*Random Float*/
-float randFloat(int lower, int upper){
-  float randFloat = random(lower,upper);
-  return randFloat;
-}
-
-/* printTime*/
-void printTime(time_t tm){
-  Serial.print("Time is: ");Serial.print(hour(tm));Serial.print(":");Serial.print(minute(tm));Serial.print(":");Serial.println(second(tm));
-}
-
-void printFloat(String lable, float value){
-  Serial.print(lable);Serial.print(" is: ");Serial.println(value);
-}
-
-/* Writes testColor to the specified index on the ring*/
-void writeToRing(int stopIdx){
-  ring->clear();
-  ring->show();
-  if(stopIdx < 13){
-    for(int i = 0; i<stopIdx; i++){
-      ring->setPixelColor(i,testColour);
-      ring->show();
-    }
-  }
-}
-
-/* writes a code to the LEDs*/
-void debugOut(int code){
-  byte v0 = 0;
-  byte v1 = 0;
-  byte v2 = 0;
-  byte v3 = 0;
-  if(code < 16){
-    /* Read fields*/
-    v0 = bitRead(code,0);
-    v1 = bitRead(code,1);
-    v2 = bitRead(code,2);
-    v3 = bitRead(code,3);
-    Serial.print("Code: "); Serial.print(v3); Serial.print(v2); Serial.print(v1); Serial.println(v0);
-  }
-
-  /* Write Values*/
-  digitalWrite(PZero,v0);
-  digitalWrite(POne,v1);
-  digitalWrite(PTwo,v2);
-  digitalWrite(PThree,v3);
-}
 
 /** Returns an int value from the float
  *  reading given by the dial

@@ -2,28 +2,46 @@
 // Created by F.B.W on 2019-07-23.
 //
 
-#ifndef ARDUWATCH_ADBUG_H
-#define ARDUWATCH_ADBUG_H
+#ifndef ADBUG_H
+#define ADBUG_H
 
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_GPS.h>
+#include <TimeLib.h>
+#include <Arduino.h>
 
-class ADBug{
+/***** REQUIRED PINS **********/
+#define PZero 9
+#define POne 10
+#define PTwo 11
+#define PThree 12
 
-    //Attributes
-    public:
-    Adafruit_NeoPixel* ring;
-    Adafruit_GPS* gps;
+/**************** ADBUG TOOLS ********************
+ADBUG tools works under the following assumptions:
 
-    int32_t Red;
+* A Serial Connection has been established to enable prints.
+* Pins [9,12] have been set to outputs for 4 lights such that P0 (9) is the Leas significant bit.
 
-    //Methods
-    ADBug();
-    ADBug(Adafruit_NeoPixel*);
-    ADBug(Adafruit_GPS*);
-    ADBug(Adafruit_GPS*,Adafruit_NeoPixel*);
+*/
 
-    void setFlag(int,Adafruit_NeoPixel*);
-    void setFlag(int);
-};
-#endif //ARDUWATCH_ADBUG_H
+//Attributes
+
+//Methods
+//Setters
+void setDebugColour(uint32_t);
+void setVerbose(bool);
+
+//Randomizers
+float randFloat(int,int);
+
+//Printers
+void printGPS(Adafruit_GPS);
+void printTime(time_t);
+void printFloat(char[],float);
+
+//Outputs
+int writeToRing(Adafruit_NeoPixel*,int);
+int setFlag(Adafruit_NeoPixel*,int);
+int debugOut(int);
+
+#endif 
