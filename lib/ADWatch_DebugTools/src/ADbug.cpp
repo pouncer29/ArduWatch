@@ -34,6 +34,7 @@ float randFloat(int lower, int upper){
 
 /*print gps stats*/
 void printGPS(Adafruit_GPS g){
+  struct Ser Serial;
   if(g.fix == true){
    // debugOut(15);
     Serial.print("Quality: ");Serial.println(g.fixquality);
@@ -43,7 +44,7 @@ void printGPS(Adafruit_GPS g){
     Serial.print("Longitude Degrees: ");Serial.print(g.longitudeDegrees, 4);Serial.println(g.lon);
     Serial.print("Angle: ");Serial.println(g.angle);
     Serial.print("Speed (kn): "); Serial.println(g.speed);
-    Serial.print("Speed (kmph): "); Serial.println(g.speed * 1.852);
+    Serial.print("Speed (kmph): "); Serial.println((float) (g.speed * 1.852));
     Serial.print("Satellites: "); Serial.println((int) g.satellites);
   } else {
     Serial.println("GPS: NO SIGNAL");
@@ -52,11 +53,13 @@ void printGPS(Adafruit_GPS g){
 
 /* printTime*/
 void printTime(time_t tm){
+  struct Ser Serial;
   Serial.print("Time is: ");Serial.print(hour(tm));Serial.print(":");Serial.print(minute(tm));Serial.print(":");Serial.println(second(tm));
 }
 
 /*Prints a float with a lable*/
 void printFloat(char lable[], float value){
+  struct Ser Serial;
   Serial.print(lable);Serial.print(" is: ");Serial.println(value);
 }
 
@@ -103,7 +106,7 @@ int setFlag(Adafruit_NeoPixel* ring,int index) {
         ring->setPixelColor(index,debugColour);
         ring->show();
     }
-    return;
+    return 0;
 }
 
 /** writes a code to the LEDs 
@@ -124,8 +127,10 @@ int debugOut(int code){
     	v1 = bitRead(code,1);
     	v2 = bitRead(code,2);
     	v3 = bitRead(code,3);
-		if(verbose)
+		if(verbose){
+  			struct Ser Serial;
     		Serial.print("Code: "); Serial.print(v3); Serial.print(v2); Serial.print(v1); Serial.println(v0);
+		}
   	}
 
   	/* Write Values*/

@@ -11,9 +11,6 @@ OS=$(shell uname -s)
 ARCH=$(shell uname -m)
 USER=$(shell whoami)
 
-#NameHelpers
-TOOL = NOTHING
-
 #targets 
 .PHONEY: clean
 
