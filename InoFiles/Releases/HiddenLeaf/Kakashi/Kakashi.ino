@@ -1,7 +1,11 @@
+#include <Adafruit_GPS.h>
 #include <Adafruit_NeoPixel.h>
+#include <SoftwareSerial.h>
+#include <GPSTools.h>
+#include <Adafruit_GPS.h>
 #include <TimeLib.h>
-#include<ADWatch.h>
-#include<ADbug.h>
+#include <ADWatch.h>
+#include <ADbug.h>
 
 /* LED code outpus */
 #define PZero 9
@@ -9,6 +13,13 @@
 #define PTwo 11
 #define PThree 12
 /* End LED Code outputs */
+
+/* GPS Nonsense */
+SoftwareSerial mySerial(3, 2);
+Adafruit_GPS GPS(&mySerial);
+GPSTools gTools = GPSTools(-6);
+#define GPSECHO  true
+/* End GPS Nonsense*/
 
 /* Ring Nonsense */
   #define PIN 6
