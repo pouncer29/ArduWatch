@@ -124,8 +124,9 @@ int debugOut(int code){
     	v1 = bitRead(code,1);
     	v2 = bitRead(code,2);
     	v3 = bitRead(code,3);
-		if(verbose)
+		if(verbose == true){
     		Serial.print("Code: "); Serial.print(v3); Serial.print(v2); Serial.print(v1); Serial.println(v0);
+		}
   	}
 
   	/* Write Values*/
