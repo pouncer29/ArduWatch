@@ -1,5 +1,7 @@
+#include <Adafruit_GPS.h>
 #include <Adafruit_NeoPixel.h>
 #include <TimeLib.h>
+#include <GPSTools.h>
 #include<ADWatch.h>
 #include<ADbug.h>
 

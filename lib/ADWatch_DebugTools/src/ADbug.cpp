@@ -19,8 +19,6 @@ void setVerbose(bool v){
 	verbose = v;
 }
 
-
-
 /***************** RANDOMIZERS ********************/
 float randFloat(int lower, int upper){
   	float randFloat = random(lower,upper);
@@ -74,7 +72,7 @@ void printFloat(char lable[], float value){
 	2 on invalid index
 */
 int writeToRing(Adafruit_NeoPixel* ring, int stopIdx){
-	if(NULL == ring){
+	if(nullptr == ring){
 		return 1;
 	} else if (stopIdx > 11){
 		return 2;
@@ -96,11 +94,12 @@ int writeToRing(Adafruit_NeoPixel* ring, int stopIdx){
 	2 on invalid index
 */
 int setFlag(Adafruit_NeoPixel* ring,int index) {
-	if(NULL == ring){
+	if(nullptr == ring){
 		return 1;
 	} else if(index > 11){
 		return 2;
 	}
+
 
     if(NULL != ring){
         ring->setPixelColor(index,debugColour);
@@ -127,15 +126,17 @@ int debugOut(int code){
     	v1 = bitRead(code,1);
     	v2 = bitRead(code,2);
     	v3 = bitRead(code,3);
-		if(verbose){
+		  if(verbose){
   			struct Ser Serial;
     		Serial.print("Code: "); Serial.print(v3); Serial.print(v2); Serial.print(v1); Serial.println(v0);
-		}
+		 }
   	}
+
 
   	/* Write Values*/
   	digitalWrite(PZero,v0);
   	digitalWrite(POne,v1);
   	digitalWrite(PTwo,v2);
   	digitalWrite(PThree,v3);
+	return 0;
 }
