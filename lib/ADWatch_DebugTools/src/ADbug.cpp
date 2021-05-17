@@ -72,7 +72,7 @@ void printFloat(char lable[], float value){
 	2 on invalid index
 */
 int writeToRing(Adafruit_NeoPixel* ring, int stopIdx){
-	if(nullptr == ring){
+	if(NULL == ring){
 		return 1;
 	} else if (stopIdx > 11){
 		return 2;
@@ -94,7 +94,7 @@ int writeToRing(Adafruit_NeoPixel* ring, int stopIdx){
 	2 on invalid index
 */
 int setFlag(Adafruit_NeoPixel* ring,int index) {
-	if(nullptr == ring){
+	if(NULL == ring){
 		return 1;
 	} else if(index > 11){
 		return 2;
