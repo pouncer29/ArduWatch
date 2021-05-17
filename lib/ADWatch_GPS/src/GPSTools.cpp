@@ -15,8 +15,7 @@
 
    return: nothing
  */
-GPSTools::GPSTools(Adafruit_GPS* myGPS,int32_t adj){
-	gps = myGPS;
+GPSTools::GPSTools(int32_t adj){
 	this->adjust = adj;
 }
 
@@ -38,76 +37,72 @@ int32_t GPSTools::tzAdjust(float deg){
 	precond: gps is initialized
 	postcond: a time_t of the current time is produced
 
-	Parameters: None
+	Parameters: gps - the Adafruit GPS to pull the time off of 
 
 	Synopsis: Takes apart the GPS time and puts it into a fresh time_t object
 
 	return: the current time according to the GPS module as a time_t
 */
-time_t GPSTools::grabTime(){
+int GPSTools::grabTime(time_t gpsTime,float longitude){
+	int hr = hour(gpsTime);
+	int min = minute(gpsTime);
+	int sec = second(gpsTime);
 
-	int32_t hour;
-	if(gps->fix){
-		int32_t adj = tzAdjust(gps->longitudeDegrees);
-		if(adj != this->adjust){
-			this->adjust = adj;
-		}
+	//If we are about to set an invalid time, return the current time.
+	if(hr > 24 || min > 60 || sec > 60){
+		return 15;
 	}
 
-	///this is Jarrods magic 24hour converter. It works similar to how the 24 hour converter works in the clock app
-	hour = (((gps->hour + adjust)%24)+24) % 24;
-	setTime(hour,gps->minute,gps->seconds,gps->day,gps->month,gps->year);
+	/* // Use this when things with the GPS don't suck.
+	int32_t adj = tzAdjust(longitude);
+	if(adj != this->adjust){
+			this->adjust = adj;
+	}*/
 
-	time_t time = now();
-	return time;
+	///this is Jarrods magic 24hour converter. It works similar to how the 24 hour converter works in the clock app
+	hr = (((hr + this->adjust)%24)+24) % 24;
+	setTime(hr,min,sec,day(gpsTime),month(gpsTime),year(gpsTime));
+
+	return 0;
 }
 
 /** grabSpeed()
 	precond: gps has been initialized and we have a fix
 	postcond: speed is produced as a float from GPS
 	
-	Parameters: none
+	Parameters: gps - the Adafruit_GPS we will pull the speed form
 	
 	Synopsis: grabs speed reading in knots from gps, converts and returns it as a kmph value
 
 	return: a float from the GPS module readings
 */
-float GPSTools::grabSpeed(void){
-	if(gps->fix)
-		return gps->speed * 1.852;
+float GPSTools::grabSpeed(float gpsSpeed){
+	float speed = gpsSpeed * 1.852;
+	if(speed < 0)
+		return 0;	
+	else if (speed > 200)
+		return 200;
 	else
-		return 0;
+		return speed;
 }
 
 /** grabHeading()
 	precond: GPS readings are initialized
 	postcond: None
 
-	Parameters: None
+	Parameters: gps - The AdafruitGPS we will pull the heading data from
 	
 	Synopsis: produces an array index value from a GPS reading
 
 	return: nothing
 */
-float GPSTools::grabHeading(void){
-	if(gps->fix)
-		return gps->angle;
-	else
+float GPSTools::grabHeading(float gpsHeading){
+	float angle = gpsHeading;
+	if(angle < 0)
 		return 0;
+	else if(angle > 360)
+		return 0;
+	else
+		return angle;
 
 }
-
-/** hasFix()
-	precond: GPS is initialized
-	postcond: the tracked variable is updated
-
-	Parameters: None
-	
-	Synopsis: Keeps the tracked gps reading up to date
-
-	return: nothing
-*/
-bool GPSTools::hasFix(void){
-	return gps->fix;
-}
-

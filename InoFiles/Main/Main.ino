@@ -4,7 +4,7 @@
 #include <ADWatch.h>
 #include <TimeLib.h>
 #include <GPSTools.h>
-#include <ADbug.h>
+
 
 /**
  *  WATCH SETUP BEGIN
@@ -19,9 +19,6 @@ enum Feats {Off = 0,Clock,Compass,Speedometer,Flashlight,Strobe,Refresh,FeatCoun
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 Adafruit_NeoPixel* ring = &strip;
-ADBug debugger = ADBug(ring);
-
-
 
 //Using a master watch Class
 ADWatch watch = ADWatch(ring);

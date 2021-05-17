@@ -5,11 +5,8 @@
 #include <Compass.h>
 #include <Speedometer.h>
 #include <Flashlight.h>
-#include <GPSTools.h>
 
 #ifndef CI
-	#include <SoftwareSerial.h>
-	#include <Adafruit_GPS.h>
 	#include <Adafruit_NeoPixel.h>
 	#include <Arduino.h>
 	#include <TimeLib.h>
@@ -42,8 +39,6 @@ class ADWatch{
 		
 		//Implements
 		Adafruit_NeoPixel* ring;
-		GPSTools* parser;
-		Adafruit_GPS* gps;
 
 		//Features
 		Clock* clock;

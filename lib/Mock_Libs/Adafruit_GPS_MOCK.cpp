@@ -4,13 +4,18 @@ Adafruit_GPS::Adafruit_GPS()
 {
 	this->fix = false;
 	this->angle = 0;
+	this->speed= 0;
 	this->longitudeDegrees = 102.2;
+	this->longitude = 102.2;
+	this->lon = 102.2;
 	this->hour = 0;
 	this->minute= 0;
 	this->seconds= 0;
 	this->day= 21;
 	this->month= 2;
 	this->year = 2020;
+	this->fixquality = 0;
+	this->satellites = 1;
 }
 
 void Adafruit_GPS::SetTime(uint8_t hr, uint8_t min, uint8_t sec){

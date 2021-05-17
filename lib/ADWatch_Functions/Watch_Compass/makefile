@@ -41,10 +41,10 @@ lib$(FUNC): $(FUNC).o $(FUNC)_Magnet.o $(FUNC)_Needle.o
 	@echo "************** libADC$(FUNC) made"
 
 #CI
-$(FUNC)_CI.o: $(SRCLIB)/$(FUNC)_CI.cpp $(SRCLIB)/$(FUNC)_CI.h
+$(FUNC)_CI.o: $(FUNC)_CI.cpp $(FUNC)_CI.h
 	$(CC) $(CPPFLAGS) -c \
 	-I $(SRCLIB) -I $(MOCKLIBS) \
-	$(SRCLIB)/$(FUNC)_CI.cpp 
+	$(FUNC)_CI.cpp 
 	@echo "Created CI component for Compass."
 
 #Compass Components

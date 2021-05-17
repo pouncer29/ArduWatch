@@ -9,12 +9,13 @@
 
 #ifndef CI
 	#include <Adafruit_GPS.h>
+	#include <Adafruit_NeoPixel.h>
 	#include <TimeLib.h>
 	#include <Arduino.h>
-	#include <SoftwareSerial.h>
 #else
 	#include <TimeLib_MOCK.h>
 	#include <Adafruit_GPS_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
 	#include <Arduino_MOCK.h>
 #endif
 
@@ -27,14 +28,12 @@ class GPSTools{
 	
 	public:
 		//Attributes
-		Adafruit_GPS* gps;
 		int adjust;
 		//Methods
-		GPSTools(Adafruit_GPS*,int32_t);
-		time_t grabTime();
-		float grabSpeed(void);
-		float grabHeading(void);
-		bool hasFix(void);
+		GPSTools(int32_t);
+		int grabTime(time_t,float);
+		float grabSpeed(float);
+		float grabHeading(float);
 
 	private:
 		//Methods

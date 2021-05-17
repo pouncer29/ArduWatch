@@ -6,11 +6,6 @@ Synopsis: The tests for the speedometer
 */
 
 #include "Speedometer_CI.h"
-#include "Speed_Gauge.h"
-#include "Speed_Dial.h"
-#include <assert.h>
-#include <iostream>
-
 using namespace std;
 
 //******************************************************************************
