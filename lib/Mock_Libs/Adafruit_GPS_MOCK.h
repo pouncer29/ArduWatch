@@ -6,7 +6,10 @@ class Adafruit_GPS
 {
  public:
 	bool fix;
+	int fixquality;
 	float longitudeDegrees;
+	float longitude;
+	float lon;
 	float speed;
 	float angle;
 	int hour;
@@ -15,6 +18,7 @@ class Adafruit_GPS
 	int day;
 	int month;
 	int year;
+	int satellites;
 
   Adafruit_GPS(void);
   void SetTime(uint8_t,uint8_t,uint8_t);

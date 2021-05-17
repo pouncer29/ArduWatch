@@ -47,6 +47,7 @@ libs:
 	@echo "************************ TOOLS AND FUNCTIONS MADE ******************"
 	$(MAKE) -C $(FUNCDIR)
 	$(MAKE) -C $(PROJDIR)/lib/ADWatch_GPS
+	$(MAKE) -C $(PROJDIR)/lib/ADWatch_DebugTools
 	@echo "************************ MAKING ADWFUNCLIB *************************"
 	$(MAKE) -C $(FUNCLIB)
 	@echo "************************** ALL LIBS MADE ***************************"
