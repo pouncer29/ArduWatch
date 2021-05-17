@@ -9,11 +9,13 @@
 
 #ifndef CI
 	#include <Adafruit_GPS.h>
+	#include <Adafruit_NeoPixel.h>
 	#include <TimeLib.h>
 	#include <Arduino.h>
 #else
 	#include <TimeLib_MOCK.h>
 	#include <Adafruit_GPS_MOCK.h>
+	#include <Adafruit_NeoPixel_MOCK.h>
 	#include <Arduino_MOCK.h>
 #endif
 
