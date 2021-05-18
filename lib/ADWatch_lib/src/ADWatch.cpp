@@ -142,7 +142,10 @@ void ADWatch::setPixels(uint32_t c){
 	@synopsis: produces a stream-like effect passing the given colour around the indicies.
 
 */
-void ADWatch::flourish(uint32_t colour, uint32_t wait){
+void ADWatch::flourish(FnColour fn, uint32_t wait){
+
+		uint32_t colour = this->getColour(fn);
+		
 		for(uint8_t i=0; i <12;i++){
 			ring->setPixelColor(i,colour);
 			ring->show();
@@ -151,6 +154,25 @@ void ADWatch::flourish(uint32_t colour, uint32_t wait){
 		delay(wait*3);
 		ring->clear(); //Could maybe use fn() below! It's just an accessor fn().
 		ring->show();
+}
+
+uint32_t ADWatch::getColour(FnColour c){
+	switch (c){
+		case BLANK_CLR:
+			return this->blank;
+		case CLOCK_CLR:
+			return this->clock_colour;
+		case COMPASS_CLR:
+			return this->compass_colour;
+		case SPEED_CLR:
+			return this->speedo_colour;
+		case LIGHT_CLR:
+			return this->light_colour;
+		case PARTY_CLR:
+			return this->party_colour;
+		default:
+			return this->error_colour;
+		}
 }
 
 /** refresh()

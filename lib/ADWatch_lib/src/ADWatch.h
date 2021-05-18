@@ -18,6 +18,13 @@
 #endif 
 
 
+/** FnColour
+   ---------
+   - This is where we declare the enum of watch function/int codes
+*/
+
+enum FnColour {BLANK_CLR, CLOCK_CLR, COMPASS_CLR, SPEED_CLR, LIGHT_CLR, PARTY_CLR};
+
 /** ADWatch
    -----------
 	-The union of all feature classes.
@@ -61,11 +68,14 @@ class ADWatch{
 		void showError(uint32_t);
 
 		//Flow tools
-		void flourish(uint32_t,uint32_t);
+		void flourish(FnColour, uint32_t);
 		void clearRing(void);
 		void setPixels(uint32_t);
 		void refresh(bool);
 		uint8_t getWatchFunction(int reading);
+
+	private:
+		uint32_t getColour(FnColour);
 
 	/*
 		In the future, it may be a good refactor to make all of our features private and store
