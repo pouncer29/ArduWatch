@@ -14,9 +14,7 @@
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>
 #include <GPSTools.h>
-#include <Adafruit_GPS.h>
-#include <TimeLib.h>
-#include <ADWatch.h>
+
 
 /* GPS Nonsense */
 SoftwareSerial mySerial(3, 2);
@@ -75,11 +73,6 @@ void loop()                     // run over and over again
 
 
 /*************** SUPPLEMENTAL FUNCTIONS *************************/
-/*Random Float*/
-float randFloat(int lower, int upper){
-  float randFloat = random(lower,upper);
-  return randFloat;
-}
 
 /*print gps stats*/
 void printGPS(Adafruit_GPS* g){
