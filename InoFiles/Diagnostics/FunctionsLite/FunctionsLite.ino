@@ -42,7 +42,9 @@ void loop()
   /*Clear ring if different from last fn*/
   if(prevFn != choice){
     Serial.print("Choice Switched From ");Serial.print(prevFn);Serial.print(" to "); Serial.println(choice);
+    watch->flourish((FnColour) choice, 60);
   }
+
 
   /*If is greater than switch*/
   if(choice == BLANK_CLR){
@@ -77,5 +79,5 @@ void loop()
 int dialSelect(){
   float reading = analogRead(A0);
   Serial.print("Reading: "); Serial.println(reading);
-  return (FnColour) ((int) reading / 100);
+  return (int) ((int) reading / 100);
 }
