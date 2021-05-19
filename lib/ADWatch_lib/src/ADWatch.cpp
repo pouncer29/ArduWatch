@@ -17,10 +17,11 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	//ring->setBrightness(20);
 
 	// init features
+
 	clock = new Clock();
 	speedo = new Speedometer();
 	compass = new Compass();
-	light = new Flashlight();
+//	light = new Flashlight();
 	functionCount = 6; //Including "refresh"
 
 	//grab colours for flourish/fn() switch
@@ -28,10 +29,14 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	clock_colour =	clock->face->minColour;
 	speedo_colour = speedo->dial->regionBColour;
 	compass_colour = compass->needle->northColour;
-	light_colour = light->lightColour;
-	party_colour = light->violet;
-	blank = light->blank;
-	error_colour = light->red; 
+	light_colour = strip->Color(255,255,255,0);
+	party_colour = strip->Color(255,0,255,0);
+	error_colour = strip->Color(255,0,0,0);
+	blank = strip->Color(0,0,0,0);
+//	light_colour = light->lightColour;
+//	party_colour = light->violet;
+//	blank = light->blank;
+//	error_colour = light->red; 
 
 }
 
