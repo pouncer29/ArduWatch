@@ -76,7 +76,7 @@ void setup(){
 
 /* LOOP */
 void loop(){
-
+  GPS.read();
 	//GPS GRAB
 	if (GPS.newNMEAreceived()) {
 		if (!GPS.parse(GPS.lastNMEA()))
