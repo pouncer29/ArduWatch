@@ -14,12 +14,18 @@
 #define NUM_LEDS 12
 #define BRIGHTNESS 10
 
-enum Feats {Off = 0,Clock,Compass,Speedometer,Flashlight,Strobe,Refresh,FeatCount = 7}; // Remember to update count if features are added
+enum Feats {Off = 0,Clock,Compass,Speedometer,Flashlight,Strobe,Set,FeatCount = 7}; // Remember to update count if features are added
 
 //For Ring
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
 Adafruit_NeoPixel* ring = &strip;
 RTC_Millis rtc;
+
+//Button Setup 
+const int buttonPin = 12;
+uint8_t buttonState = 0;
+boolean settingTime = false;
+
 
 
 
@@ -27,12 +33,6 @@ RTC_Millis rtc;
 ADWatch watch = ADWatch(ring);
 
 //For Flow
-//ShowTimeButton
-const uint8_t startWatchPin = 8;// the number of the pushbutton pin INPUT
-boolean on = false;         //current output state
-int buttonState = 0;       //the current flow through the button.
-bool isRunning = false;     //whether or not to do the light show on button press
-bool initialRun = true;
 
 //Flourish Colours
 uint32_t compassColour;
@@ -60,21 +60,19 @@ void setup()
    while (!Serial); // wait for serial port to connect. Needed for native USB
   #endif
 
-  rtc.begin(DateTime(F(__DATE__), F(__TIME__)));
+   rtc.begin(DateTime(F(__DATE__), F(__TIME__)));
+
+   //SETUP BUTTON
+   pinMode(buttonPin, INPUT);
 
  
-  // flow setup
-  initialRun = true;
-
-
   //INIT RING
     ring->setBrightness(BRIGHTNESS);
     ring->begin();
     ring->clear();
     ring->show(); //Supposedly initilizes all to off
     
-    //For Buttons
-    pinMode(startWatchPin,INPUT);
+
     //Init Flourish Colours & Cycler
     clockColour = watch.clock_colour;
     compassColour = watch.compass_colour;
@@ -90,7 +88,7 @@ void setup()
     Colours[Speedometer] = speedoColour;
     Colours[Flashlight] = flashColour;
     Colours[Strobe] = partyColour;
-    Colours[Refresh] = errorColour;
+    Colours[Set] = errorColour;
 
     curFeat = 0;
     prevFeat = 0;
@@ -101,8 +99,7 @@ void setup()
 void loop()                   
 {
     /** WATCH LOOP*/
-    Serial.print("Reading is: "); Serial.print(analogRead(A0)); Serial.print(" Feat is: "); Serial.println(curFeat);
-    
+    if(settingTime == false){
     curFeat = getFeat();
     if(curFeat != prevFeat){
         //If Turning on for the first time
@@ -115,42 +112,97 @@ void loop()
         delay(800);
     }else{
         Serial.print("CurFeat: ");
-        switch (curFeat){
-            case Off:
-                ring->clear();
-                ring->show();
-                break;
-            case Clock :
-                Serial.println(curFeat);
-                time_t curTime = rtc.now().unixtime();
-                watch.showTime(curTime);
-                break;
-            case Compass:
-                break;
-
-            case Speedometer:
-
-                break;
-            case Flashlight:
-                Serial.println(curFeat);
-                watch.showLight();
-                ring->show();
-                break;
-            case Strobe:
-                Serial.println(curFeat);
-                watch.showStrobe(startWatchPin);
-                break;
-            case Refresh:
-                Serial.println(curFeat);
-                //watch.refresh(!gTools.hasFix());
-                break;
-            default:
-                Serial.println(curFeat);
-                watch.showError(partyColour);
-                break;
+        if(curFeat == Off){
+          ring->clear();
+          ring->show();
+          
+        } else if (curFeat == Clock){
+            Serial.println("CLOCK");
+            time_t curTime = rtc.now().unixtime();
+            watch.showTime(curTime);
+        } else if (curFeat == Flashlight){
+            Serial.println("LIGHT");
+            watch.showLight();
+            ring->show();
+          
+        } else if (curFeat == Strobe){ 
+            Serial.println("STROBE");
+            watch.showStrobe(6);
+        } else if (curFeat == Set){
+            Serial.println("IN SET");
+            configureTime(watch);
+            settingTime= false;
+        } else { 
+           Serial.println(curFeat);
+           watch.showError(partyColour);
         }
+//        switch (curFeat){
+//            case Off:
+//                ring->clear();
+//                ring->show();
+//                break;
+//            case Clock :
+//                Serial.println("CLOCK");
+//                time_t curTime = rtc.now().unixtime();
+//                watch.showTime(curTime);
+//                break;
+//            case Compass:
+//                break;
+//            case Speedometer:
+//                break;
+//            case Flashlight:
+//                Serial.println("LIGHT");
+//                watch.showLight();
+//                ring->show();
+//                break;
+//            case Strobe:
+//                Serial.println("STROBE");
+//                watch.showStrobe(6);
+//                break;
+//            case Set:
+//                Serial.println("IN SET");
+//                watch.flourish(Colours[Strobe],50);
+//           
+//                //uint32_t _hour = configureTime(watch,watch.clock_colour_hr);
+//                //uint32_t _minute = 0;
+//                //uint32_t _second = 0;
+//                //Serial.println(_hour); 
+//                break;
+//            default:
+//                Serial.println(curFeat);
+//                watch.showError(partyColour);
+//                break;
+//        }
         delay(500);
     }
+    }
+}
+
+void configureTime(ADWatch w){
+  uint8_t clickCount = 0;
+  settingTime = true;
+  uint8_t idx = 0;
+  uint32_t timeColours[] = {w.clock_colour_hr, w.clock_colour_min, w.clock_colour_sec};
+  uint8_t timeValues[] = {0,0,0};
+ while(clickCount < 2) {
+  Serial.print("ClickCount: "); Serial.println(clickCount);
+  idx = (analogRead(A0) / 10) % 12;
+  ring->clear();
+  ring->setPixelColor(idx,timeColours[clickCount]);
+  ring->show();
+  delay(10);
+  if(digitalRead(buttonPin) == HIGH){
+    timeValues[clickCount] = idx;
+    Serial.print("Set To:"); Serial.println(idx);
+    clickCount++;
+    delay(10);
+  }
+  delay(100);
+ }
+
+ DateTime newTime = DateTime(2022,3,6,timeValues[0],timeValues[1],timeValues[2]);
+ rtc.adjust(newTime);
+
 }
 
 /** Gets the Current Feat based on dial position*/

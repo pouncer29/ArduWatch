@@ -26,6 +26,9 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 	//grab colours for flourish/fn() switch
 
 	clock_colour =	clock->face->minColour;
+	clock_colour_hr = clock->face->hrColour;
+	clock_colour_min = clock->face->minColour;
+	clock_colour_sec = clock->face->secColour;
 	speedo_colour = speedo->dial->regionBColour;
 	compass_colour = compass->needle->northColour;
 	light_colour = light->lightColour;
@@ -54,6 +57,7 @@ ADWatch::ADWatch(Adafruit_NeoPixel* strip){
 void ADWatch::showTime(time_t t){
 	clock->trackTime(t,ring);
 }
+
 
 //TODO test
 /** showSpeed()
@@ -181,7 +185,7 @@ uint8_t ADWatch::getWatchFunction(int reading){
 	uint8_t functionId = reading / 100;
 	if(functionId > 10)
 		return 10;
-	else if(functionId > 5)
+	else if(functionId > 6)
 		return (functionId-functionCount);
 	else
 		return functionId;

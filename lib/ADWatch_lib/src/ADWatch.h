@@ -28,6 +28,9 @@ class ADWatch{
 		
 		//Attributes
 		uint32_t clock_colour;
+		uint32_t clock_colour_hr;
+		uint32_t clock_colour_min;
+		uint32_t clock_colour_sec;
 		uint32_t speedo_colour;
 		uint32_t compass_colour;
 		uint32_t light_colour;
