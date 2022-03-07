@@ -176,6 +176,12 @@ void ADWatch::showError(uint32_t errColour){
 	ring->show();
 }
 
+void ADWatch::showSetTime(){
+    this->flourish(clock_colour_hr,100);
+    this->flourish(clock_colour_min,100);
+    this->flourish(clock_colour_sec,100);
+};
+
 /**
  *
  * @param reading - the potentiometer reading to map to the enum

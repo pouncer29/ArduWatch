@@ -64,6 +64,7 @@ class ADWatch{
 		void showError(uint32_t);
 
 		//Flow tools
+		void showSetTime(void);
 		void flourish(uint32_t,uint32_t);
 		void clearRing(void);
 		void setPixels(uint32_t);
